@@ -2,10 +2,10 @@
 This is a Java EE 7 web application that _consumes_ events produced by the CICS TS event processing support as a result of a CICS application event, a CICS system event, or a CICS policy event action.
 
 Once the application is installed, it can be called:
-* by CICS directly as a custom event adapter
-* by the CICS HTTP event adapter as a RESTfull service
-* by your program using the EXEC CICS LINK command
-* by your program using the EXEC CICS START command
+* by CICS directly as a [custom event processing adapter](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.eventprocessing.doc/concepts/dfhep_event_processing_adapters.html)
+* by the CICS [HTTP EP adapter](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.eventprocessing.doc/concepts/dfhep_event_processing_http_adapter.html) with event formatted using the [common base event REST format](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.eventprocessing.doc/reference/dfhep_event_processing_cberformat.html)
+* by your program using the [EXEC CICS LINK PROGRAM(CA1Y)](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.applicationprogramming.doc/commands/dfhp4_link.html) command
+* by your program using the [EXEC CICS START TRANSID(CA1Y) CHANNEL()](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.applicationprogramming.doc/commands/dfhp4_starttransidchannel.html) command
 
 The received event can be formatted and:
 * sent as an email
@@ -65,7 +65,7 @@ java.util.logging.SimpleFormatter.format=%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS %4$
 
 ```properties
 -Djava.util.logging.config.file=/u/cockerm/ca1y/examples/logging.properties
-```properties
+```
 
 * Enable the JVM server.
 * As requests are processed, log output will be written to the JVM server standard file.
