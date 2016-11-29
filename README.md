@@ -17,9 +17,9 @@ The received event can be formatted and:
 The application was originally released as the [IBM CA1Y: Send email from CICS Transaction Server for z/OS](http://www-01.ibm.com/support/docview.wss?uid=swg24033197) and referred to here as CA1Y for short. 
 
 ## Requirements
-* CICS TS TS V5.3, or above.
+* CICS TS TS V5.3 with APAR PI63005, or above.
 * A configured CICS Liberty JVM server, as described in topic [Configuring a Liberty JVM server](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.java.doc/JVMserver/config_jvmserver_liberty.html). 
-* CICS Explorer SDK 5.3, or above.
+* CICS Explorer SDK 5.3.0.8, or above.
 * Access to the Maven Central Repository to resolve dependencies.
 
 ## Installation
