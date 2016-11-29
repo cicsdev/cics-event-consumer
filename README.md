@@ -23,7 +23,7 @@ The application was originally released as the [IBM CA1Y: Send email from CICS T
 * Access to the Maven Central Repository to resolve dependencies
 
 ## Installation
-* Define, install and enable CICS transaction with NAME(CA1Y),PROGRAM(CA1Y),TASKDATALOC(ANY)
+* Define, install and enable a CICS transaction with NAME(CA1Y),PROGRAM(CA1Y),TASKDATALOC(ANY)
 * Update the Liberty server configuration file server.xml to include the following features:
 
 ```xml
@@ -32,7 +32,7 @@ The application was originally released as the [IBM CA1Y: Send email from CICS T
 <feature>jaxb-2.2</feature>
 <feature>javaMail-1.5</feature>
 ```
-* Clone this repository, or download the repository [ZIP](https://github.com/cicsdev/cics-event-consumer/archive/master.zip) and expand it.
+* Clone this repository, or download the repository [cics-event-consumer-master.zip](https://github.com/cicsdev/cics-event-consumer/archive/master.zip) and expand it.
 * In CICS Explorer, select `File` > `Import...` > `Existing Projects into Workspace` > `Select root directory` > `Browse` and select the repository `projects` directory. Select all the projects, then `Copy projects into workspace`, then `Finish`.
 * Export the `com.ibm.cics.ca1y.web.cicsbundle` CICS Bundle project to zFS using the wizard `Export Bundle Project to z/OS UNIX File System...` to a directory on zFS, eg. /usr/lpp/ca1y/com.ibm.cics.ca1y.web.cicsbundle_1.7.1
 * Define, install and enable CICS bundle with NAME(CA1Y),BUNDLEDIR(/usr/lpp/ca1y/com.ibm.cics.ca1y.web.cicsbundle_1.7.1)
@@ -40,11 +40,12 @@ The application was originally released as the [IBM CA1Y: Send email from CICS T
 Alternatively you can export the `com.ibm.cics.ca1y.web` project as a WAR file and install it into the Liberty JVM server using an application entry in server.xml.
 
 ## Documentation
-Details how to use CA1Y see the [CA1Y.pdf](https://github.com/cicsdev/cics-event-consumer/tree/master/documentation/CA1Y.pdf).
+Details how to use CA1Y see the [ca1y.pdf](https://github.com/cicsdev/cics-event-consumer/blob/master/documentation/ca1y.pdf).
     
 ## CAY logging
-CA1Y uses java.util.logging facilities to trace the processing of consumed events.
+The application uses the standard Java logging framework (java.util.logging) to write messages. These can be directed to the JVM server standard error (STDERR) file as follows: 
 
+* Disable the JVM server.
 * Create a logging.properties file on zFS to specify the logging parameters. For example create /usr/lpp/ca1y/examples/logging.properties containing the following:
 
 ```properties
@@ -68,4 +69,3 @@ java.util.logging.SimpleFormatter.format=%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS %4$
 ```
 
 * Enable the JVM server.
-* As requests are processed, log output will be written to the JVM server standard file.
