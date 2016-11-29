@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<cbe:CommonBaseEvent xmlns:cbe="http://www.ibm.com/AC/commonbaseevent1_0_1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0.1" creationTime="2016-11-25T19:21:12.691+00:00">
+<cbe:sourceComponentId component="IBM CICS TS#5.3.0" componentIdType="ProductName" executionEnvironment="IBM z/OS" instanceId="GBIBMIYA.IYK3ZMC3" location="MV2C" locationType="Hostname" subComponent="CICS EP" componentType="http://www.ibm.com/xmlns/prod/cics/eventprocessing"/>
+<cbe:situation categoryName="OtherSituation">
+<cbe:situationType xsi:type="cbe:OtherSituation" reasoningScope="EXTERNAL"><CICSApplicationEvent/></cbe:situationType>
+</cbe:situation>
+
+<cics:event xmlns:cics="http://www.ibm.com/xmlns/prod/cics/events/CBE">
+
+<cics:context-info>
+<cics:eventname>TST1</cics:eventname>
+<cics:usertag></cics:usertag>
+<cics:networkapplid>GBIBMIYA.IYK3ZMC3</cics:networkapplid>
+<cics:timestamp>2016-11-25T19:21:12.691+00:00</cics:timestamp>
+<cics:bindingname>CA1YTST1</cics:bindingname>
+<cics:capturespecname>TST1</cics:capturespecname>
+<cics:UOWid>1A11C7C2C9C2D4C9E8C14BC9E8C3E6E3F1F7F6B354F3A507D70001</cics:UOWid>
+</cics:context-info>
+
+<cics:payload-data>
+<data:payload xmlns:data="http://www.ibm.com/prod/cics/TST1">
+<data:EPDATA_UFWORD_LOW>0</data:EPDATA_UFWORD_LOW>
+<data:EPDATA_UFWORD_HIGH>99999999</data:EPDATA_UFWORD_HIGH>
+<data:EPDATA_SFWORD_LOW>-99999999</data:EPDATA_SFWORD_LOW>
+<data:EPDATA_SFWORD_HIGH>99999999</data:EPDATA_SFWORD_HIGH>
+<data:EPDATA_UHWORD_LOW>0</data:EPDATA_UHWORD_LOW>
+<data:EPDATA_UHWORD_HIGH>9999</data:EPDATA_UHWORD_HIGH>
+<data:EPDATA_SHWORD_LOW>-9999</data:EPDATA_SHWORD_LOW>
+<data:EPDATA_SHWORD_HIGH>9999</data:EPDATA_SHWORD_HIGH>
+<data:EPDATA_SHORT_HFP_LOW>-321.1233</data:EPDATA_SHORT_HFP_LOW>
+<data:EPDATA_SHORT_HFP_HIGH>321.1233</data:EPDATA_SHORT_HFP_HIGH>
+<data:EPDATA_LONG_HFP_LOW>-54321.12345</data:EPDATA_LONG_HFP_LOW>
+<data:EPDATA_LONG_HFP_HIGH>54321.12345</data:EPDATA_LONG_HFP_HIGH>
+<data:EPDATA_PACKED_DEC_LOW>-99999999</data:EPDATA_PACKED_DEC_LOW>
+<data:EPDATA_PACKED_DEC_HIGH>99999999</data:EPDATA_PACKED_DEC_HIGH>
+<data:EPDATA_ZONED_ST_LOW>-99999999</data:EPDATA_ZONED_ST_LOW>
+<data:EPDATA_ZONED_ST_HIGH>99999999</data:EPDATA_ZONED_ST_HIGH>
+<data:EPDATA_ZONED_STS_LOW>-99999999</data:EPDATA_ZONED_STS_LOW>
+<data:EPDATA_ZONED_STS_HIGH>99999999</data:EPDATA_ZONED_STS_HIGH>
+<data:EPDATA_ZONED_SL_LOW>-99999999</data:EPDATA_ZONED_SL_LOW>
+<data:EPDATA_ZONED_SL_HIGH>99999999</data:EPDATA_ZONED_SL_HIGH>
+<data:EPDATA_ZONED_SLS_LOW>-99999999</data:EPDATA_ZONED_SLS_LOW>
+<data:EPDATA_ZONED_SLS_HIGH>99999999</data:EPDATA_ZONED_SLS_HIGH>
+<data:EPDATA_CHAR>Example catpure type CHAR.&lt;&lt;&lt;&lt;&lt;&lt;</data:EPDATA_CHAR>
+<data:EPDATA_CHARZ>Example capture type CHARZ.</data:EPDATA_CHARZ>
+<data:EPDATA_HEX>0x000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F</data:EPDATA_HEX>
+<data:EPDATA_HEXZ>0x0102030405060708090A0B0C0D0E0F</data:EPDATA_HEXZ>
+<data:EPDATA_NATIONAL>UTF16BE examples:???????????????</data:EPDATA_NATIONAL>
+</data:payload>
+</cics:payload-data>
+</cics:event>
+</cbe:CommonBaseEvent>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <copyright                                                  -->
+<!-- 	Licensed Materials - Property of IBM                     -->
+<!-- 	SAMPLE                                                   -->
+<!-- 	(C) Copyright IBM Corp. 2016 All Rights Reserved.        -->
+<!-- 	US Government Users Restricted Rights - Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp. -->
+<!-- </copyright> -->
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	version="3.1">
+	<display-name>cicseventconsumer</display-name>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+	<servlet>
+		<description>IBM JAX-RS service</description>
+		<display-name>IBM JAX-RS service</display-name>
+		<servlet-name>IBMJAXRS</servlet-name>
+		<servlet-class>com.ibm.websphere.jaxrs.server.IBMRestServlet</servlet-class>
+		<init-param>
+			<param-name>javax.ws.rs.Application</param-name>
+			<param-value>com.ibm.cics.ca1y.web.EventConfig</param-value>
+		</init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>IBMJAXRS</servlet-name>
+		<url-pattern>*</url-pattern>
+	</servlet-mapping>
+</web-app>

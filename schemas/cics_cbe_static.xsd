@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!-- 
+<copyright 
+ notice="cics-lm-source-program" 
+ pids="5655-Y04" 
+ years="2009" 
+ crc="4040281523" > 
+  
+                      
+ Licensed Materials - Property of IBM 
+  
+ 5655-Y04 
+  
+ (C) Copyright IBM Corp. 2009 All Rights Reserved. 
+  
+ US Government Users Restricted Rights - Use, duplication or 
+ disclosure restricted by GSA ADP Schedule Contract with 
+ IBM Corp. 
+  
+ @{Ý**¨copyright.years=2009} 
+  
+              
+ </copyright> 
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:cics="http://www.ibm.com/xmlns/prod/cics/events/CBE"
+	targetNamespace="http://www.ibm.com/xmlns/prod/cics/events/CBE" elementFormDefault="qualified">
+	<!-- Root element for the schema -->
+	<xsd:element name="event">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="context-info" type="cics:contextInfoType" />
+				<xsd:element name="payload-data" type="cics:payloadDataType" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:complexType name="contextInfoType">
+		<xsd:sequence>
+		    <xsd:element name="eventname" type="xsd:string" />
+		    <xsd:element name="usertag" type="xsd:string" />
+		    <xsd:element name="networkapplid" type="xsd:string" />
+		    <xsd:element name="timestamp" type="xsd:dateTime" />
+		    <xsd:element name="bindingname" type="xsd:string" />
+		    <xsd:element name="capturespecname" type="xsd:string" />
+		    <xsd:element name="UOWid" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="payloadDataType">
+		<xsd:sequence>
+			<xsd:any minOccurs="0" maxOccurs="unbounded" processContents="skip" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+</xsd:schema>
