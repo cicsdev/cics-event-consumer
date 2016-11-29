@@ -2,28 +2,28 @@
 This is a Java EE 7 web application that _consumes_ events produced by the CICS TS event processing support as a result of a CICS application event, a CICS system event, or a CICS policy event action.
 
 Once the application is installed, it can be called:
-* by CICS directly as a [custom event processing adapter](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.eventprocessing.doc/concepts/dfhep_event_processing_adapters.html)
-* by the CICS [HTTP EP adapter](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.eventprocessing.doc/concepts/dfhep_event_processing_http_adapter.html) with event formatted using the [common base event REST format](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.eventprocessing.doc/reference/dfhep_event_processing_cberformat.html)
-* by your program using the [EXEC CICS LINK PROGRAM(CA1Y)](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.applicationprogramming.doc/commands/dfhp4_link.html) command
-* by your program using the [EXEC CICS START TRANSID(CA1Y) CHANNEL()](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.applicationprogramming.doc/commands/dfhp4_starttransidchannel.html) command
+* by CICS directly as a [custom event processing adapter](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.eventprocessing.doc/concepts/dfhep_event_processing_adapters.html).
+* by the CICS [HTTP EP adapter](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.eventprocessing.doc/concepts/dfhep_event_processing_http_adapter.html) with event formatted using the [common base event REST format](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.eventprocessing.doc/reference/dfhep_event_processing_cberformat.html).
+* by your program using the [EXEC CICS LINK PROGRAM(CA1Y)](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.applicationprogramming.doc/commands/dfhp4_link.html) command.
+* by your program using the [EXEC CICS START TRANSID(CA1Y) CHANNEL()](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.applicationprogramming.doc/commands/dfhp4_starttransidchannel.html) command.
 
 The received event can be formatted and:
-* sent as an email
-* sent an instant message on the Jabber network
-* stored in a zFS file, MVS file, or temporary storage queue
-* written out as a message to the MVS operator console
-* submitted as an MVS job
+* sent as an email.
+* sent an instant message on the Jabber network.
+* stored in a zFS file, MVS file, or temporary storage queue.
+* written out as a message to the MVS operator console.
+* submitted as an MVS job.
 
 The application was originally released as the [IBM CA1Y: Send email from CICS Transaction Server for z/OS](http://www-01.ibm.com/support/docview.wss?uid=swg24033197) and referred to here as CA1Y for short. 
 
 ## Requirements
-* CICS TS TS V5.3, or above
-* A configured CICS Liberty JVM server, as described in topic [Configuring a Liberty JVM server](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.java.doc/JVMserver/config_jvmserver_liberty.html) 
-* CICS Explorer SDK 5.3, or above
-* Access to the Maven Central Repository to resolve dependencies
+* CICS TS TS V5.3, or above.
+* A configured CICS Liberty JVM server, as described in topic [Configuring a Liberty JVM server](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.java.doc/JVMserver/config_jvmserver_liberty.html). 
+* CICS Explorer SDK 5.3, or above.
+* Access to the Maven Central Repository to resolve dependencies.
 
 ## Installation
-* Define, install and enable a CICS transaction with NAME(CA1Y),PROGRAM(CA1Y),TASKDATALOC(ANY)
+* Define, install and enable a CICS transaction with NAME(CA1Y),PROGRAM(CA1Y),TASKDATALOC(ANY).
 * Update the Liberty server configuration file server.xml to include the following features:
 
 ```xml
@@ -62,7 +62,7 @@ java.util.logging.SimpleFormatter.format=%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS %4$
 # Add the following line to the JVM server profile:
 -Djava.util.logging.config.file=/usr/lpp/ca1y/examples/logging.properties
 ```
-* Add the following to the JVM server profile 
+* Add the following to the JVM server profile.
 
 ```properties
 -Djava.util.logging.config.file=/u/cockerm/ca1y/examples/logging.properties
