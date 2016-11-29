@@ -1,14 +1,3 @@
-# IBM Health Center
--Xhealthcenter:port=27506  
--Dcom.ibm.java.diagnostics.healthcenter.agent.iiop.port=27507
-
-# Debugging properties
--Xdebug
--Xrunjdwp:transport=dt_socket,server=y,address=27508,suspend=n
-
-# CA1Y logging
--Djava.util.logging.config.file=/u/cockerm/ca1y/examples/logging.properties
-
 #######################################################################
 # JVM profile: DFHWLP                                                 #
 #                                                                     #
@@ -52,7 +41,7 @@ JAVA_HOME=/usr/lpp/java/J8.0_64
 #
 # Set the current working directory. If you do not specify this option, 
 # the current working directory defaults to /tmp.
-WORK_DIR=/u/cockerm/cicsts53/workdir
+WORK_DIR=.
 #
 #**********************************************************************
 #
@@ -129,7 +118,7 @@ WLP_INSTALL_DIR=&USSHOME;/wlp
 # to verify that the server has installed and started correctly.  The
 # server will only be updated with the value of this property
 # when com.ibm.cics.jvmserver.wlp.autoconfigure=true.
--Dcom.ibm.cics.jvmserver.wlp.defaultapp=true
+#-Dcom.ibm.cics.jvmserver.wlp.defaultapp=true
 #
 # If your Web application serves static resources (e.g. .jpg, .gif, 
 # .ico, .bmp, .css, etc) - using this property will ensure requests   

@@ -9,7 +9,7 @@
  *  restricted by GSA ADP Schedule Contract with IBM Corporation.
  */
 
-package com.ibm.cics.ca1y.experimental;
+package com.ibm.cics.ca1y;
 
 import java.util.Properties;
 import java.util.logging.Level;
@@ -23,9 +23,6 @@ import org.jivesoftware.smack.MessageListener;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Presence;
-
-import com.ibm.cics.ca1y.Emit;
-import com.ibm.cics.ca1y.Util;
 
 public class CICSXMPP {
 	

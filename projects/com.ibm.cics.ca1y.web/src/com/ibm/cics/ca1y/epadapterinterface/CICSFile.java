@@ -9,7 +9,7 @@
  *  restricted by GSA ADP Schedule Contract with IBM Corporation.
  */
 
-package com.ibm.cics.ca1y.experimental;
+package com.ibm.cics.ca1y.epadapterinterface;
 
 import com.ibm.cics.ca1y.Emit;
 import com.ibm.cics.ca1y.EmitProperties;
