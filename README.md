@@ -40,7 +40,7 @@ The application was originally released as the [IBM CA1Y: Send email from CICS T
 Alternatively you can export the `com.ibm.cics.ca1y.web` project as a WAR file and install it into the Liberty JVM server using an application entry in server.xml.
 
 ## Documentation
-For details on using the application to capture and process events see [ca1y.pdf](https://github.com/cicsdev/cics-event-consumer/blob/master/documentation/ca1y.pdf).
+For details on using the application to capture and process events see [ca1y.pdf](https://github.com/cicsdev/cics-event-consumer/blob/master/documentation/ca1y.pdf). Note Chapter 2 Installation is no longer relevant and should be ignored.
     
 ## Logging
 The application uses the standard Java logging framework (java.util.logging) to write messages. These can be directed to the JVM server standard error (STDERR) file as follows: 
