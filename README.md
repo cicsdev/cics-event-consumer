@@ -10,7 +10,7 @@ Once the application is installed, it can be called:
 The received event can be formatted and:
 * sent as an email using the [Simple Mail Transfer Protocol (SMTP)](https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol).
 * sent as an instant message using the [Extensible Messaging and Presence Protocol (XMPP)](https://en.wikipedia.org/wiki/XMPP).
-* stored in a zFS file, a MVS file
+* stored in a zFS file or an MVS file.
 * stored in a CICS temporary storage queue.
 * written out as a message to the MVS operator console.
 * submitted as an MVS job.
