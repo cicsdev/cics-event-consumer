@@ -37,11 +37,11 @@ To install or make changes to the application:
 ```
 * Clone this repository, or download the repository [cics-event-consumer-master.zip](https://github.com/cicsdev/cics-event-consumer/archive/master.zip) and expand it.
 * In CICS Explorer, select `File` > `Import...` > `Existing Projects into Workspace` > `Select root directory` > `Browse` and select the repository `projects` directory. Select all the projects, then `Copy projects into workspace`, then `Finish`.
-* If your JVM server resource name is not DFH$WLP, expand project com.ibm.cics.ca1y.web.cicsbundle, then edit com.ibm.cics.ca1y.web.warbundle, and update the value for jvmserver.
+* If your JVMSERVER resource name is not DFH$WLP, expand project com.ibm.cics.ca1y.web.cicsbundle, then edit com.ibm.cics.ca1y.web.warbundle, and update the value for jvmserver.
 * Export the `com.ibm.cics.ca1y.web.cicsbundle` CICS Bundle project to zFS using the wizard `Export Bundle Project to z/OS UNIX File System...` to a directory on zFS, eg. /usr/lpp/ca1y/com.ibm.cics.ca1y.web.cicsbundle_1.7.1
 * Define, install and enable CICS bundle with NAME(CA1Y), BUNDLEDIR(/usr/lpp/ca1y/com.ibm.cics.ca1y.web.cicsbundle_1.7.1).
 
-Alternatively you can export the `com.ibm.cics.ca1y.web` project as a WAR file and install it into the Liberty JVM server using an application entry in server.xml.
+Alternatively you can export the `com.ibm.cics.ca1y.web` project as a WAR file and install it into the Liberty JVM server using the dropins directory or an application entry in server.xml as described in topic [Deploying web applications directly to a Liberty JVM server](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.java.doc/JVMserver/create_libertyapp.html).
 
 ## Documentation
 For details on using the application to capture and process events see [ca1y.pdf](https://github.com/cicsdev/cics-event-consumer/blob/master/documentation/ca1y.pdf). Note Chapter 2 Installation is no longer relevant and should be ignored.
@@ -49,7 +49,7 @@ For details on using the application to capture and process events see [ca1y.pdf
 ## Logging
 The application uses the standard Java logging framework (java.util.logging) to write messages. These can be directed to the JVM server standard error (STDERR) file as follows: 
 
-* Disable the JVM server.
+* Disable the JVMSERVER resource.
 * Create a logging.properties file on zFS to specify the logging parameters. For example create /usr/lpp/ca1y/examples/logging.properties containing the following:
 
 ```properties
@@ -66,10 +66,10 @@ java.util.logging.SimpleFormatter.format=%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS %4$
 # Add the following line to the JVM server profile:
 -Djava.util.logging.config.file=/usr/lpp/ca1y/examples/logging.properties
 ```
-* Add the following to the JVM server profile.
+* Add the following to the Liberty JVM server profile.
 
 ```properties
 -Djava.util.logging.config.file=/u/cockerm/ca1y/examples/logging.properties
 ```
 
-* Enable the JVM server.
+* Enable the JVMSERVER resource.
