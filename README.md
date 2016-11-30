@@ -8,9 +8,10 @@ Once the application is installed, it can be called:
 * by your program using the [EXEC CICS START TRANSID(CA1Y) CHANNEL()](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.applicationprogramming.doc/commands/dfhp4_starttransidchannel.html) command.
 
 The received event can be formatted and:
-* sent as an email.
+* sent as an email using the [Simple Mail Transfer Protocol (SMTP)](https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol).
 * sent as an instant message using the [Extensible Messaging and Presence Protocol (XMPP)](https://en.wikipedia.org/wiki/XMPP).
-* stored in a zFS file, MVS file, or temporary storage queue.
+* stored in a zFS file, a MVS file
+* stored in a CICS temporary storage queue.
 * written out as a message to the MVS operator console.
 * submitted as an MVS job.
 
@@ -22,7 +23,7 @@ To run the application:
 * A configured CICS Liberty JVM server, as described in topic [Configuring a Liberty JVM server](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.java.doc/JVMserver/config_jvmserver_liberty.html). 
 
 To install or make changes to the application:
-* [IBM CICS Explorer](https://developer.ibm.com/mainframe/products/downloads/eclipse-tools/) 5.3.0.8, or above with features IBM CICS SDK for Java, and IBM CICS SDK for Servlet and JSP support
+* [IBM CICS Explorer](https://developer.ibm.com/mainframe/products/downloads/eclipse-tools/) 5.3.0.8, or above with features IBM CICS SDK for Java, and IBM CICS SDK for Servlet and JSP support.
 * Access to the Maven Central Repository to resolve dependencies.
 
 ## Installation
@@ -66,7 +67,7 @@ java.util.logging.SimpleFormatter.format=%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS %4$
 # Add the following line to the JVM server profile:
 -Djava.util.logging.config.file=/usr/lpp/ca1y/examples/logging.properties
 ```
-* Add the following to the Liberty JVM server profile.
+* Add the following to the Liberty JVM server profile:
 
 ```properties
 -Djava.util.logging.config.file=/u/cockerm/ca1y/examples/logging.properties
