@@ -26,7 +26,7 @@ To install or make changes to the application:
 * Access to the Maven Central Repository to resolve dependencies.
 
 ## Installation
-* Define, install and enable a CICS transaction with NAME(CA1Y),PROGRAM(CA1Y),TASKDATALOC(ANY).
+* Define, install and enable a CICS transaction with NAME(CA1Y), PROGRAM(CA1Y), TASKDATALOC(ANY).
 * Update the Liberty server configuration file server.xml to include the following features:
 
 ```xml
@@ -37,8 +37,9 @@ To install or make changes to the application:
 ```
 * Clone this repository, or download the repository [cics-event-consumer-master.zip](https://github.com/cicsdev/cics-event-consumer/archive/master.zip) and expand it.
 * In CICS Explorer, select `File` > `Import...` > `Existing Projects into Workspace` > `Select root directory` > `Browse` and select the repository `projects` directory. Select all the projects, then `Copy projects into workspace`, then `Finish`.
+* If your JVM server resource name is not DFH$WLP, expand project com.ibm.cics.ca1y.web.cicsbundle, then edit com.ibm.cics.ca1y.web.warbundle, and update the value for jvmserver.
 * Export the `com.ibm.cics.ca1y.web.cicsbundle` CICS Bundle project to zFS using the wizard `Export Bundle Project to z/OS UNIX File System...` to a directory on zFS, eg. /usr/lpp/ca1y/com.ibm.cics.ca1y.web.cicsbundle_1.7.1
-* Define, install and enable CICS bundle with NAME(CA1Y),BUNDLEDIR(/usr/lpp/ca1y/com.ibm.cics.ca1y.web.cicsbundle_1.7.1).
+* Define, install and enable CICS bundle with NAME(CA1Y), BUNDLEDIR(/usr/lpp/ca1y/com.ibm.cics.ca1y.web.cicsbundle_1.7.1).
 
 Alternatively you can export the `com.ibm.cics.ca1y.web` project as a WAR file and install it into the Liberty JVM server using an application entry in server.xml.
 
