@@ -57,16 +57,13 @@ The application uses the standard Java logging framework (java.util.logging) to 
 # Logging levels
 java.util.logging.ConsoleHandler.level=ALL
 com.ibm.cics.ca1y.level=ALL
-
 # Logging handlers
 com.ibm.cics.ca1y.handlers=java.util.logging.ConsoleHandler
 com.ibm.cics.ca1y.useParentHandlers=false
 java.util.logging.ConsoleHandler.formatter=java.util.logging.SimpleFormatter
 java.util.logging.SimpleFormatter.format=%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS %4$s %2$s - %5$s %6$s%n
-
-# Add the following line to the JVM server profile:
--Djava.util.logging.config.file=/usr/lpp/ca1y/examples/logging.properties
 ```
+
 * Add the following to the Liberty JVM server profile:
 
 ```properties
