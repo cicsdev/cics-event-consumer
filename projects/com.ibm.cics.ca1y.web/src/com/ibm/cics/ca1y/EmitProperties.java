@@ -34,7 +34,7 @@ public class EmitProperties extends Properties {
 	 * Copyright statement to be included in the compiled class.
 	 */
 	static final String COPYRIGHT = "Licensed Materials - Property of IBM. "
-			+ "CICS SupportPac CA1Y (c) Copyright IBM Corporation 2012 - 2015. All Rights Reserved. "
+			+ "CICS SupportPac CA1Y (c) Copyright IBM Corporation 2012 - 2016. All Rights Reserved. "
 			+ "US Government Users Restricted Rights - Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corporation";
 
 	/**
@@ -50,12 +50,12 @@ public class EmitProperties extends Properties {
 	/**
 	 * Vector to store names of event business information items. Need to
 	 * retrieve in order of insertion. Duplicate keys are not supported by
-	 * LinkedHasMap.
+	 * LinkedHashMap.
 	 */
 	private final LinkedHashMap<String, Integer> businessInformationItems = new LinkedHashMap<String, Integer>();
 
 	/**
-	 * Hastable to store and associate a property key with an attachment.
+	 * Hashtable to store and associate a property key with an attachment.
 	 */
 	private final Hashtable<String, byte[]> attachments = new Hashtable<String, byte[]>();
 
@@ -121,14 +121,15 @@ public class EmitProperties extends Properties {
 	}
 
 	/**
-	 * Get the event business information items and values.
+	 * Get the event business information items and values where the item name matches the provided regular expression.
 	 * 
-	 * @param none
-	 * @return Enumeration<String>
+	 * @param expression
+	 *            - regular expression
+	 * @return Linked hash map of items
 	 */
-	public Map<String, Object> getBusinessInformationItemsValues() {
+	public Map<String, Object> getBusinessInformationItemsValues(String expression) {
 		LinkedHashMap<String, Object> lhm = new LinkedHashMap<String, Object>();
-
+		
 		for (Map.Entry<String, Integer> entry : getBusinessInformationItems().entrySet()) {
 			String key = entry.getKey();
 
@@ -142,7 +143,10 @@ public class EmitProperties extends Properties {
 				value = getProperty(key);
 			}
 
-			lhm.put(name, value);
+			// Only add the item if the name matches the provided regular expression
+			if ((expression == null) || (name.matches(expression))) {
+				lhm.put(name, value);
+			}
 		}
 
 		return lhm;

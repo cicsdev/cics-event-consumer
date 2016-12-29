@@ -3,5 +3,5 @@
     <meta_directives>
         <timestamp>2016-11-25T13:18:57.721Z</timestamp>
     </meta_directives>
-    <define name="com.ibm.cics.ca1y.web" type="http://www.ibm.com/xmlns/prod/cics/bundle/WARBUNDLE" path="com.ibm.cics.ca1y.web.warbundle"/>
+    <define name="com.ibm.cics.ca1y.ear" type="http://www.ibm.com/xmlns/prod/cics/bundle/EARBUNDLE" path="com.ibm.cics.ca1y.ear.earbundle"/>
 </manifest>

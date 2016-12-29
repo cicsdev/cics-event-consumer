@@ -99,15 +99,17 @@ public class Emit {
 	private static final String TOKEN_REGEX_DEFAULT = "\\{(.+?)\\}";
 
 	/**
-	 * Property to specify a file of additional properties to load.
+	 * Properties to specify a file of additional properties to load.
 	 */
 	private static final String IMPORT = "import";
+	public static final String CA1Y_IMPORT = "ca1y.import";
 
 	/**
-	 * Property to specify a file of additional properties to load that should
+	 * Properties to specify a file of additional properties to load that should
 	 * not be logged.
 	 */
 	public static final String IMPORT_PRIVATE = "import.private";
+	public static final String CA1Y_IMPORT_PRIVATE = "ca1y.import.private";
 
 	/**
 	 * Property to specify a CICS program to link to when an emission fails.
@@ -448,7 +450,30 @@ public class Emit {
 			// specified override
 			Pattern pattern = getPattern(props);
 
-			// Merge properties from the import location
+			// Merge properties from the JVM system property location
+			if (System.getProperties().containsKey(CA1Y_IMPORT)) {
+				if (logger.isLoggable(Level.FINE)) {
+					logger.fine(messages.getString("LoadingPropertiesFromImport") + " " + CA1Y_IMPORT);
+				}
+				
+				props.setProperty(CA1Y_IMPORT, System.getProperties().getProperty(CA1Y_IMPORT));
+				
+				resolveTokensInKey(CA1Y_IMPORT, pattern, props, cicsChannel, isStartedWithEPAdpter, false);
+				
+				if (!Util.loadProperties(props, props.getProperty(CA1Y_IMPORT))) {
+					logger.warning(Emit.messages.getString("InvalidImportProperties") + " " + CA1Y_IMPORT);
+				}
+
+				// Remove the IMPORT property otherwise it will go through
+				// unnecessary token processing
+				props.remove(CA1Y_IMPORT);
+				
+				// Re-evaluate token regex as the imported properties may have
+				// changed it
+				pattern = getPattern(props);
+			}
+
+			// Merge properties from the supplied property import
 			if (props.containsKey(IMPORT)) {
 				if (logger.isLoggable(Level.FINE)) {
 					logger.fine(messages.getString("LoadingPropertiesFromImport") + " " + IMPORT);
@@ -459,11 +484,11 @@ public class Emit {
 				if (!Util.loadProperties(props, props.getProperty(IMPORT))) {
 					logger.warning(Emit.messages.getString("InvalidImportProperties") + " " + IMPORT);
 				}
-
+				
 				// Remove the IMPORT property otherwise it will go through
 				// unnecessary token processing
 				props.remove(IMPORT);
-
+				
 				// Re-evaluate token regex as the imported properties may have
 				// changed it
 				pattern = getPattern(props);
@@ -646,6 +671,22 @@ public class Emit {
 			}
 		}
 
+		if (HTTP.validForEmission(props)) {
+			// Emit message to an HTTP server
+
+			if (props.isPropertyTrue(CA1Y_RECOVERABLE)) {
+				// Events required to be recoverable are not supported.
+				emissionSuccessful = false;
+				logger.warning(messages.getString("RecoverableEventNotSupportedHTTP"));
+
+			} else {
+				HTTP http = new HTTP(props);
+				
+				if (http.send() == false) {
+					emissionSuccessful = false;
+				}
+			}
+		}
 		if (CICSHTTP.validForEmission(props)) {
 			// Emit message to an HTTP server
 
@@ -1738,7 +1779,7 @@ public class Emit {
 		final String[] commonBaseEventRESTCommand = { "commonbaseeventrest" };
 		final String[] commonBaseEventCommandCommand = { "commonbaseevent" };
 		final String[] cicsFlattenedEventCommand = { "cicsflattenedevent" };
-		final String[] jsonCommand = { "json" };
+		final String[] jsonCommand = { "json", ":properties=" };
 		final String[] emitCommand = { "emit" };
 		final String[] linkCommand = { "link=" };
 		final String[] putcontainerCommand = { "putcontainer=" };
@@ -2138,7 +2179,8 @@ public class Emit {
 				} else if (token.startsWith(jsonCommand[0])) {
 					tokenReplaced = true;
 					matcher.appendReplacement(buffer, "");
-					buffer.append(getJson(props));
+					String options[] = Util.getOptions(token, jsonCommand);
+					buffer.append(getJson(props, options[1]));
 					reevaluateForTokens = true;
 
 					if (props.getPropertyMime(key) == null) {
@@ -2715,11 +2757,11 @@ public class Emit {
 	 *            - the properties table to use
 	 * @return a JSON document, or empty document if errors when generating JSON
 	 */
-	private static String getJson(EmitProperties props) {
+	private static String getJson(EmitProperties props, String propertiesExpression) {
 		final ObjectMapper mapper = new ObjectMapper();
 
 		try {
-			return mapper.writeValueAsString(props.getBusinessInformationItemsValues());
+			return mapper.writeValueAsString(props.getBusinessInformationItemsValues(propertiesExpression));
 
 		} catch (Exception e) {
 			e.printStackTrace();

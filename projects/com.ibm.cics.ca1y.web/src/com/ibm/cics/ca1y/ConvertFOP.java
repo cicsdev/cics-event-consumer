@@ -46,9 +46,8 @@ public class ConvertFOP {
 	 * Copyright statement to be included in the compiled class.
 	 */
 	static final String COPYRIGHT = "Licensed Materials - Property of IBM. "
-			+ "CICS SupportPac CA1Y (c) Copyright IBM Corporation 2012 - 2015. All Rights Reserved. "
+			+ "CICS SupportPac CA1Y (c) Copyright IBM Corporation 2012 - 2016. All Rights Reserved. "
 			+ "US Government Users Restricted Rights - Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corporation";
-	
 
 	// Lazily initialise this instance to avoid calling Apache FOP during class load as it may not be available.
 	private static FopFactory fopFactory;

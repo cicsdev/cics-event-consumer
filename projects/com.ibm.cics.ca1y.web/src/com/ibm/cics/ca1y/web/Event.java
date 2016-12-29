@@ -12,8 +12,8 @@
 package com.ibm.cics.ca1y.web;
 
 import java.io.StringReader;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,8 +22,11 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
@@ -32,6 +35,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.ibm.cics.ca1y.Emit;
+import com.ibm.cics.ca1y.EmitProperties;
 
 /**
  * Consumes CICS Common base event REST format
@@ -42,7 +46,7 @@ import com.ibm.cics.ca1y.Emit;
  * .doc/reference/dfhep_event_processing_cberformat.html
  * 
  * @author Mark Cocker <mark_cocker@uk.ibm.com>
- * @version 1.7
+ * @version 1.7.1
  * @since 2016-11-28
  */
 @Path("/cberest")
@@ -60,25 +64,26 @@ public class Event {
 	@POST
 	@Consumes({ MediaType.APPLICATION_XML, MediaType.TEXT_XML })
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response createEvent(String eventXML) {
+	public Response createEvent(String eventXML, @Context UriInfo info) {
 		
 		if (logger.isLoggable(Level.FINE)) {
 			logger.fine(messages.getString("EventReceived") + ": " + eventXML);
 		}
 		
 		if (eventXML == null) {
+			// Return error response to client as the event data is missing
 			return Response.status(Response.Status.NO_CONTENT).build();
 		}
 		
 		// Whether event was successfully processed
 		boolean emitEvent = false;
 
-		// JAXB generated class for parsed event
+		// Properties for event extracted from received XML
+		EmitProperties props = new EmitProperties();
+		
+		// JAXB generated class is used to hold the parsed XML data
 		com.ibm.xmlns.prod.cics.events.cbe.Event event = null;
 
-		// Properties for event extracted from received XML
-		Properties props = new Properties();
-		
 		try {
 			/*
 			 * The com.ibm.xmlns.prod.cics.events.cbe.Event.class was generated from the JDK provided JAXB command line utility xjc
@@ -94,19 +99,35 @@ public class Event {
 			if (logger.isLoggable(Level.FINE)) {
 				logger.fine(messages.getString("EventFailedXMLParsing") + ": " + e);
 			}
+			event = null;
 		}
-
+		
 		// Only process event if all context-info and pay load data is present
 		if ((event != null) && (event.getContextInfo() != null)	&& (event.getPayloadData() != null) && (event.getContextInfo().getTimestamp() != null)) {
+
+			// Place each query parameter name and and value into the properties
+			MultivaluedMap<String, String> queryParameters = info.getQueryParameters();
+			if (queryParameters != null && queryParameters.size() > 0) {
+				Iterator<String> iterator = queryParameters.keySet().iterator();
+				
+				while (iterator.hasNext()) {
+					String key = iterator.next();
+					
+					List<String> list = queryParameters.get(key);
+					for (String value : list) {
+						props.setProperty(key, value);
+					}
+				}
+			}
 			
 			// Add each context-info element as an event property
-			props.put("eventname", event.getContextInfo().getEventname());
-			props.put("usertag", event.getContextInfo().getUsertag());
-			props.put("networkapplid", event.getContextInfo().getNetworkapplid());
-			props.put("bindingname", event.getContextInfo().getBindingname());
-			props.put("capturespecname", event.getContextInfo().getCapturespecname());
-			props.put("UOWid", event.getContextInfo().getUOWid());
-			props.put("timestamp", event.getContextInfo().getTimestamp().toString());
+			props.setProperty("eventname", event.getContextInfo().getEventname());
+			props.setProperty("usertag", event.getContextInfo().getUsertag());
+			props.setProperty("networkapplid", event.getContextInfo().getNetworkapplid());
+			props.setProperty("bindingname", event.getContextInfo().getBindingname());
+			props.setProperty("capturespecname", event.getContextInfo().getCapturespecname());
+			props.setProperty("uowid", event.getContextInfo().getUOWid());
+			props.setProperty("timestamp", event.getContextInfo().getTimestamp().toString());
 			
 			// There can be 0-n elements of pay load data
 			List<Element> payloadData = event.getPayloadData().getAny();
@@ -123,7 +144,11 @@ public class Event {
 						// CICS does not allow the . character for the name of business information items.
 						// As CA1Y requires some property names to have a . in them, such as mail.content,
 						// replace double underscores with .
-						props.put(node.getLocalName().replaceAll("__", "."), node.getTextContent());
+						String key = node.getLocalName().replaceAll("__", ".");
+						props.setProperty(key, node.getTextContent());
+						
+						// Mark property as a business information item
+						props.putBusinessInformationItem(key, node.getTextContent().length());
 					}
 				}
 			}
@@ -132,7 +157,7 @@ public class Event {
 				logger.fine(messages.getString("AboutToProcessEvent") + ": " + props);
 			}
 
-			emitEvent = Emit.emit(props);
+			emitEvent = Emit.emit(props, null, false);
 		}
 		
 		if (logger.isLoggable(Level.FINE)) {

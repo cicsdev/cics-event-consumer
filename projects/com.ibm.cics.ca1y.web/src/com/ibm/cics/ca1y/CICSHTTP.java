@@ -36,7 +36,7 @@ public class CICSHTTP implements EmitAdapter {
 	 * Copyright statement to be included in the compiled class.
 	 */
 	static final String COPYRIGHT = "Licensed Materials - Property of IBM. "
-			+ "CICS SupportPac CA1Y (c) Copyright IBM Corporation 2012 - 2015. All Rights Reserved. "
+			+ "CICS SupportPac CA1Y (c) Copyright IBM Corporation 2012 - 2016. All Rights Reserved. "
 			+ "US Government Users Restricted Rights - Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corporation";
 
 	/**
@@ -58,7 +58,7 @@ public class CICSHTTP implements EmitAdapter {
 	/**
 	 * Property to specify the HTTP entity body content.
 	 */
-	private static final String HTTP_CONTENT = "http.content";
+	private static final String CICS_HTTP_CONTENT = "http.content";
 
 	/**
 	 * Property to specify the HTTP content characterset
@@ -88,7 +88,7 @@ public class CICSHTTP implements EmitAdapter {
 	private static final String HTTP_METHOD_DEFAULT = "PUT";
 
 	/**
-	 * The default MIME type to use for the mail content.
+	 * The default MIME type to use for the HTTP content.
 	 */
 	private static final String HTTP_CONTENT_MIME_TEXT_DEFAULT = "text/plain";
 
@@ -101,8 +101,8 @@ public class CICSHTTP implements EmitAdapter {
 	public boolean send() {
 		HttpSession httpSession;
 
-		if (props.getPropertyMime(HTTP_CONTENT) == null) {
-			props.setPropertyMime(HTTP_CONTENT, HTTP_CONTENT_MIME_TEXT_DEFAULT);
+		if (props.getPropertyMime(CICS_HTTP_CONTENT) == null) {
+			props.setPropertyMime(CICS_HTTP_CONTENT, HTTP_CONTENT_MIME_TEXT_DEFAULT);
 		}
 
 		HttpClientRequest httpClientRequest = new HttpClientRequest(props.getProperty(HTTP_METHOD, HTTP_METHOD_DEFAULT));
@@ -188,7 +188,7 @@ public class CICSHTTP implements EmitAdapter {
 		
 		// Set the HTTP header character set
 		String characterSet = null;
-		if ((props.containsKey(HTTP_CHARACTERSET) == false) && (props.getPropertyAttachment(HTTP_CONTENT) == null)) {
+		if ((props.containsKey(HTTP_CHARACTERSET) == false) && (props.getPropertyAttachment(CICS_HTTP_CONTENT) == null)) {
 			// If there is no character set passed in, and the content to send is not an attachment, use default
 			characterSet = HTTP_CHARACTERSET_DEFAULT;
 			
@@ -197,7 +197,7 @@ public class CICSHTTP implements EmitAdapter {
 			characterSet = props.getProperty(HTTP_CHARACTERSET);
 		}
 		
-		String contentType = props.getPropertyMime(HTTP_CONTENT, HTTP_CONTENT_MIME_TEXT_DEFAULT);
+		String contentType = props.getPropertyMime(CICS_HTTP_CONTENT, HTTP_CONTENT_MIME_TEXT_DEFAULT);
 		
 		if (characterSet != null) {
 			// Append the character set to the end of the ContentType
@@ -223,25 +223,21 @@ public class CICSHTTP implements EmitAdapter {
 			}
 
 			try {
-				/*
-				 * Should use httpSession.open(false) but CICS Explorer does not include
-				 * the correct JCICS library. See RRC defect 78840
-				 */
-				httpSession.open();
+				httpSession.open(false);
 
 				httpClientRequest.writeHeader(httpSession, "Content-Type", contentType);
 				httpClientRequest.setNoClientConvert();
 				
-				if (props.getPropertyAttachment(HTTP_CONTENT) == null) {
+				if (props.getPropertyAttachment(CICS_HTTP_CONTENT) == null) {
 					
 					if (characterSet != null) {
-						httpClientRequest.sendFrom(httpSession, (props.getProperty(HTTP_CONTENT)).getBytes(characterSet));
+						httpClientRequest.sendFrom(httpSession, (props.getProperty(CICS_HTTP_CONTENT)).getBytes(characterSet));
 					} else {
-						httpClientRequest.sendFrom(httpSession, props.getProperty(HTTP_CONTENT));
+						httpClientRequest.sendFrom(httpSession, props.getProperty(CICS_HTTP_CONTENT));
 					}
 
 				} else {
-					httpClientRequest.sendFrom(httpSession, props.getPropertyAttachment(HTTP_CONTENT));
+					httpClientRequest.sendFrom(httpSession, props.getPropertyAttachment(CICS_HTTP_CONTENT));
 				}
 
 				HttpClientResponse httpClientResponse = new HttpClientResponse();
@@ -340,7 +336,7 @@ public class CICSHTTP implements EmitAdapter {
 	 * @return true if the entries in EmitProperties are valid for emission. 
 	 */
 	public static boolean validForEmission(EmitProperties props) {
-		return props.containsKey(CICSHTTP.HTTP_CONTENT);
+		return props.containsKey(CICSHTTP.CICS_HTTP_CONTENT);
 	}
 	
 	/**
@@ -361,8 +357,8 @@ public class CICSHTTP implements EmitAdapter {
 			sb.append(",").append(HTTP_URI).append(":").append(props.getProperty(HTTP_URI));
 		}
 
-		if (props.getPropertyMime(HTTP_CONTENT) != null) {
-			sb.append(",").append("MIME:").append(props.getPropertyMime(HTTP_CONTENT));
+		if (props.getPropertyMime(CICS_HTTP_CONTENT) != null) {
+			sb.append(",").append("MIME:").append(props.getPropertyMime(CICS_HTTP_CONTENT));
 		}
 
 		if (props.containsKey(HTTP_CERTIFICATE)) {

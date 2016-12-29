@@ -22,6 +22,7 @@ public class EventConfig extends Application {
     {
         Set<Class<?>> classes = new HashSet<Class<?>>();
         classes.add(com.ibm.cics.ca1y.web.Event.class);
+        classes.add(com.ibm.cics.ca1y.web.Log.class);
         return classes;
     }
 }
