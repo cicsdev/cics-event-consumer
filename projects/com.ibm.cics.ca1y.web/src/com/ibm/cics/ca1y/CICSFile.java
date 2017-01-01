@@ -9,10 +9,8 @@
  *  restricted by GSA ADP Schedule Contract with IBM Corporation.
  */
 
-package com.ibm.cics.ca1y.epadapterinterface;
+package com.ibm.cics.ca1y;
 
-import com.ibm.cics.ca1y.Emit;
-import com.ibm.cics.ca1y.EmitProperties;
 import com.ibm.cics.server.*;
 
 import java.util.logging.Level;
