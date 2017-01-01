@@ -335,7 +335,7 @@ public class Email implements EmitAdapter {
 	 * @return true if the entries in EmitProperties are valid for emission. 
 	 */
 	public static boolean validForEmission(EmitProperties props) {
-		return props.containsKey(Email.MAIL_TO) || props.containsKey(Email.MAIL_CC) || props.containsKey(Email.MAIL_BCC);
+		return (props.containsKey(Email.MAIL_TO) || props.containsKey(Email.MAIL_CC) || props.containsKey(Email.MAIL_BCC));
 	}
 	
 	/**
