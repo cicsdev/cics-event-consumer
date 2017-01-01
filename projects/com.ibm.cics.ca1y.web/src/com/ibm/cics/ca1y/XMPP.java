@@ -119,7 +119,7 @@ public class XMPP {
 				}
 
 				if (logger.isLoggable(Level.INFO)) {
-					logger.info(Emit.messages.getString("XMPP_LOG_MESSAGES_SUCCESS") + " - " + getMessageSummary());
+					logger.info(Emit.messages.getString("XMPPLogMessageSuccess") + " - " + getMessageSummary());
 				}
 
 				return true;
@@ -128,7 +128,7 @@ public class XMPP {
 				e.printStackTrace();
 				
 				if (logger.isLoggable(Level.INFO)) {
-					logger.info(Emit.messages.getString("XMPP_LOG_MESSAGES_FAIL") + " - " + getMessageSummary());
+					logger.info(Emit.messages.getString("XMPPLogMessageFail") + " - " + getMessageSummary());
 				}
 			}
 		}
