@@ -15,12 +15,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Enumeration;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.client.Invocation;
+import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
 
@@ -56,6 +57,11 @@ public class HTTP implements EmitAdapter {
 	 * Property to specify the HTTP entity body content.
 	 */
 	private static final String HTTP_CONTENT = "java.http.content";
+	
+	/**
+	 * The prefix for properties to specify headers to be added to the HTTP request.
+	 */
+	private static final String HTTP_HEADER_PREFIX= "java.http.header.";
 
 	/**
 	 * Property to specify the HTTP method.
@@ -82,58 +88,63 @@ public class HTTP implements EmitAdapter {
 		// Prepare HTTP request
 		Client client = ClientBuilder.newClient();
 		WebTarget target = client.target(props.getProperty(HTTP_URI));
-		target.request(props.getPropertyMime(HTTP_CONTENT));
-		Invocation.Builder builder = target.request();
+		Builder builder = target.request(props.getPropertyMime(HTTP_CONTENT));
 		
-		// Add all properties that start with the prefix as HTTP headers to the request
-		String prefix = "java.http.header.";
-
-		Enumeration<?> e = props.propertyNames();
-		while (e.hasMoreElements()) {
-			String key = (String) e.nextElement();
+		// Add all properties that start with the prefix as HTTP headers to the HTTP request
+		Enumeration<?> list = props.propertyNames();
+		while (list.hasMoreElements()) {
+			String key = (String) list.nextElement();
 			
-			if (key.startsWith(prefix)) {
-				builder.header(key.substring(prefix.length()), props.getProperty(key));
+			if (key.startsWith(HTTP_HEADER_PREFIX)) {
+				builder.header(key.substring(HTTP_HEADER_PREFIX.length()), props.getProperty(key));
 			}
 		}
 
+		// Prepare the HTTP content in an entity
 		Entity<String> entity = Entity.entity(props.getProperty(HTTP_CONTENT), props.getPropertyMime(HTTP_CONTENT));
 		
+		// Make the HTTP call
 		Response response = builder.method(props.getProperty(HTTP_METHOD, HTTP_METHOD_DEFAULT), entity);
 		
-		String httpBody = "";
-		
+		// Get the HTTP response body
+		String responseHttpBody = "";
 		try {
-			httpBody = IOUtils.toString((InputStream) response.getEntity(), StandardCharsets.UTF_8);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			responseHttpBody = IOUtils.toString((InputStream) response.getEntity(), StandardCharsets.UTF_8);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-
-		logger.info(getMessageSummary() + ",HTTP response status:" + response.getStatus() + ",HTTP response body:" + httpBody);
 
 		// HTTP request status suggests it was processed successfully
 		if ((response.getStatus() == 200) || (response.getStatus() == 201) || (response.getStatus() == 202)) { 
+			
+			if (logger.isLoggable(Level.INFO)) {
+				logger.info(Emit.messages.getString("HTTPLogSuccess") + " - " + getMessageSummary() + ",HTTP response status:" + response.getStatus() + ",HTTP response body:" + responseHttpBody);
+			}
+
 			return true;
 		}
-		
+
+		if (logger.isLoggable(Level.INFO)) {
+			logger.info(Emit.messages.getString("HTTPLogFail") + " - " + getMessageSummary() + ",HTTP response status:" + response.getStatus() + ",HTTP response body:" + responseHttpBody);
+		}
+
 		// HTTP request status suggests it failed to be processed
 		return false;
 	}
 
 	/**
-	 * Return true if we should attempt to emit 
+	 * Return true if we should attempt to emit using this class.
 	 * 
-	 * @return true if the entries in EmitProperties are valid for emission. 
+	 * @return boolean 
 	 */
 	public static boolean validForEmission(EmitProperties props) {
-		return props.containsKey(HTTP.HTTP_CONTENT);
+		return (props.containsKey(HTTP.HTTP_CONTENT) && props.containsKey(HTTP.HTTP_URI));
 	}
 	
 	/**
-	 * Return a short summary of the contents to be written to the queue.
+	 * Return a short summary of the contents to be sent to the HTTP server.
 	 * 
-	 * @return short summary of the contents to be written to the queue.
+	 * @return String
 	 */
 	private String getMessageSummary() {
 		StringBuilder sb = new StringBuilder();
