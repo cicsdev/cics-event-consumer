@@ -3,7 +3,7 @@
  * 
  * CICS SupportPac CA1Y - CICS® TS support for sending emails
  * 
- * © Copyright IBM Corporation 2012 - 2016. All Rights Reserved.
+ * © Copyright IBM Corporation 2012 - 2017. All Rights Reserved.
  * 
  *  US Government Users Restricted Rights - Use, duplication, or disclosure
  *  restricted by GSA ADP Schedule Contract with IBM Corporation.
@@ -40,13 +40,13 @@ import com.ibm.cics.ca1y.EmitProperties;
 /**
  * Consumes CICS Common base event REST format
  * 
- * For details of this format see the CICS Knoweldge Center
+ * For details of this format see the CICS Knowledge Center
  * http://www.ibm.com/support
  * /knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.eventprocessing
  * .doc/reference/dfhep_event_processing_cberformat.html
  * 
  * @author Mark Cocker <mark_cocker@uk.ibm.com>
- * @version 1.7.1
+ * @version 1.8.0
  * @since 2016-11-28
  */
 @Path("/cberest")
@@ -87,7 +87,7 @@ public class Event {
 		try {
 			/*
 			 * The com.ibm.xmlns.prod.cics.events.cbe.Event.class was generated from the JDK provided JAXB command line utility xjc
-			 * with the following syntax:
+			 * as follows:
 			 * 
 			 * ./xjc -target 2.1 -d ~/Desktop/src ~/CICSExplorerSDK.data/com.ibm.cics.ca1y.web/src/com/ibm/cics/ca1y/web/cics_cbe_static.xsd
 			 */
@@ -133,7 +133,7 @@ public class Event {
 			List<Element> payloadData = event.getPayloadData().getAny();
 			
 			if (payloadData.get(0) != null) {
-				// Add each pay load data element as an event property
+				// Add each pay load data element as a property
 				NodeList payload = payloadData.get(0).getChildNodes();
 				
 				for (int i = 0; i < payload.getLength(); i++) {
@@ -154,9 +154,10 @@ public class Event {
 			}
 			
 			if (logger.isLoggable(Level.FINE)) {
-				logger.fine(messages.getString("AboutToProcessEvent") + ": " + props);
+				logger.fine(messages.getString("EventAboutToProcessEvent") + ": " + props);
 			}
-
+			
+			// Emit the event
 			emitEvent = Emit.emit(props, null, false);
 		}
 		
@@ -166,8 +167,8 @@ public class Event {
 
 		if (emitEvent) {
 			return Response.status(Response.Status.OK).build();
-		} else {
-			return Response.status(Response.Status.BAD_REQUEST).build();
 		}
+			
+		return Response.status(Response.Status.BAD_REQUEST).build();
 	}
 }

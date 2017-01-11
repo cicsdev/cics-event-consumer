@@ -10,7 +10,7 @@
 			<arguments>
 				<dictionary>
 					<key>bundleID</key>
-					<value>com.ibm.cics.ca1y.web.cicsbundle</value>
+					<value>com.ibm.cics.ca1y.web.cicsbundle.mark</value>
 				</dictionary>
 				<dictionary>
 					<key>majorVersion</key>
@@ -18,11 +18,11 @@
 				</dictionary>
 				<dictionary>
 					<key>microVersion</key>
-					<value>1</value>
+					<value>0</value>
 				</dictionary>
 				<dictionary>
 					<key>minorVersion</key>
-					<value>7</value>
+					<value>8</value>
 				</dictionary>
 			</arguments>
 		</buildCommand>

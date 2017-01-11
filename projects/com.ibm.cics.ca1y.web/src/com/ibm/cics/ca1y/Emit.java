@@ -3,7 +3,7 @@
  * 
  * CICS SupportPac CA1Y - CICS® TS support for sending emails
  * 
- * © Copyright IBM Corporation 2012 - 2016. All Rights Reserved.
+ * © Copyright IBM Corporation 2012 - 2017. All Rights Reserved.
  * 
  *  US Government Users Restricted Rights - Use, duplication, or disclosure
  *  restricted by GSA ADP Schedule Contract with IBM Corporation.
@@ -671,7 +671,7 @@ public class Emit {
 			}
 		}
 
-		if (HTTP.validForEmission(props)) {
+		if (JavaHTTP.validForEmission(props)) {
 			// Emit message to an HTTP server
 
 			if (props.isPropertyTrue(CA1Y_RECOVERABLE)) {
@@ -680,7 +680,7 @@ public class Emit {
 				logger.warning(messages.getString("RecoverableEventNotSupportedHTTP"));
 
 			} else {
-				HTTP http = new HTTP(props);
+				JavaHTTP http = new JavaHTTP(props);
 				
 				if (http.send() == false) {
 					emissionSuccessful = false;

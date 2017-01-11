@@ -3,7 +3,7 @@
  * 
  * CICS SupportPac CA1Y - CICS® TS support for sending emails
  * 
- * © Copyright IBM Corporation 2012 - 2016. All Rights Reserved.
+ * © Copyright IBM Corporation 2012 - 2017. All Rights Reserved.
  * 
  *  US Government Users Restricted Rights - Use, duplication, or disclosure
  *  restricted by GSA ADP Schedule Contract with IBM Corporation.
@@ -72,7 +72,7 @@ public class CICSHTTP implements EmitAdapter {
 	private static final String HTTP_CERTIFICATE = "http.certificate";
 
 	/**
-	 * Property to specify the HTTP entity body content.
+	 * Property to specify how many times to retry the HTTP request.
 	 */
 	private static final String HTTP_RETRY = "http.retry";
 	private static final int HTTP_RETRY_DEFAULT = 0;
@@ -208,8 +208,7 @@ public class CICSHTTP implements EmitAdapter {
 		String statusText = "";
 		long retryDelay;
 
-		retry++;
-		while (retry > 0) {
+		while (retry >= 0) {
 			retry--;
 
 			retryDelay = HTTP_RETRY_DELAY_DEFAULT;

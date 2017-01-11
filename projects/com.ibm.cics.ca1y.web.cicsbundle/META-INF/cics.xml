@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<manifest xmlns="http://www.ibm.com/xmlns/prod/cics/bundle" id="com.ibm.cics.ca1y.web.cicsbundle" bundleMajorVer="1" bundleMinorVer="7" bundleMicroVer="1" bundleVersion="1" bundleRelease="0" build="IntB-201511072132">
+<manifest xmlns="http://www.ibm.com/xmlns/prod/cics/bundle" id="com.ibm.cics.ca1y.web.cicsbundle" bundleMajorVer="1" bundleMinorVer="8" bundleMicroVer="0" bundleVersion="1" bundleRelease="0" build="IntB-201511072132">
     <meta_directives>
         <timestamp>2016-11-25T13:18:57.721Z</timestamp>
     </meta_directives>
-    <define name="com.ibm.cics.ca1y.ear" type="http://www.ibm.com/xmlns/prod/cics/bundle/EARBUNDLE" path="com.ibm.cics.ca1y.ear.earbundle"/>
+    <define name="com.ibm.cics.ca1y.web" type="http://www.ibm.com/xmlns/prod/cics/bundle/WARBUNDLE" path="com.ibm.cics.ca1y.web.warbundle"/>
 </manifest>
