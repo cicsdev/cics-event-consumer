@@ -105,8 +105,7 @@ public class Emit {
 	public static final String CA1Y_IMPORT = "ca1y.import";
 
 	/**
-	 * Properties to specify a file of additional properties to load that should
-	 * not be logged.
+	 * Properties to specify a file of additional properties to load that should not be logged.
 	 */
 	public static final String IMPORT_PRIVATE = "import.private";
 	public static final String CA1Y_IMPORT_PRIVATE = "ca1y.import.private";
@@ -117,14 +116,12 @@ public class Emit {
 	public static final String ONFAILURE = "onfailure";
 
 	/**
-	 * Assume the DFHEP.ADAPTERPARM container is available on the CICS event
-	 * processing custom EP Adapter interface.
+	 * Assume the DFHEP.ADAPTERPARM container is available on the CICS event processing custom EP Adapter interface.
 	 */
 	private static boolean dfhepAdaptparm = true;
 
 	/**
-	 * Version of the DFHEP.CONTEXT container provided on the CICS event
-	 * processing custom EP Adapter interface.
+	 * Version of the DFHEP.CONTEXT container provided on the CICS event processing custom EP Adapter interface.
 	 */
 	private static int epcxVersion;
 
@@ -166,12 +163,10 @@ public class Emit {
 	/*
 	 * CICS region local CCSID, or use file.encoding if not present
 	 */
-	private static String LOCAL_CCSID = System.getProperty("com.ibm.cics.jvmserver.local.ccsid",
-			System.getProperty("file.encoding"));
+	private static String LOCAL_CCSID = System.getProperty("com.ibm.cics.jvmserver.local.ccsid", System.getProperty("file.encoding"));
 
 	/*
-	 * Property to set if the event adapter is required to only use recoverable
-	 * emission methods
+	 * Property to set if the event adapter is required to only use recoverable emission methods
 	 */
 	private static final String CA1Y_RECOVERABLE = "CA1YRecoverable";
 
@@ -197,15 +192,12 @@ public class Emit {
 	public static ResourceBundle messages = ResourceBundle.getBundle("com/ibm/cics/ca1y/messages");
 
 	/**
-	 * Format a request from the JVM standard in and command line arguments. Each
-	 * line in standard in, or argument on the command line should follow the
-	 * conventions required to be loaded by the Java Properties class, eg.
-	 * name=value
+	 * Format a request from the JVM standard in and command line arguments. Each line in standard in, or argument on
+	 * the command line should follow the conventions required to be loaded by the Java Properties class, eg. name=value
 	 * 
 	 * @param args
 	 *            - zero or more arguments specified on the command line
-	 * @return exit code - 0 if successfull, non-zero if there was at least one
-	 *         problem actioning the request
+	 * @return exit code - 0 if successfull, non-zero if there was at least one problem actioning the request
 	 */
 	public static void main(String[] args) {
 		if (logger.isLoggable(Level.FINE)) {
@@ -231,9 +223,8 @@ public class Emit {
 	 * Format a request from Java Properties.
 	 * 
 	 * @param props
-	 *			- properties to use as parameters.
-	 * @return boolean
-	 *         	- true if the emission was successful.
+	 *            - properties to use as parameters.
+	 * @return boolean - true if the emission was successful.
 	 */
 	public static boolean emit(Properties props) {
 		if (logger.isLoggable(Level.FINE)) {
@@ -253,42 +244,35 @@ public class Emit {
 	}
 
 	/**
-	 * Format a request from a CICS event, channel, commarea, or start data and
-	 * emit it.
+	 * Format a request from a CICS event, channel, commarea, or start data and emit it.
 	 * 
 	 * Can be called as a CICS custom event adapter or as a CICS program.
 	 * 
-	 * If called with a CICS channel where the channel name begins with
-	 * 'DFHEP.' or 'DFHMP.' it is assumed to be a custom event adapter and as
-	 * such the parameters are expected to be provided in containers DFHEP.ADAPTER,
+	 * If called with a CICS channel where the channel name begins with 'DFHEP.' or 'DFHMP.' it is assumed to be a
+	 * custom event adapter and as such the parameters are expected to be provided in containers DFHEP.ADAPTER,
 	 * DFHEP_DESCRIPTOR, DFHEP_CONTEXT, and DFHEP_ADAPTPARM.
 	 * 
-	 * Otherwise parameters are expected to be in a CICS commarea. or CICS start data,
-	 * or a CICS container named CA1Y.
+	 * Otherwise parameters are expected to be in a CICS commarea. or CICS start data, or a CICS container named CA1Y.
 	 * 
 	 * @param commAreaHolder
-	 *             - the CICS commarea to use as parameters. 
-	 * @return void
-	 *             - required to be void by CICS.
+	 *            - the CICS commarea to use as parameters.
+	 * @return void - required to be void by CICS.
 	 */
 	@CICSProgram("CA1Y")
 	public static void main() {
-		main((CommAreaHolder)null);
+		main((CommAreaHolder) null);
 	}
-	
+
 	public static void main(CommAreaHolder commAreaHolder) {
 		if (logger.isLoggable(Level.FINE)) {
-			logger.fine(messages.getString("EmitStart") + " "
-					+ messages.getString("Name") + " "
-					+ messages.getString("Version") + " "
+			logger.fine(messages.getString("EmitStart") + " " + messages.getString("Name") + " " + messages.getString("Version") + " "
 					+ messages.getString("Copyright"));
 		}
 
 		Channel channel = Task.getTask().getCurrentChannel();
 		if (channel == null) {
 			try {
-				// Create channel in case it is needed later for linking to
-				// other CICS programs
+				// Create channel in case it is needed later for linking to other CICS programs
 				channel = Task.getTask().createChannel(CA1Y_CHANNEL);
 
 			} catch (ChannelErrorException e) {
@@ -312,7 +296,8 @@ public class Emit {
 		if ((channel.getName().startsWith("DFHEP.")) || (channel.getName().startsWith("DFHMP."))) {
 			// Configuration is passed as an event adapter container.
 			//
-			// A CICS event from an event binding is passed in a channel name starting with 'DFHEP.'.
+			// A CICS event from an event binding is passed in a channel name
+			// starting with 'DFHEP.'.
 			// A CICS event from a policy is passed in a channel name starting with 'DFHMP.'.
 
 			// Avoid having to make this test again by keeping a cache
@@ -336,7 +321,7 @@ public class Emit {
 			addRetrieveData(props);
 
 		} else {
-			// Require that configuration is passed in a CICS container named CA1Y
+			// Configuration is passed in a CICS container named CA1Y
 			isStartedWithCA1YContainer = true;
 
 			if (addContainerCA1Y(props, channel) == false) {
@@ -357,18 +342,15 @@ public class Emit {
 		// Create a response container for each property that needs to be returned
 		for (Map.Entry<String, String> entry : props.getReturnContainers().entrySet()) {
 			if (logger.isLoggable(Level.FINE)) {
-				logger.fine(messages.getString("CreateResponseContainer") + " "
-						+ EmitProperties.getPropertySummary(props, entry.getKey()));
+				logger.fine(messages.getString("CreateResponseContainer") + " " + EmitProperties.getPropertySummary(props, entry.getKey()));
 			}
 
 			try {
 				Container container = channel.createContainer(entry.getValue());
 
 				if (props.getPropertyAttachment(entry.getKey()) == null) {
-					// Property does not have an attachment so create a container of type CHAR.
-					// Should use container.putString but this was only added in
-					// CICS TS V5.1
-					container.put(props.getProperty(entry.getKey()).getBytes("IBM1047"), "IBM1047");
+					// Create a container of type CHAR
+					container.putString(props.getProperty(entry.getKey()));
 
 				} else {
 					// Creates a container of type BIT
@@ -382,8 +364,8 @@ public class Emit {
 			}
 		}
 
-		// Link to onfailure program
 		if ((emissionSuccessful == false) && (props.containsKey(ONFAILURE))) {
+			// Link to onfailure program
 			String onfailure = props.getProperty(ONFAILURE).trim();
 
 			if (logger.isLoggable(Level.FINE)) {
@@ -396,8 +378,8 @@ public class Emit {
 			try {
 				p.link(channel);
 
-				// As we successfully called the specified program to handle the
-				// failure, treat this as a successful emission.
+				// As we successfully called the specified program to handle the failure, treat this as a successful
+				// emission
 				emissionSuccessful = true;
 
 			} catch (Exception e) {
@@ -406,20 +388,15 @@ public class Emit {
 		}
 
 		if (logger.isLoggable(Level.FINE)) {
-			logger.fine(messages.getString("EmitFinish") + " "
-					+ messages.getString("Name") + " "
-					+ messages.getString("Version") + " "
+			logger.fine(messages.getString("EmitFinish") + " " + messages.getString("Name") + " " + messages.getString("Version") + " "
 					+ messages.getString("Copyright"));
 
 		}
 
 		if (isStartedWithEPAdpter) {
 			if (emissionSuccessful == false) {
-				/*
-				 * CICS event processing expects the adapter to issue a CICS
-				 * abend if the event could not be emitted to update CICS
-				 * statistics.
-				 */
+				// CICS event processing expects the adapter to issue a CICS abend if the event could not be emitted to
+				// update CICS statistics
 				Task.getTask().abend(CA1Y_ABEND_CODE);
 			}
 
@@ -433,92 +410,86 @@ public class Emit {
 
 	/**
 	 * Emit a message using configuration from a set of properties, and data from the CICS channel.
-     *
+	 *
 	 * @param props
 	 *            - properties to use
 	 * @param cicsChannel
-	 *             - CICS channel
+	 *            - CICS channel
 	 * @param isStartedWithEPAdpter
-	 *             - true if the CICS current channel is the architected EP adapter channel
+	 *            - true if the CICS current channel is the architected EP adapter channel
 	 * @return true if emission was successful
 	 */
 	public static boolean emit(EmitProperties props, Channel cicsChannel, boolean isStartedWithEPAdpter) {
 
 		boolean emissionSuccessful = true;
 		try {
-			// Create a compiled regex from either the default pattern or the
-			// specified override
+			// Create a compiled regex from either the default pattern or the specified override
 			Pattern pattern = getPattern(props);
 
-			// Merge properties from the JVM system property location
 			if (System.getProperties().containsKey(CA1Y_IMPORT)) {
+				// Merge properties from the JVM system property ca1y.import
 				if (logger.isLoggable(Level.FINE)) {
 					logger.fine(messages.getString("LoadingPropertiesFromImport") + " " + CA1Y_IMPORT);
 				}
-				
+
 				props.setProperty(CA1Y_IMPORT, System.getProperties().getProperty(CA1Y_IMPORT));
-				
+
 				resolveTokensInKey(CA1Y_IMPORT, pattern, props, cicsChannel, isStartedWithEPAdpter, false);
-				
+
 				if (!Util.loadProperties(props, props.getProperty(CA1Y_IMPORT))) {
 					logger.warning(Emit.messages.getString("InvalidImportProperties") + " " + CA1Y_IMPORT);
 				}
 
-				// Remove the IMPORT property otherwise it will go through
-				// unnecessary token processing
+				// Remove the IMPORT property otherwise it will go through unnecessary token processing
 				props.remove(CA1Y_IMPORT);
-				
-				// Re-evaluate token regex as the imported properties may have
-				// changed it
+
+				// Re-evaluate token regex as the imported properties may have changed it
 				pattern = getPattern(props);
 			}
 
-			// Merge properties from the supplied property import
 			if (props.containsKey(IMPORT)) {
+				// Merge properties from the supplied property import
 				if (logger.isLoggable(Level.FINE)) {
 					logger.fine(messages.getString("LoadingPropertiesFromImport") + " " + IMPORT);
 				}
 
 				resolveTokensInKey(IMPORT, pattern, props, cicsChannel, isStartedWithEPAdpter, false);
-				
+
 				if (!Util.loadProperties(props, props.getProperty(IMPORT))) {
 					logger.warning(Emit.messages.getString("InvalidImportProperties") + " " + IMPORT);
 				}
-				
-				// Remove the IMPORT property otherwise it will go through
-				// unnecessary token processing
+
+				// Remove the IMPORT property otherwise it will go through unnecessary token processing
 				props.remove(IMPORT);
-				
-				// Re-evaluate token regex as the imported properties may have
-				// changed it
+
+				// Re-evaluate token regex as the imported properties may have changed it
 				pattern = getPattern(props);
 			}
 
-			// Merge properties from the import.private location, marking each of merged properties as private
 			if (props.containsKey(IMPORT_PRIVATE)) {
+				// Merge properties from the import.private location, marking each of the merged properties as private
 				if (logger.isLoggable(Level.FINE)) {
 					logger.fine(messages.getString("LoadingPropertiesFromImport") + " " + IMPORT_PRIVATE);
 				}
 
 				props.setPropertyPrivacy(IMPORT_PRIVATE, true);
-				
+
 				resolveTokensInKey(IMPORT_PRIVATE, pattern, props, cicsChannel, isStartedWithEPAdpter, false);
 
-				// Use a temporary object to load IMPORT_PRIVATE into as this is
-				// the only way to then set the privacy for each property
+				// Use a temporary object to load IMPORT_PRIVATE into as this is the only way to then set the privacy
+				// for each property
 				Properties privateProperties = new Properties();
 
 				if (!Util.loadProperties(privateProperties, props.getProperty(IMPORT_PRIVATE))) {
 					logger.warning(Emit.messages.getString("InvalidImportProperties") + " " + IMPORT_PRIVATE);
 				}
 
-				// Remove IMPORT_PRIVATE property otherwise it will be logged
-				// and will go through unnecessary token processing.
+				// Remove IMPORT_PRIVATE property otherwise it will be logged and will go through unnecessary token
+				// processing.
 				props.setPropertyPrivacy(IMPORT_PRIVATE, false);
 				props.remove(IMPORT_PRIVATE);
 
-				// Copy each property (note putAll method is discouraged) and
-				// set the privacy attribute to true
+				// Copy each property (note putAll method is discouraged) and set the privacy attribute to true
 				Enumeration<?> e = privateProperties.propertyNames();
 				while (e.hasMoreElements()) {
 					String key = (String) e.nextElement();
@@ -534,9 +505,7 @@ public class Emit {
 				addPropertiesFromDFHEP_ADAPTPARM(props, cicsChannel);
 			}
 
-			// Resolve tokens in each property value
-			// Ensure resolving of properties in name order as this is likely to be
-			// easier for customers to predict processing.
+			// Resolve tokens in each property value in property name order as this is likely to be easier to predict
 			Enumeration<?> e = props.propertyNamesOrdered();
 			while (e.hasMoreElements()) {
 				String key = (String) e.nextElement();
@@ -548,8 +517,7 @@ public class Emit {
 			while (e.hasMoreElements()) {
 				String key = (String) e.nextElement();
 
-				if ((props.getPropertyAlternateName(key) != null)
-						&& (props.getProperty(props.getPropertyAlternateName(key)) != null)) {
+				if ((props.getPropertyAlternateName(key) != null) && (props.getProperty(props.getPropertyAlternateName(key)) != null)) {
 					props.setPropertyAlternateName(key, props.getProperty(key));
 				}
 
@@ -617,7 +585,7 @@ public class Emit {
 
 			} else {
 				Email email = new Email(props);
-				
+
 				if (email.send() == false) {
 					emissionSuccessful = false;
 				}
@@ -625,12 +593,8 @@ public class Emit {
 		}
 
 		if (CICSQueue.validForEmission(props)) {
-			/*
-			 * Emit message to a CICS queue. Note it is not possible to
-			 * establish via JCICS if the queue is recoverable or not, so cannot
-			 * guard against using a recoverable event with a non-recoverable
-			 * queue.
-			 */
+			// Emit message to a CICS queue. Note it is not possible to establish via JCICS if the queue is recoverable
+			// or not, so cannot guard against using a recoverable event with a non-recoverable queue
 			CICSQueue cicsQueue = new CICSQueue(props);
 			if (cicsQueue.send() == false) {
 				emissionSuccessful = false;
@@ -641,7 +605,7 @@ public class Emit {
 			// Emit message as an MVS job
 
 			if (props.isPropertyTrue(CA1Y_RECOVERABLE)) {
-				// Events required to be recoverable are not supported.
+				// Events required to be recoverable are not supported
 				emissionSuccessful = false;
 				logger.warning(messages.getString("RecoverableEventNotSupportedMVSJOB"));
 
@@ -658,13 +622,13 @@ public class Emit {
 			// Emit message as an MVS console message
 
 			if (props.isPropertyTrue(CA1Y_RECOVERABLE)) {
-				// Events required to be recoverable are not supported.
+				// Events required to be recoverable are not supported
 				emissionSuccessful = false;
 				logger.warning(messages.getString("RecoverableEventNotSupportedMVSWTO"));
 
 			} else {
 				MVSWriteToOperator mvsWriteToOperator = new MVSWriteToOperator(props);
-				
+
 				if (mvsWriteToOperator.send() == false) {
 					emissionSuccessful = false;
 				}
@@ -675,13 +639,13 @@ public class Emit {
 			// Emit message to an HTTP server
 
 			if (props.isPropertyTrue(CA1Y_RECOVERABLE)) {
-				// Events required to be recoverable are not supported.
+				// Events required to be recoverable are not supported
 				emissionSuccessful = false;
 				logger.warning(messages.getString("RecoverableEventNotSupportedHTTP"));
 
 			} else {
 				JavaHTTP http = new JavaHTTP(props);
-				
+
 				if (http.send() == false) {
 					emissionSuccessful = false;
 				}
@@ -691,13 +655,13 @@ public class Emit {
 			// Emit message to an HTTP server
 
 			if (props.isPropertyTrue(CA1Y_RECOVERABLE)) {
-				// Events required to be recoverable are not supported.
+				// Events required to be recoverable are not supported
 				emissionSuccessful = false;
 				logger.warning(messages.getString("RecoverableEventNotSupportedHTTP"));
 
 			} else {
 				CICSHTTP cicsHTTP = new CICSHTTP(props);
-				
+
 				if (cicsHTTP.send() == false) {
 					emissionSuccessful = false;
 				}
@@ -708,13 +672,13 @@ public class Emit {
 			// Emit message to a File via JZOS
 
 			if (props.isPropertyTrue(CA1Y_RECOVERABLE)) {
-				// Events required to be recoverable are not supported.
+				// Events required to be recoverable are not supported
 				emissionSuccessful = false;
 				logger.warning(messages.getString("RecoverableEventNotSupportedJZOS"));
 
 			} else {
 				JZOSFile pdsFile = new JZOSFile(props);
-				
+
 				if (pdsFile.send() == false) {
 					emissionSuccessful = false;
 				}
@@ -763,10 +727,7 @@ public class Emit {
 				zipfile.write(props.getPropertyAttachment(key));
 
 			} else {
-				/*
-				 * Windows requires text files use CR+LF, so replace \n with
-				 * \r\n
-				 */
+				// Windows requires text files use CR+LF, so replace \n with \r\n
 				String property = props.getProperty(key);
 
 				if (property != null) {
@@ -774,11 +735,8 @@ public class Emit {
 				}
 			}
 
-			/*
-			 * Remove the property MIME to prevent it from becoming an
-			 * attachment. Do not remove the property itself as it may be used
-			 * elsewhere
-			 */
+			// Remove the property MIME to prevent it from becoming an attachment. Do not remove the property itself as
+			// it may be used elsewhere
 			props.setPropertyMime(key, null);
 		}
 
@@ -788,8 +746,8 @@ public class Emit {
 	}
 
 	/**
-	 * Convert a property from XML using either JAX processor and a stylesheet,
-	 * or the FOP Apache processor and optionally a stylesheet.
+	 * Convert a property from XML using either JAX processor and a stylesheet, or the FOP Apache processor and
+	 * optionally a stylesheet.
 	 * 
 	 * @param key
 	 *            - property to convert
@@ -799,8 +757,7 @@ public class Emit {
 	 */
 	private static boolean convertProperty(String key, EmitProperties props) {
 
-		if ((ConvertXML.xsltFromMimeTypes.contains(props.getPropertyMime(key)))
-				&& (ConvertXML.xsltToMimeTypes.contains(props.getPropertyMimeTo(key)))) {
+		if ((ConvertXML.xsltFromMimeTypes.contains(props.getPropertyMime(key))) && (ConvertXML.xsltToMimeTypes.contains(props.getPropertyMimeTo(key)))) {
 			// Use JAXP to convert
 			String result = ConvertXML.convertXSLT(props.getProperty(key), props.getProperty(props.getPropertyXSLT(key)), props);
 
@@ -816,10 +773,8 @@ public class Emit {
 			return true;
 		}
 
-		if ((ConvertFOP.fopFromMimeTypes.contains(props.getPropertyMime(key)))
-				&& (ConvertFOP.fopToMimeTypes.contains(props.getPropertyMimeTo(key)))) {
+		if ((ConvertFOP.fopFromMimeTypes.contains(props.getPropertyMime(key))) && (ConvertFOP.fopToMimeTypes.contains(props.getPropertyMimeTo(key)))) {
 			// Use Apache FOP to convert
-
 			ByteArrayInputStream bais = null;
 			ByteArrayInputStream xsltStream = null;
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -875,8 +830,7 @@ public class Emit {
 	}
 
 	/**
-	 * Create a compiled pattern from the regex supplied in the properties, or a
-	 * default.
+	 * Create a compiled pattern from the regex supplied in the properties, or a default.
 	 * 
 	 * @param props
 	 *            - the properties to find the regex in
@@ -888,8 +842,7 @@ public class Emit {
 			try {
 				String regex = props.getProperty(TOKEN_REGEX);
 
-				// Remove regex from properties to prevent it from being
-				// processed further.
+				// Remove regex from properties to prevent it from being processed further
 				props.remove(TOKEN_REGEX);
 
 				return Pattern.compile(regex);
@@ -922,14 +875,14 @@ public class Emit {
 
 			try {
 				props.load(new StringReader(s));
-				
+
 				return true;
 
 			} catch (Exception e) {
 
 			}
 		}
-		
+
 		return false;
 	}
 
@@ -943,11 +896,11 @@ public class Emit {
 	private static boolean addPropertiesFromInputStream(Properties props, InputStream is) {
 		if (is == null)
 			return false;
-		
+
 		if (props == null)
 			props = new Properties();
-		
-		/* Read the Java standard input stream as properties */
+
+		// Read the Java standard input stream as properties
 		try {
 			if (is.available() > 0) {
 				if (logger.isLoggable(Level.FINE)) {
@@ -956,21 +909,20 @@ public class Emit {
 
 				try {
 					props.load(is);
-					
+
 					return true;
 
 				} catch (IOException e) {
-					// The data in System.in could not be interpreted as a set
-					// of properties
+					// The data in System.in could not be interpreted as a set of properties
 					e.printStackTrace();
 				}
 			}
-			
+
 		} catch (IOException e) {
 			// Could not read the input stream
 			e.printStackTrace();
 		}
-		
+
 		return false;
 	}
 
@@ -1013,11 +965,7 @@ public class Emit {
 	 */
 	private static boolean addContainerCA1Y(Properties props, Channel channel) {
 		try {
-			/*
-			 * CONFIG container provides the initial configuration. Let CICS
-			 * convert the container.
-			 */
-
+			// CA1Y container provides the initial configuration. Let CICS convert the container
 			String s = new String(channel.createContainer(CA1Y_CONTAINER).get("UTF-8"), "UTF-8");
 
 			if (logger.isLoggable(Level.FINE)) {
@@ -1028,9 +976,9 @@ public class Emit {
 
 		} catch (Exception e) {
 			logger.warning(messages.getString("InvalidContainerCA1Y") + ":" + e.getMessage());
-
-			return false;
 		}
+
+		return false;
 	}
 
 	/**
@@ -1081,12 +1029,7 @@ public class Emit {
 	private static boolean putContainerCA1YRESPONSE(boolean b, Channel channel) {
 		try {
 			Container container = channel.createContainer("CA1YRESPONSE");
-
-			/*
-			 * Would prefer to use container.putString(b ? "true" : "false");
-			 * but this method was only introduced in CICS TS V5.1
-			 */
-			container.put(Boolean.toString(b).getBytes("UTF-8"), "UTF-8");
+			container.putString(b ? "true" : "false");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1102,8 +1045,7 @@ public class Emit {
 	 * 
 	 * @param b
 	 * @param commAreaHolder
-	 * @return true if the response was copied into the commarea, false
-	 *         otherwise.
+	 * @return true if the response was copied into the commarea, false otherwise.
 	 */
 	private static boolean putCommarea(boolean b, CommAreaHolder commAreaHolder) {
 		byte[] response;
@@ -1126,8 +1068,7 @@ public class Emit {
 		}
 
 		if (response.length > commAreaHolder.getValue().length) {
-			// The commarea is too small for the response, and we are not
-			// allowed to change the size
+			// The commarea is too small for the response, and we are not allowed to change the size
 			return false;
 		}
 
@@ -1138,10 +1079,8 @@ public class Emit {
 	}
 
 	/**
-	 * Add name=value properties from contents of container 'DFHEP.ADAPTER'.
-	 * This container is created from the CICS EP custom adapter configuration
-	 * specified in the Adapter tab in the CICS Explorer .epadapter and .evbind
-	 * editors.
+	 * Add name=value properties from contents of container 'DFHEP.ADAPTER'. This container is created from the CICS EP
+	 * custom adapter configuration specified in the Adapter tab in the CICS Explorer .epadapter and .evbind editors.
 	 * 
 	 * @param props
 	 *            - the properties to add to.
@@ -1153,11 +1092,7 @@ public class Emit {
 		String dfhepAdapter;
 
 		try {
-			// From CICS TS V4.2 the DFHEP.ADAPTER container is data type
-			// CHAR so CICS can do the conversion to UTF-8
-			// Use getString() in preference, but this was only introduced in
-			// CICS TS V5.1
-			dfhepAdapter = new String(channel.createContainer("DFHEP.ADAPTER").get("UTF-8"), "UTF-8");
+			dfhepAdapter = channel.createContainer("DFHEP.ADAPTER").getString();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -1213,8 +1148,8 @@ public class Emit {
 	}
 
 	/**
-	 * Add name / value properties from contents of container DFHEP.DESCRIPTOR
-	 * and business information items from containers DFHEP.DATA.nnnnn
+	 * Add name / value properties from contents of container DFHEP.DESCRIPTOR and business information items from
+	 * containers DFHEP.DATA.nnnnn
 	 * 
 	 * @param props
 	 *            - The properties to add entries to
@@ -1222,8 +1157,8 @@ public class Emit {
 	 *            - The channel to get the container from
 	 * @return true if properties added successfully
 	 */
-	private static boolean addPropertiesFromDFHEP_DESCRIPTOR(EmitProperties props, Channel channel) throws ContainerErrorException,
-			ChannelErrorException, CCSIDErrorException, CodePageErrorException {
+	private static boolean addPropertiesFromDFHEP_DESCRIPTOR(EmitProperties props, Channel channel) throws ContainerErrorException, ChannelErrorException,
+			CCSIDErrorException, CodePageErrorException {
 
 		// DFHEP.DESCRIPTOR container is mapped by COBOL copybook
 		// hlq.DFHCOB(DFHEPDEO).
@@ -1266,15 +1201,21 @@ public class Emit {
 					dataToConvert = data.get("UTF-8");
 
 				} catch (ContainerErrorException e) {
-					// Container could not be found because it was not available to be captured by CICS. Ignore.
+					// Container could not be found because it was not available
+					// to be captured by CICS. Ignore.
 					//
-					// Details are in CICS topic "Writing a custom EP adapter" that says
-					// "If a data item was not available for data capture, the corresponding data item container is not present
-					// in the CICS event object. This situation can happen, for example, when CAPTURESPEC specifies a capture data item
-					// associated with an optional parameter that was not present on the API command that caused the event."
-					
+					// Details are in CICS topic "Writing a custom EP adapter"
+					// that says
+					// "If a data item was not available for data capture, the
+					// corresponding data item container is not present
+					// in the CICS event object. This situation can happen, for
+					// example, when CAPTURESPEC specifies a capture data item
+					// associated with an optional parameter that was not
+					// present on the API command that caused the event."
+
 				} catch (Exception e) {
-					// Data captured by CICS does not match the codepage specified in the event binding information source
+					// Data captured by CICS does not match the codepage
+					// specified in the event binding information source
 					e.printStackTrace();
 				}
 
@@ -1288,7 +1229,7 @@ public class Emit {
 
 			if (dataToConvert == null) {
 				// No data to convert
-				
+
 			} else if ((epdeitem.isEpde__char(datatype) || epdeitem.isEpde__charz(datatype))) {
 				// Handle EPDE-DATATYPE=EPDE-CHAR
 				// Handle EPDE-DATATYPE=EPDE-CHARZ
@@ -1296,7 +1237,8 @@ public class Emit {
 					dataString = new String(dataToConvert, "UTF-8");
 
 				} catch (Exception e) {
-					// Data captured by CICS does not match the codepage specified in the event binding information source
+					// Data captured by CICS does not match the codepage
+					// specified in the event binding information source
 					e.printStackTrace();
 				}
 
@@ -1389,8 +1331,8 @@ public class Emit {
 					signFormat = MarshallExternalDecimalUtils.SIGN_FORMAT_TRAILING;
 				}
 
-				dataBigInteger = MarshallExternalDecimalUtils.unmarshallBigIntegerFromBuffer(dataToConvert, 0, dataToConvertLength,
-						sign, signFormat, MarshallExternalDecimalUtils.EXTERNAL_DECIMAL_SIGN_EBCDIC);
+				dataBigInteger = MarshallExternalDecimalUtils.unmarshallBigIntegerFromBuffer(dataToConvert, 0, dataToConvertLength, sign, signFormat,
+						MarshallExternalDecimalUtils.EXTERNAL_DECIMAL_SIGN_EBCDIC);
 
 				if (logger.isLoggable(Level.FINE)) {
 					if (signFormat == MarshallExternalDecimalUtils.SIGN_FORMAT_LEADING_SEPARATE)
@@ -1411,11 +1353,11 @@ public class Emit {
 			} else if (epdeitem.isEpde__hexfloat(datatype)) {
 				// Handle EPDE-DATATYPE=EPDE-HEXFLOAT
 				if (dataToConvertLength == 4)
-					dataFloat = new Float(MarshallFloatUtils.unmarshallFloatFromBuffer(dataToConvert, 0, true,
-							MarshallFloatUtils.FLOAT_FORMAT_IBM_390_HEX, dataToConvertLength));
+					dataFloat = new Float(MarshallFloatUtils.unmarshallFloatFromBuffer(dataToConvert, 0, true, MarshallFloatUtils.FLOAT_FORMAT_IBM_390_HEX,
+							dataToConvertLength));
 				else
-					dataFloat = new Float(MarshallFloatUtils.unmarshallDoubleFromBuffer(dataToConvert, 0, true,
-							MarshallFloatUtils.FLOAT_FORMAT_IBM_390_HEX, dataToConvertLength));
+					dataFloat = new Float(MarshallFloatUtils.unmarshallDoubleFromBuffer(dataToConvert, 0, true, MarshallFloatUtils.FLOAT_FORMAT_IBM_390_HEX,
+							dataToConvertLength));
 
 			} else if (epdeitem.isEpde__binfloat(datatype)) {
 				// Handle EPDE-DATATYPE=EPDE-BINFLOAT
@@ -1429,11 +1371,11 @@ public class Emit {
 			} else if (epdeitem.isEpde__decfloat(datatype)) {
 				// Handle EPDE-DATATYPE=EPDE-DECFLOAT
 				if (dataToConvertLength == 4)
-					dataFloat = new Float(MarshallFloatUtils.unmarshallFloatFromBuffer(dataToConvert, 0, true,
-							MarshallFloatUtils.FLOAT_FORMAT_IEEE_DFP_IBM, dataToConvertLength));
+					dataFloat = new Float(MarshallFloatUtils.unmarshallFloatFromBuffer(dataToConvert, 0, true, MarshallFloatUtils.FLOAT_FORMAT_IEEE_DFP_IBM,
+							dataToConvertLength));
 				else
-					dataFloat = new Float(MarshallFloatUtils.unmarshallDoubleFromBuffer(dataToConvert, 0, true,
-							MarshallFloatUtils.FLOAT_FORMAT_IEEE_DFP_IBM, dataToConvertLength));
+					dataFloat = new Float(MarshallFloatUtils.unmarshallDoubleFromBuffer(dataToConvert, 0, true, MarshallFloatUtils.FLOAT_FORMAT_IEEE_DFP_IBM,
+							dataToConvertLength));
 			}
 
 			// Format as type attachment, text, numeric, or scientific
@@ -1532,11 +1474,8 @@ public class Emit {
 				props.setProperty(epdeitem.getEpde__dataname().trim(), dataString);
 			}
 
-			/*
-			 * Keep list of business information items so we can later retrieve
-			 * them in the specific order presented here, including the format
-			 * length.
-			 */
+			// Keep list of business information items so we can later retrieve them in the specific order presented
+			// here, including the format length
 			if (dataString == null) {
 				props.putBusinessInformationItem(epdeitem.getEpde__dataname().trim(), dataToConvert.length);
 			} else {
@@ -1550,37 +1489,15 @@ public class Emit {
 			if (logger.isLoggable(Level.FINE)) {
 				StringBuilder sb = new StringBuilder();
 
-				sb.append(messages.getString("AddedProperty"))
-						.append(" ")
-						.append(epdeitem.getEpde__dataname().trim())
-						.append(",")
-						.append(messages.getString("CapturedDataLength"))
-						.append(":")
-						.append(dataToConvertLength)
-						.append(",")
-						.append(messages.getString("CapturedDataInHex"))
-						.append(":0x")
-						.append(Util.getHexSummary(dataToConvert))
-						.append(",")
-						.append(messages.getString("CapturedType"))
-						.append(":")
-						.append(datatype.trim())
-						.append(",")
-						.append(messages.getString("CapturedPrecision"))
-						.append(":")
-						.append(epdeitem.getEpde__dataprecision())
-						.append(",")
-						.append(conversionSummary)
-						.append(",")
-						.append(messages.getString("FormatType"))
-						.append(":")
-						.append(epdeitem.getEpde__formattype().trim())
-						.append(",")
-						.append(messages.getString("FormatLength"))
-						.append(":")
-						.append(epdeitem.isEpde__formatlen__auto(epdeitem.getEpde__formatlen()) ? "auto" : epdeitem
-								.getEpde__formatlen()).append(",").append(messages.getString("FormatPrecision")).append(":")
-						.append(epdeitem.getEpde__formatprecision());
+				sb.append(messages.getString("AddedProperty")).append(" ").append(epdeitem.getEpde__dataname().trim()).append(",")
+						.append(messages.getString("CapturedDataLength")).append(":").append(dataToConvertLength).append(",")
+						.append(messages.getString("CapturedDataInHex")).append(":0x").append(Util.getHexSummary(dataToConvert)).append(",")
+						.append(messages.getString("CapturedType")).append(":").append(datatype.trim()).append(",")
+						.append(messages.getString("CapturedPrecision")).append(":").append(epdeitem.getEpde__dataprecision()).append(",")
+						.append(conversionSummary).append(",").append(messages.getString("FormatType")).append(":")
+						.append(epdeitem.getEpde__formattype().trim()).append(",").append(messages.getString("FormatLength")).append(":")
+						.append(epdeitem.isEpde__formatlen__auto(epdeitem.getEpde__formatlen()) ? "auto" : epdeitem.getEpde__formatlen()).append(",")
+						.append(messages.getString("FormatPrecision")).append(":").append(epdeitem.getEpde__formatprecision());
 
 				if (dataFloat != null) {
 					sb.append(",Java Float:").append(dataFloat);
@@ -1610,8 +1527,8 @@ public class Emit {
 	}
 
 	/**
-	 * Add name / value properties from contents of container DFHEP.ADAPTPARM
-	 * that is is mapped by COBOL copybook hlq.DFHCOB(DFHEPAPO).
+	 * Add name / value properties from contents of container DFHEP.ADAPTPARM that is is mapped by COBOL copybook
+	 * hlq.DFHCOB(DFHEPAPO).
 	 * 
 	 * @param props
 	 *            - The Properties to append to
@@ -1628,12 +1545,10 @@ public class Emit {
 				props.setPropertyAndResolved("EPAP_VERSION", Long.toString(epapv1.getEpap__version()));
 				props.setPropertyAndResolved("EPAP_ADAPTER_NAME", epapv1.getEpap__adapter__name().trim());
 				props.setPropertyAndResolved("EPAP_RECOVER", epapv1.getEpap__recover());
-				props.setPropertyAndResolved(CA1Y_RECOVERABLE, (epapv1.isEpap__recoverable(epapv1.getEpap__recover()) ? "true"
-						: "false"));
+				props.setPropertyAndResolved(CA1Y_RECOVERABLE, (epapv1.isEpap__recoverable(epapv1.getEpap__recover()) ? "true" : "false"));
 
 			} catch (Exception e) {
-				// If this container is not available, ignore and do not try
-				// again on subsequent requests.
+				// If this container is not available, ignore and do not try again on subsequent requests
 				dfhepAdaptparm = false;
 
 				return false;
@@ -1721,26 +1636,25 @@ public class Emit {
 	}
 
 	/**
-	 * Using the key and pattern to identify a token, replace all tokens for the
-	 * key value in the property.
+	 * Using the key and pattern to identify a token, replace all tokens for the key value in the property.
 	 * 
 	 * @param key
 	 *            - The string to search for tokens
 	 * @param pattern
-	 *            - The string to search for tokens
+	 *            - The pattern to use to find tokens
 	 * @param props
 	 *            - The properties to use as the lookup table
 	 * @param cicsChannel
-	 *            - The channel to get the container from
+	 *            - The channel to get containers from
 	 * @param channelDFHEP
-	 *            - True if the name of the current CICS channel is identified
-	 *            as event processing
+	 *            - True if the name of the current CICS channel is identified as event processing
 	 * @param allowReevaluateForTokens
-	 *            - true if at least one token was replaced, false otherwise
+	 *            - reevaluated the key for tokens if at least one token was replaced with a value that could contain
+	 *            another token
 	 * @return true if at least one token was replaced
 	 */
-	private static boolean resolveTokensInKey(String key, Pattern pattern, EmitProperties props, Channel cicsChannel,
-			boolean channelDFHEP, boolean allowReevaluateForTokens) {
+	private static boolean resolveTokensInKey(String key, Pattern pattern, EmitProperties props, Channel cicsChannel, boolean channelDFHEP,
+			boolean allowReevaluateForTokens) {
 
 		if ((key == null) || (pattern == null) || (props == null) || (props.getProperty(key) == null)) {
 			return false;
@@ -1748,7 +1662,6 @@ public class Emit {
 
 		if (props.getPropertyResolved(key)) {
 			// Property is already resolved
-
 			if (logger.isLoggable(Level.FINE)) {
 				logger.fine(messages.getString("PropertyResolved") + " " + EmitProperties.getPropertySummary(props, key));
 			}
@@ -1760,8 +1673,7 @@ public class Emit {
 			logger.fine(messages.getString("PropertyResolving") + " " + EmitProperties.getPropertySummary(props, key));
 		}
 
-		// Do not change the order of the command options, as later processing
-		// relies on this order
+		// Do not change the order of the command options, as later processing relies on this order
 		final String[] nomoretokensCommand = { "nomoretokens" };
 		final String[] noinnertokensCommand = { "noinnertokens" };
 		final String[] datetimeCommand = { "datetime=" };
@@ -1772,8 +1684,8 @@ public class Emit {
 		final String[] zipCommand = { "zip=", ":include=" };
 		final String[] doctemplateCommand = { "doctemplate=", ":addPropertiesAsSymbols", ":binary" };
 		final String[] transformCommand = { "transform=", ":xmltransform=", ":jsontransform=", ":jvmserver=" };
-		final String[] ftpCommand = { "ftp=", ":server=", ":username=", ":userpassword=", ":transfer=", ":mode=", ":epsv=",
-				":protocol=", ":trustmgr=", ":datatimeout=", ":proxyserver=", ":proxyusername=", ":proxypassword=" };
+		final String[] ftpCommand = { "ftp=", ":server=", ":username=", ":userpassword=", ":transfer=", ":mode=", ":epsv=", ":protocol=", ":trustmgr=",
+				":datatimeout=", ":proxyserver=", ":proxyusername=", ":proxypassword=" };
 		final String[] hexCommand = { "hex=" };
 		final String[] systemsymbolCommand = { "systemsymbol=" };
 		final String[] commonBaseEventRESTCommand = { "commonbaseeventrest" };
@@ -1788,17 +1700,17 @@ public class Emit {
 		final String[] trimCommand = { "trim" };
 
 		final int maxTimesToResolveTokens = 10;
-		
+
 		boolean tokenReplaced = false;
 		boolean allowPropertyToBeReevaluatedForTokens = true;
 		String putContainer = null;
 
-		// Indicate the property has been resolved at this point to prevent
-		// recursion resolving tokens within the property
+		// Indicate the property has been resolved at this point to prevent recursion resolving tokens within the
+		// property
 		props.setPropertyResolved(key, true);
 
-		// As a token's replacement may itself contain tokens we need to
-		// iterate token searching, up to a maximum number of times
+		// As a token's replacement may itself contain tokens we need to iterate token searching, up to a maximum number
+		// of times
 		for (int i = 0; (i < maxTimesToResolveTokens) && (allowPropertyToBeReevaluatedForTokens); i++) {
 			boolean reevaluateForTokens = false;
 			Matcher matcher = pattern.matcher(props.getProperty(key));
@@ -1819,8 +1731,7 @@ public class Emit {
 					break;
 
 				} else if (token.startsWith(noinnertokensCommand[0])) {
-					// Processing all tokens in this property but prevent
-					// re-evaluation tokens in resolve tokens
+					// Processing all tokens in this property but prevent re-evaluation tokens in resolve tokens
 					// eg. token is "noinntertokens"
 					tokenReplaced = true;
 					matcher.appendReplacement(buffer, "");
@@ -1868,8 +1779,7 @@ public class Emit {
 						}
 
 					} else if (options[2] != null) {
-						// eg.
-						// {transform=propertyName:jsontransform=jsontransfrmResource:jvmserver=jvmResource}
+						// eg. {transform=propertyName:jsontransform=jsontransfrmResource:jvmserver=jvmResource}
 						try {
 							Container inputContainer = cicsChannel.createContainer("DFHJSON-DATA");
 							inputContainer.put(props.getPropertyAttachment(options[0]));
@@ -1898,12 +1808,11 @@ public class Emit {
 					}
 
 				} else if (token.startsWith(mimeCommand[0])) {
-					// Store the MIME type in the property.
+					// Store the MIME type in the property
 					// eg. token is "mime=application/octet-stream"
 					// eg. token is "mime=application/xml"
 					// eg. token is "mime=text/xsl:to=application/pdf"
-					// eg. token is
-					// "mime=text/xml:to=application/pdf:xslt=xsltProperty"
+					// eg. token is "mime=text/xml:to=application/pdf:xslt=xsltProperty"
 					tokenReplaced = true;
 					matcher.appendReplacement(buffer, "");
 					String[] options = Util.getOptions(token, mimeCommand);
@@ -1919,7 +1828,7 @@ public class Emit {
 					}
 
 				} else if (token.startsWith(nameCommand[0])) {
-					// Store the name in the property.
+					// Store the name in the property
 					// eg. token is "name=My Picture"
 					tokenReplaced = true;
 					matcher.appendReplacement(buffer, "");
@@ -1927,8 +1836,8 @@ public class Emit {
 					props.setPropertyAlternateName(key, options[0]);
 
 				} else if (token.startsWith(datetimeCommand[0])) {
-					// For tokens that start with DATETIME_PREFIX, replace
-					// the token with the resolved date and time format
+					// For tokens that start with DATETIME_PREFIX, replace the token with the resolved date and time
+					// format
 					// eg. token is "datetime=yyyy.MM.dd G 'at' HH:mm:ss z"
 					tokenReplaced = true;
 					matcher.appendReplacement(buffer, "");
@@ -1950,7 +1859,7 @@ public class Emit {
 					}
 
 				} else if (token.startsWith(zipCommand[0])) {
-					// Store the zip in the property.
+					// Store the zip in the property
 					// eg. token is "zip="
 					// eg. token is "zip=MyZip.zip"
 					// eg. token is "zip=MyZip.zip:include=property1"
@@ -2022,8 +1931,7 @@ public class Emit {
 									props.setPropertyAlternateName(key, zf.getActualFilename());
 								}
 
-								buffer.append(IOUtils.toString(zf.getInputStream(),
-										(options[1] == null) ? ZUtil.getDefaultPlatformEncoding() : options[1]));
+								buffer.append(IOUtils.toString(zf.getInputStream(), (options[1] == null) ? ZUtil.getDefaultPlatformEncoding() : options[1]));
 								reevaluateForTokens = true;
 
 							} catch (Exception e) {
@@ -2080,8 +1988,7 @@ public class Emit {
 					}
 
 				} else if (token.startsWith(doctemplateCommand[0])) {
-					// Replace the token with the contents of the CICS
-					// document template resource
+					// Replace the token with the contents of the CICS document template resource
 					// eg. token is "doctemplate=MyTemplate"
 					// eg. token is "doctemplate=MyTemplate:addPropertiesAsSymbols"
 					// eg. token is "doctemplate=MyTemplate:binary"
@@ -2097,11 +2004,11 @@ public class Emit {
 							}
 
 							Document document = new Document();
-							
+
 							if (options[1] != null) {
 								// Add all properties except the current property as symbols to document
 								Enumeration<?> e = props.propertyNamesOrdered();
-								
+
 								while (e.hasMoreElements()) {
 									String key2 = (String) e.nextElement();
 
@@ -2112,16 +2019,16 @@ public class Emit {
 												// resolve the token before attempting to use it
 												resolveTokensInKey(key2, pattern, props, cicsChannel, channelDFHEP, allowReevaluateForTokens);
 											}
-											
+
 											document.addSymbol(key2, props.getProperty(key2));
-										
+
 										} catch (Exception e2) {
 											// Continue even if there are errors adding a symbol
 										}
 									}
 								}
 							}
-							
+
 							document.createTemplate(options[0]);
 							buffer.append(new String(document.retrieve("UTF-8", true), "UTF-8"));
 							reevaluateForTokens = true;
@@ -2206,20 +2113,19 @@ public class Emit {
 					String defaultanonymouspassword = null;
 
 					if (isCICS) {
-						defaultanonymouspassword = channelDFHEP ? props.getProperty("EPCX_USERID") : props
-								.getProperty("TASK_USERID");
+						defaultanonymouspassword = channelDFHEP ? props.getProperty("EPCX_USERID") : props.getProperty("TASK_USERID");
 
 						if (defaultanonymouspassword != null) {
 							try {
-								defaultanonymouspassword = (new StringBuilder(String.valueOf(defaultanonymouspassword)))
-										.append("@").append(InetAddress.getLocalHost().getHostName()).toString();
+								defaultanonymouspassword = (new StringBuilder(String.valueOf(defaultanonymouspassword))).append("@")
+										.append(InetAddress.getLocalHost().getHostName()).toString();
 							} catch (Exception _ex) {
 							}
 						}
 					}
 
-					byte b[] = getFileUsingFTP(options[0], options[1], options[2], options[3], options[4], options[5], options[6],
-							options[7], options[8], options[9], options[10], options[11], options[12], defaultanonymouspassword);
+					byte b[] = getFileUsingFTP(options[0], options[1], options[2], options[3], options[4], options[5], options[6], options[7], options[8],
+							options[9], options[10], options[11], options[12], defaultanonymouspassword);
 
 					if (b != null) {
 						if ("binary".equalsIgnoreCase(options[4])) {
@@ -2247,7 +2153,7 @@ public class Emit {
 					}
 
 				} else if (token.startsWith(responsecontainerCommand[0])) {
-					// Store the name in the property.
+					// Store the name in the property
 					// eg. token is "responsecontainer="
 					// eg. token is "responsecontainer=MyContainer"
 					tokenReplaced = true;
@@ -2269,11 +2175,13 @@ public class Emit {
 					}
 
 				} else if (token.startsWith(emitCommand[0])) {
+					// Set this property to be emitted
 					tokenReplaced = true;
 					matcher.appendReplacement(buffer, "");
 					props.putBusinessInformationItem(key, 0);
 
 				} else if (token.startsWith(systemsymbolCommand[0])) {
+					// Get the z/OS system symbol
 					tokenReplaced = true;
 					matcher.appendReplacement(buffer, "");
 					String options[] = Util.getOptions(token, systemsymbolCommand);
@@ -2284,6 +2192,7 @@ public class Emit {
 					}
 
 				} else if (token.startsWith(linkCommand[0])) {
+					// Link to CICS program
 					tokenReplaced = true;
 					matcher.appendReplacement(buffer, "");
 					String options[] = Util.getOptions(token, linkCommand);
@@ -2307,6 +2216,7 @@ public class Emit {
 					}
 
 				} else if (token.startsWith(putcontainerCommand[0])) {
+					// Put the value of this property into a CICS container once the tokens have been resolve
 					tokenReplaced = true;
 					matcher.appendReplacement(buffer, "");
 					String options[] = Util.getOptions(token, putcontainerCommand);
@@ -2316,39 +2226,36 @@ public class Emit {
 				} else if (token.startsWith(trimCommand[0])) {
 					tokenReplaced = true;
 					matcher.appendReplacement(buffer, "");
-					
+
 					// Remove leading and training spaces from the buffer up to the point of the token
 					buffer = new StringBuffer(buffer.toString().trim());
-					
+
 				} else if (props.containsKey(token)) {
 					// The token refers to a property
 					tokenReplaced = true;
 					matcher.appendReplacement(buffer, "");
 
-					// Do not copy property if it is the current key or it is
-					// marked as private
+					// Do not copy property if it is the current key or it is marked as private
 					if ((key.equals(token) == false) && (props.getPropertyPrivacy(key) == false)) {
 
 						if ((props.getPropertyResolved(token) == false) && (allowPropertyToBeReevaluatedForTokens)) {
-							// resolve the token before attempting to use it
+							// Resolve the tokens in the property before attempting to use it
 							resolveTokensInKey(token, pattern, props, cicsChannel, channelDFHEP, allowReevaluateForTokens);
 						}
 
 						if (props.getPropertyAttachment(token) == null) {
-							// copy the token's property
+							// Copy the tokens' property
 							buffer.append(props.getProperty(token));
 
 						} else {
-							// copy the token's property attachment
+							// Copy the tokens' property attachment
 
 							if (props.getPropertyAttachment(key) == null) {
 								// current property does not have an attachment
-								props.setPropertyAttachment(key, Arrays.copyOf(props.getPropertyAttachment(token),
-										props.getPropertyAttachment(token).length));
+								props.setPropertyAttachment(key, Arrays.copyOf(props.getPropertyAttachment(token), props.getPropertyAttachment(token).length));
 
 							} else {
-								// current property has an attachment, so append
-								// the token's attachment
+								// Current property has an attachment, so append the tokens' attachment
 								ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
 								try {
@@ -2371,11 +2278,9 @@ public class Emit {
 					matcher.appendReplacement(buffer, "");
 					buffer.append(System.getProperty(token));
 
-				} else if (isCICS && (token.getBytes().length >= CONTAINER_NAME_LENGTH_MIN)
-						&& (token.getBytes().length <= CONTAINER_NAME_LENGTH_MAX)) {
-					// If this is not an EP event and the token is a max of 16
-					// characters, attempt to replace token with contents of the
-					// CICS container named by the token in current channel.
+				} else if (isCICS && (token.getBytes().length >= CONTAINER_NAME_LENGTH_MIN) && (token.getBytes().length <= CONTAINER_NAME_LENGTH_MAX)) {
+					// If this is not an EP event and the token is a max of 16 characters, attempt to replace token with
+					// contents of the CICS container named by the token in current channel
 					tokenReplaced = true;
 					matcher.appendReplacement(buffer, "");
 
@@ -2387,24 +2292,19 @@ public class Emit {
 						Container container = (cicsChannel).createContainer(token);
 
 						try {
-							// Assume container is of type CHAR and get CICS to
-							// convert it.
-							// Would prefer to use getstring but it is not
-							// available on
-							// CICS TS V4.2.
-							buffer.append(new String(container.get(Emit.defaultCharset)));
+							// Assume container is of type CHAR and get CICS to convert it
+							buffer.append(container.getString());
 							reevaluateForTokens = true;
 
 						} catch (CodePageErrorException e) {
-							// As container could not be converted, assume
-							// it is of type BIT
+							// As container could not be converted, assume it is of type BIT and copy the contents into
+							// an attachment
 
 							if (props.getPropertyAttachment(key) == null) {
 								props.setPropertyAttachment(key, container.get());
 
 							} else {
-								// Append the property named by token to the
-								// existing attachment
+								// Append the property named by token to the existing attachment
 								ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
 								try {
@@ -2446,8 +2346,7 @@ public class Emit {
 			}
 		}
 
-		if (isCICS && (putContainer != null) && (putContainer.length() >= CONTAINER_NAME_LENGTH_MIN)
-				&& (putContainer.length() <= CONTAINER_NAME_LENGTH_MAX)) {
+		if ((isCICS) && (putContainer != null) && (putContainer.length() >= CONTAINER_NAME_LENGTH_MIN) && (putContainer.length() <= CONTAINER_NAME_LENGTH_MAX)) {
 			try {
 				Container container = cicsChannel.createContainer(putContainer);
 
@@ -2459,7 +2358,7 @@ public class Emit {
 						logger.fine(messages.getString("PutContainerChar") + " " + putContainer);
 					}
 
-					container.put(props.getProperty(key).getBytes("UTF-8"), "UTF-8");
+					container.putString(props.getProperty(key));
 
 				} else {
 					// Creates a container of type BIT
@@ -2493,17 +2392,13 @@ public class Emit {
 		StringBuilder sb = new StringBuilder();
 
 		// Add header equivalent to CICS TS COBOL copybook DFHEPFEO.cpy
-		sb.append("EPFE0002")
-			.append(Util.rightPad(props.getProperty("EPCX_EVENT__BINDING"), 32))
-			.append(Util.rightPad(props.getProperty("EPCX_EBUSERTAG"), 8))
-			.append(Util.rightPad(props.getProperty("EPCX_BUSINESSEVENT"), 32))
-			.append(Util.rightPad(props.getProperty("EPCX_UOWID"), 54))
-			.append(Util.rightPad(props.getProperty("EPCX_NETQUAL") + "." + props.getProperty("EPCX_APPLID"), 17))
-			.append(Util.rightPad(rfc3339.format(new Date()), 29)).append(Util.rightPad(props.getProperty("EPCX_CS__NAME"), 32))
-			.append(Util.rightPad(" ", 16));
+		sb.append("EPFE0002").append(Util.rightPad(props.getProperty("EPCX_EVENT__BINDING"), 32)).append(Util.rightPad(props.getProperty("EPCX_EBUSERTAG"), 8))
+				.append(Util.rightPad(props.getProperty("EPCX_BUSINESSEVENT"), 32)).append(Util.rightPad(props.getProperty("EPCX_UOWID"), 54))
+				.append(Util.rightPad(props.getProperty("EPCX_NETQUAL") + "." + props.getProperty("EPCX_APPLID"), 17))
+				.append(Util.rightPad(rfc3339.format(new Date()), 29)).append(Util.rightPad(props.getProperty("EPCX_CS__NAME"), 32))
+				.append(Util.rightPad(" ", 16));
 
-		// Add business information items in the order defined in the event
-		// binding.
+		// Add business information items in the order defined in the event binding
 		for (Map.Entry<String, Integer> entry : props.getBusinessInformationItems().entrySet()) {
 			if (entry.getValue() == 0) {
 				sb.append(props.getProperty(entry.getKey()));
@@ -2517,7 +2412,8 @@ public class Emit {
 	}
 
 	/**
-	 * Return an HTML document containing a table of properties and containers that match the provided regular expressions.
+	 * Return an HTML document containing a table of properties and containers that match the provided regular
+	 * expressions.
 	 * 
 	 * @param props
 	 *            - properties to use
@@ -2528,18 +2424,15 @@ public class Emit {
 	 * @param summary
 	 * @return HTML document
 	 */
-	private static String getHtmlTable(EmitProperties props, String propertiesExpression, String containersExpression,
-			String summary, boolean isCICS) {
+	private static String getHtmlTable(EmitProperties props, String propertiesExpression, String containersExpression, String summary, boolean isCICS) {
 
 		if ((propertiesExpression == null) && (containersExpression == null)) {
-			// if neither properties or containers expression are provided,
-			// default both
+			// if neither properties or containers expression are provided, default both
 			propertiesExpression = "";
 			containersExpression = "";
 		}
 
-		// Return an HTML document as a string containing a table of the
-		// property keys and values
+		// Return an HTML document as a string containing a table of the property keys and values
 		StringBuilder sb = new StringBuilder();
 		sb.append("<!DOCTYPE html><html><body>");
 
@@ -2559,6 +2452,7 @@ public class Emit {
 					if (!key.matches(propertiesExpression)) {
 						continue;
 					}
+
 				} catch (Exception e2) {
 					// ignore problems with regular expression
 				}
@@ -2580,6 +2474,7 @@ public class Emit {
 				if ((props.getPropertyPrivacy(key) == false) && (props.getPropertyAttachment(key) != null)) {
 					if (summary == null) {
 						sb.append(Util.getHexDump(props.getPropertyAttachment(key), 32, "<br/>"));
+
 					} else {
 						sb.append(Util.getHexSummary(props.getPropertyAttachment(key)));
 					}
@@ -2639,7 +2534,8 @@ public class Emit {
 	}
 
 	/**
-	 * Return an text document containing a table of properties and containers that match the provided regular expressions.
+	 * Return an text document containing a table of properties and containers that match the provided regular
+	 * expressions.
 	 * 
 	 * @param props
 	 *            - properties to use
@@ -2650,12 +2546,10 @@ public class Emit {
 	 * @param summary
 	 * @return character table
 	 */
-	private static String getTextTable(EmitProperties props, String propertiesExpression, String containersExpression,
-			String summary) {
+	private static String getTextTable(EmitProperties props, String propertiesExpression, String containersExpression, String summary) {
 
 		if ((propertiesExpression == null) && (containersExpression == null)) {
-			// if neither properties or containers expression are provided,
-			// default both
+			// if neither properties or containers expression are provided, default both
 			propertiesExpression = "";
 			containersExpression = "";
 		}
@@ -2771,8 +2665,7 @@ public class Emit {
 	}
 
 	/**
-	 * Return an XML representation of a CICS event referred to as the
-	 * common base event format.
+	 * Return an XML representation of a CICS event referred to as the common base event format.
 	 * 
 	 * @param props
 	 *            - the properties table to use
@@ -2803,8 +2696,7 @@ public class Emit {
 	}
 
 	/**
-	 * Return an XML representation of a CICS event referred to as the
-	 * common base event REST format.
+	 * Return an XML representation of a CICS event referred to as the common base event REST format.
 	 * 
 	 * @param props
 	 *            - the properties table to use
@@ -2816,8 +2708,8 @@ public class Emit {
 	}
 
 	/**
-	 * Return an XML representation of elements that are common to both the
-	 * common base event and common base event REST format.
+	 * Return an XML representation of elements that are common to both the common base event and common base event REST
+	 * format.
 	 * 
 	 * @param props
 	 *            - the properties table to use
@@ -2826,26 +2718,25 @@ public class Emit {
 	private static StringBuilder getCommonBaseEventSection(EmitProperties props) {
 		StringBuilder sb = new StringBuilder();
 
-		sb.append("<cics:event xmlns:cics=\"http://www.ibm.com/xmlns/prod/cics/events/CBE\">")
-				.append("<cics:context-info><cics:eventname>")
-				.append(props.getProperty("EPCX_BUSINESSEVENT"))
-				.append("</cics:eventname><cics:usertag>")
-				.append(props.getProperty("EPCX_EBUSERTAG"))
-				.append("</cics:usertag><cics:networkapplid>")
-				.append(props.getProperty("EPCX_NETQUAL"))
-				.append(".")
-				.append(props.getProperty("EPCX_APPLID"))
-				.append("</cics:networkapplid><cics:timestamp>")
-				.append(rfc3339.format(new Date()))
-				.append("</cics:timestamp><cics:bindingname>")
-				.append(props.getProperty("EPCX_EVENT__BINDING"))
-				.append("</cics:bindingname><cics:capturespecname>")
-				.append(props.getProperty("EPCX_CS__NAME"))
-				.append("</cics:capturespecname><cics:UOWid>")
-				.append(props.getProperty("EPCX_UOWID"))
-				.append("</cics:UOWid></cics:context-info><cics:payload-data><data:payload xmlns:data=\"http://www.ibm.com/prod/cics/")
-				.append(props.getProperty("EPCX_EBUSERTAG")).append("/").append(props.getProperty("EPCX_BUSINESSEVENT"))
-				.append("\">");
+		sb.append("<cics:event xmlns:cics=\"http://www.ibm.com/xmlns/prod/cics/events/CBE\">");
+
+		sb.append("<cics:context-info>");
+
+		sb.append("<cics:eventname>").append(props.getProperty("EPCX_BUSINESSEVENT")).append("</cics:eventname>");
+		sb.append("<cics:usertag>").append(props.getProperty("EPCX_EBUSERTAG")).append("</cics:usertag>");
+		sb.append("<cics:networkapplid>").append(props.getProperty("EPCX_NETQUAL")).append(".").append(props.getProperty("EPCX_APPLID"))
+				.append("</cics:networkapplid>");
+		sb.append("<cics:timestamp>").append(rfc3339.format(new Date())).append("</cics:timestamp>");
+		sb.append("<cics:bindingname>").append(props.getProperty("EPCX_EVENT__BINDING")).append("</cics:bindingname>");
+		sb.append("<cics:capturespecname>").append(props.getProperty("EPCX_CS__NAME")).append("</cics:capturespecname>");
+		sb.append("<cics:UOWid>").append(props.getProperty("EPCX_UOWID")).append("</cics:UOWid>");
+
+		sb.append("</cics:context-info>");
+
+		sb.append("<cics:payload-data>");
+
+		sb.append("<data:payload xmlns:data=\"http://www.ibm.com/prod/cics/").append(props.getProperty("EPCX_EBUSERTAG")).append("/")
+				.append(props.getProperty("EPCX_BUSINESSEVENT")).append("\">");
 
 		for (Map.Entry<String, Integer> entry : props.getBusinessInformationItems().entrySet()) {
 			String key = entry.getKey();
@@ -2862,7 +2753,11 @@ public class Emit {
 			sb.append("</data:").append(key).append(">");
 		}
 
-		sb.append("</data:payload></cics:payload-data></cics:event>");
+		sb.append("</data:payload>");
+
+		sb.append("</cics:payload-data>");
+
+		sb.append("</cics:event>");
 
 		return sb;
 	}
@@ -2900,9 +2795,8 @@ public class Emit {
 	 *            -
 	 * @return byte[] representing the retrieved file, null otherwise.
 	 */
-	private static byte[] getFileUsingFTP(String filename, String server, String username, String userpassword, String transfer,
-			String mode, String epsv, String protocol, String trustmgr, String datatimeout, String proxyserver,
-			String proxyusername, String proxypassword, String anonymouspassword) {
+	private static byte[] getFileUsingFTP(String filename, String server, String username, String userpassword, String transfer, String mode, String epsv,
+			String protocol, String trustmgr, String datatimeout, String proxyserver, String proxyusername, String proxypassword, String anonymouspassword) {
 
 		FTPClient ftp;
 
@@ -2995,15 +2889,12 @@ public class Emit {
 		if (logger.isLoggable(Level.FINE)) {
 			StringBuilder sb = new StringBuilder();
 
-			sb.append(Emit.messages.getString("FTPAboutToGetFileFromServer")).append(" - ").append("file name:").append(filename)
-					.append(",server:").append(server).append(":").append(port).append(",username:").append(username)
-					.append(",userpassword:")
-					.append(userpassword != null && !"anonymous".equals(username) ? "<obscured>" : userpassword)
-					.append(",transfer:").append(transfer).append(",mode:").append(mode).append(",epsv:").append(epsv)
-					.append(",protocol:").append(protocol).append(",trustmgr:").append(trustmgr).append(",datatimeout:")
-					.append(datatimeout).append(",proxyserver:").append(proxyserver).append(":").append(proxyport)
-					.append(",proxyusername:").append(proxyusername).append(",proxypassword:")
-					.append(proxypassword != null ? "<obscured>" : null);
+			sb.append(Emit.messages.getString("FTPAboutToGetFileFromServer")).append(" - ").append("file name:").append(filename).append(",server:")
+					.append(server).append(":").append(port).append(",username:").append(username).append(",userpassword:")
+					.append(userpassword != null && !"anonymous".equals(username) ? "<obscured>" : userpassword).append(",transfer:").append(transfer)
+					.append(",mode:").append(mode).append(",epsv:").append(epsv).append(",protocol:").append(protocol).append(",trustmgr:").append(trustmgr)
+					.append(",datatimeout:").append(datatimeout).append(",proxyserver:").append(proxyserver).append(":").append(proxyport)
+					.append(",proxyusername:").append(proxyusername).append(",proxypassword:").append(proxypassword != null ? "<obscured>" : null);
 
 			logger.fine(sb.toString());
 		}
