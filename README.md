@@ -17,6 +17,9 @@ The received event can be formatted and:
 
 The application was originally released as the [IBM CA1Y: Send email from CICS Transaction Server for z/OS](http://www-01.ibm.com/support/docview.wss?uid=swg24033197) and referred to here as CA1Y for short. 
 
+## License
+This project is licensed under [Apache License Version 2.0](https://github.com/cicsdev/cics-event-consumer/blob/master/LICENSE).
+
 ## Requirements
 To run the application:
 * CICS TS TS V5.3 with APAR PI63005, or above.
@@ -45,7 +48,7 @@ To install or make changes to the application:
 Alternatively you can export the `com.ibm.cics.ca1y.web` project as a WAR file and install it into the Liberty JVM server using the dropins directory or an application entry in server.xml as described in topic [Deploying web applications directly to a Liberty JVM server](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.java.doc/JVMserver/create_libertyapp.html).
 
 ## Documentation
-For details on using the application to capture and process events see [ca1y.pdf](https://github.com/cicsdev/cics-event-consumer/blob/master/documentation/ca1y.pdf). Note Chapter 2 Installation is no longer relevant and should be ignored.
+See the [Wiki](https://github.com/cicsdev/cics-event-consumer/wiki).
     
 ## Logging
 The application uses the standard Java logging framework (java.util.logging) to write messages. These can be directed to the JVM server standard error (STDERR) file as follows: 
@@ -70,4 +73,4 @@ java.util.logging.SimpleFormatter.format=%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS %4$
 -Djava.util.logging.config.file=/usr/lpp/ca1y/examples/logging.properties
 ```
 
-* Enable the JVMSERVER resource.
+* Enable the JVMSERVER resource. 
