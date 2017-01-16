@@ -575,6 +575,9 @@ public class Emit {
 	 */
 	private static boolean callAdapters(EmitProperties props) {
 		boolean emissionSuccessful = true;
+		
+		// This method would benefit from using an array of the clases that implement the EmitAdapter interface
+		// however this would require use of Java 8 that introduced support for the static method validForEmission on the interface.
 
 		if (Email.validForEmission(props)) {
 			// Emit message to SMTP server
