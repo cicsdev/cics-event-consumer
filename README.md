@@ -17,9 +17,6 @@ The received event can be formatted and:
 
 The application was originally released as the [IBM CA1Y: Send email from CICS Transaction Server for z/OS](http://www-01.ibm.com/support/docview.wss?uid=swg24033197) and referred to here as CA1Y for short. 
 
-## License
-This project is licensed under [Apache License Version 2.0](https://github.com/cicsdev/cics-event-consumer/blob/master/LICENSE).
-
 ## Requirements
 To run the application:
 * CICS TS TS V5.3 with APAR PI63005, or above.
@@ -33,12 +30,13 @@ To install or make changes to the application:
 * Define, install and enable a CICS transaction with NAME(CA1Y), PROGRAM(CA1Y), TASKDATALOC(ANY).
 * Update the Liberty server configuration file server.xml to include the following features:
 
-```xml
+    ```xml
 <feature>cicst:link-1.0</feature>
 <feature>jaxrs-2.0</feature>
 <feature>jaxb-2.2</feature>
 <feature>javaMail-1.5</feature>
-```
+    ```
+    
 * Clone this repository, or download the repository [cics-event-consumer-master.zip](https://github.com/cicsdev/cics-event-consumer/archive/master.zip) and expand it.
 * In CICS Explorer, select `File` > `Import...` > `Existing Projects into Workspace` > `Select root directory` > `Browse` and select the repository `projects` directory. Select all the projects, then `Copy projects into workspace`, then `Finish`.
 * If your JVMSERVER resource name is not DFH$WLP, expand project com.ibm.cics.ca1y.web.cicsbundle, then edit com.ibm.cics.ca1y.web.warbundle, and update the value for jvmserver.
@@ -47,8 +45,8 @@ To install or make changes to the application:
 
 Alternatively you can export the `com.ibm.cics.ca1y.web` project as a WAR file and install it into the Liberty JVM server using the dropins directory or an application entry in server.xml as described in topic [Deploying web applications directly to a Liberty JVM server](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.java.doc/JVMserver/create_libertyapp.html).
 
-## Documentation
-See the [Wiki](https://github.com/cicsdev/cics-event-consumer/wiki).
+## Usage
+See the [Wiki](https://github.com/cicsdev/cics-event-consumer/wiki) and the [examples](https://github.com/cicsdev/cics-event-consumer/tree/master/examples).
     
 ## Logging
 The application uses the standard Java logging framework (java.util.logging) to write messages. These can be directed to the JVM server standard error (STDERR) file as follows: 
@@ -73,4 +71,7 @@ java.util.logging.SimpleFormatter.format=%1$tY-%1$tm-%1$td %1$tH:%1$tM:%1$tS %4$
 -Djava.util.logging.config.file=/usr/lpp/ca1y/examples/logging.properties
 ```
 
-* Enable the JVMSERVER resource. 
+* Enable the JVMSERVER resource.
+
+## License
+This project is licensed under [Apache License Version 2.0](https://github.com/cicsdev/cics-event-consumer/blob/master/LICENSE).
