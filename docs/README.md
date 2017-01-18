@@ -1,3 +1,9 @@
+# Contents
+{:.no_toc}
+
+* Will be replaced with the ToC
+{:toc}
+
 # cics-event-consumer
 This is a Java EE 7 web application that _consumes_ events produced by the CICS TS event processing support as a result of a CICS application event, a CICS system event, or a CICS policy event action.
 
