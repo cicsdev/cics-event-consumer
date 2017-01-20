@@ -1588,10 +1588,10 @@ public class Emit {
 				if (epcxVersion == 2) {
 					// EPCX version 2
 					props.setPropertyAndResolved("EPCX_VERSION", Long.toString(epcxv2.getEpcx__version()));
-					props.setPropertyAndResolved("EPCX_SCHEMA__VERSION", Short.toString(epcxv2.getEpcx__schema__version()));
-					props.setPropertyAndResolved("EPCX_SCHEMA__RELEASE", Short.toString(epcxv2.getEpcx__schema__release()));
-					props.setPropertyAndResolved("EPCX_EVENT__BINDING", epcxv2.getEpcx__event__binding().trim());
-					props.setPropertyAndResolved("EPCX_CS__NAME", epcxv2.getEpcx__cs__name().trim());
+					props.setPropertyAndResolved("EPCX_SCHEMA_VERSION", Short.toString(epcxv2.getEpcx__schema__version()));
+					props.setPropertyAndResolved("EPCX_SCHEMA_RELEASE", Short.toString(epcxv2.getEpcx__schema__release()));
+					props.setPropertyAndResolved("EPCX_EVENT_BINDING", epcxv2.getEpcx__event__binding().trim());
+					props.setPropertyAndResolved("EPCX_CS_NAME", epcxv2.getEpcx__cs__name().trim());
 					props.setPropertyAndResolved("EPCX_EBUSERTAG", epcxv2.getEpcx__ebusertag().trim());
 					props.setPropertyAndResolved("EPCX_BUSINESSEVENT", epcxv2.getEpcx__businessevent().trim());
 					props.setPropertyAndResolved("EPCX_NETQUAL", epcxv2.getEpcx__netqual().trim());
@@ -1613,10 +1613,10 @@ public class Emit {
 
 				props.setPropertyAndResolved("EPCX_STRUCTID", epcxv1.getEpcx__strucid().trim());
 				props.setPropertyAndResolved("EPCX_VERSION", Long.toString(epcxv1.getEpcx__version()));
-				props.setPropertyAndResolved("EPCX_SCHEMA__VERSION", Short.toString(epcxv1.getEpcx__schema__version()));
-				props.setPropertyAndResolved("EPCX_SCHEMA__RELEASE", Short.toString(epcxv1.getEpcx__schema__release()));
-				props.setPropertyAndResolved("EPCX_EVENT__BINDING", epcxv1.getEpcx__event__binding().trim());
-				props.setPropertyAndResolved("EPCX_CS__NAME", epcxv1.getEpcx__cs__name().trim());
+				props.setPropertyAndResolved("EPCX_SCHEMA_VERSION", Short.toString(epcxv1.getEpcx__schema__version()));
+				props.setPropertyAndResolved("EPCX_SCHEMA_RELEASE", Short.toString(epcxv1.getEpcx__schema__release()));
+				props.setPropertyAndResolved("EPCX_EVENT_BINDING", epcxv1.getEpcx__event__binding().trim());
+				props.setPropertyAndResolved("EPCX_CS_NAME", epcxv1.getEpcx__cs__name().trim());
 				props.setPropertyAndResolved("EPCX_EBUSERTAG", epcxv1.getEpcx__ebusertag().trim());
 				props.setPropertyAndResolved("EPCX_BUSINESSEVENT", epcxv1.getEpcx__businessevent().trim());
 				props.setPropertyAndResolved("EPCX_NETQUAL", epcxv1.getEpcx__netqual().trim());
@@ -2395,10 +2395,10 @@ public class Emit {
 		StringBuilder sb = new StringBuilder();
 
 		// Add header equivalent to CICS TS COBOL copybook DFHEPFEO.cpy
-		sb.append("EPFE0002").append(Util.rightPad(props.getProperty("EPCX_EVENT__BINDING"), 32)).append(Util.rightPad(props.getProperty("EPCX_EBUSERTAG"), 8))
+		sb.append("EPFE0002").append(Util.rightPad(props.getProperty("EPCX_EVENT_BINDING"), 32)).append(Util.rightPad(props.getProperty("EPCX_EBUSERTAG"), 8))
 				.append(Util.rightPad(props.getProperty("EPCX_BUSINESSEVENT"), 32)).append(Util.rightPad(props.getProperty("EPCX_UOWID"), 54))
 				.append(Util.rightPad(props.getProperty("EPCX_NETQUAL") + "." + props.getProperty("EPCX_APPLID"), 17))
-				.append(Util.rightPad(rfc3339.format(new Date()), 29)).append(Util.rightPad(props.getProperty("EPCX_CS__NAME"), 32))
+				.append(Util.rightPad(rfc3339.format(new Date()), 29)).append(Util.rightPad(props.getProperty("EPCX_CS_NAME"), 32))
 				.append(Util.rightPad(" ", 16));
 
 		// Add business information items in the order defined in the event binding
