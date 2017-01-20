@@ -7,7 +7,7 @@ For example it can be called:
 * by your program using the [EXEC CICS LINK PROGRAM(CA1Y)](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.applicationprogramming.doc/commands/dfhp4_link.html) command.
 * by your program using the [EXEC CICS START TRANSID(CA1Y) CHANNEL()](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.applicationprogramming.doc/commands/dfhp4_starttransidchannel.html) command.
 
-The received event or data can be formatted and:
+The received event, channel, or commarea can be formatted and:
 * sent as an email using the [Simple Mail Transfer Protocol (SMTP)](https://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol).
 * sent as an instant message using the [Extensible Messaging and Presence Protocol (XMPP)](https://en.wikipedia.org/wiki/XMPP).
 * stored in a zFS file, MVS file, or a CICS defined VSAM dataset.
@@ -20,7 +20,7 @@ The application was originally released as the [IBM CA1Y: Send email from CICS T
 ## Requirements
 To install or make changes to the application:
 * [IBM CICS Explorer](https://developer.ibm.com/mainframe/products/downloads/eclipse-tools/) 5.3.0.8, or above with features IBM CICS SDK for Java, and IBM CICS SDK for Servlet and JSP support.
-* Access to the Maven Central Repository to resolve dependencies.
+* Access to the Maven Central Repository or suitable proxy to resolve dependencies defined in [pom.xml](https://github.com/cicsdev/cics-event-consumer/blob/master/projects/com.ibm.cics.ca1y.web/pom.xml).
 
 To run the application:
 * CICS TS TS V5.3 with APAR PI63005, or above.
@@ -47,6 +47,9 @@ Alternatively you can export the `com.ibm.cics.ca1y.web` project as a WAR file a
 
 ## Usage
 See the [documentation](https://cicsdev.github.io/cics-event-consumer/) and the [examples](https://github.com/cicsdev/cics-event-consumer/tree/master/examples).
+
+## Motivation
+This project was started in 2012 as to demonstrate how to write CICS event adapter, and how the many APIs available in Java could be used to consume and process the events. Several customers raised the requirement to send an email from a CICS application asynchronously to the task, and the combination of event processing and the JavaMail API lead to the project being made available. As detailed in the [CHANGELOG](https://github.com/cicsdev/cics-event-consumer/blob/master/CHANGELOG.md), the project evolved meet new requirements - some motivated by customer need, and others to learn about Java, CICS, and JZOS APIs. It was moved to GitHub to encourage community engagement.   
     
 ## License
 This project is licensed under [Apache License Version 2.0](https://github.com/cicsdev/cics-event-consumer/blob/master/LICENSE).
