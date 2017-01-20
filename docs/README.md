@@ -1,4 +1,10 @@
-# README
+# Overview
+Love it or hate it, electronic mail has become an effective form of communication widely used in our private lives and dealings with businesses, governments, and other organizations. The trend towards on-line purchasing, investments, banking, managing utilities and tax returns is driving further adoption of email. For example customers now expect confirmation of orders, account alerts, and availability of statements to be sent within minutes via email.
 
+As many of today's transactions are hosted in CICS Transaction Server (CICS), it is not surprising the need to send emails from CICS applications has been raised a number of times on the [cics-l](https://listserv.meduniwien.ac.at/cgi-bin/wa?A0=cics-l&D=0&F=&H=0&O=T&S=&T=0) list and customer surveys.
 
+There are already a number of solutions to send emails from CICS and batch, such as the [z/OS Communications Server SMTP application](http://pic.dhe.ibm.com/infocenter/zos/v1r13/topic/com.ibm.zos.r13.halz001/smt.htm#smt) and the spool interface, intermediaries such as process servers, and writing your own SMTP client. These solutions however can be inflexible in creating the email content, lack immediacy, require in-depth knowledge of SMTP, require code to be developed and maintained, or require the purchase of additional products.
 
+This SupportPac provides an SMTP client to send emails and attachments that is quick to setup, easy to call from your CICS application, CICS event, batch JCL or script. It runs in Java and therefore eligible for off-loading onto a [System z Application Assist Processor zAAP specialty engine](http://www.ibm.com/systems/z/hardware/features/zaap/index.html).
+
+In addition to sending emails, the SupportPac is able to write to CICS temporary data (TD) queues and temporary storage (TS) queues, submit MVS jobs, issue MVS console messages, and send HTTP requests. TD queues can be used as an audit trail or monitored by systems management tools to initiate automation scripts. TS queues are useful to test the capture, emission and formatting of events. MVS jobs and console messages can be used to automate system activity, issue modify commands, or initiate batch work. HTTP requests could initiate many types of activity such as sending SMS messages or updating dashboards.
