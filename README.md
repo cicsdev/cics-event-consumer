@@ -29,14 +29,12 @@ To run the application:
 ## Installation
 1 Define, install and enable a CICS transaction with NAME(CA1Y), PROGRAM(CA1Y), TASKDATALOC(ANY).
 * Update the Liberty server configuration file server.xml to include the following features:
-
-    ```xml
+ ```xml
 <feature>cicst:link-1.0</feature>
 <feature>jaxrs-2.0</feature>
 <feature>jaxb-2.2</feature>
 <feature>javaMail-1.5</feature>
-  ```
-        
+  ```   
 * Clone this repository, or download the repository [cics-event-consumer-master.zip](https://github.com/cicsdev/cics-event-consumer/archive/master.zip) and expand it.
 * In CICS Explorer, select `File` > `Import...` > `Existing Projects into Workspace` > `Select root directory` > `Browse` and select the repository `projects` directory. Select all the projects, then `Copy projects into workspace`, then `Finish`.
 * If your JVMSERVER resource name is not DFH$WLP, expand project com.ibm.cics.ca1y.web.cicsbundle, then edit com.ibm.cics.ca1y.web.warbundle, and update the value for jvmserver.
@@ -49,7 +47,7 @@ Alternatively you can export the `com.ibm.cics.ca1y.web` project as a WAR file a
 See the [documentation](https://cicsdev.github.io/cics-event-consumer/) and the [examples](https://github.com/cicsdev/cics-event-consumer/tree/master/examples).
 
 ## Motivation
-This project was started in 2012 as to demonstrate how to write CICS event adapter, and how the many APIs available in Java could be used to consume and process the events. Several customers raised the requirement to send an email from a CICS application asynchronously to the task, and the combination of event processing and the JavaMail API lead to the project being made available. As detailed in the [CHANGELOG](https://github.com/cicsdev/cics-event-consumer/blob/master/CHANGELOG.md), the project evolved meet new requirements - some motivated by customer need, and others to learn about Java, CICS, and JZOS APIs. It was moved to GitHub to encourage community engagement.   
+This project was started in 2012 as to demonstrate how to write CICS event adapter, and how the many APIs available in Java could be used to consume and process the events. Several customers raised the requirement to send an email from a CICS application asynchronously to the task, and the combination of event processing and the JavaMail API lead to the project being made available. As detailed in the [CHANGELOG](https://github.com/cicsdev/cics-event-consumer/blob/master/CHANGELOG.md), the project evolved to meet new requirements - some motivated by customer need, and others to learn about Java, CICS, and JZOS APIs. It was moved to GitHub to encourage community engagement.   
     
 ## License
 This project is licensed under [Apache License Version 2.0](https://github.com/cicsdev/cics-event-consumer/blob/master/LICENSE).
