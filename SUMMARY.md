@@ -2,7 +2,6 @@
 
 ## Reference
 * [Introduction](docs/README.md)
-* [Overview](docs/README.md)
 * [Properties](docs/properties.md)
     * [General](docs/general.md)
     * [Batch job](docs/batch-job.md)
