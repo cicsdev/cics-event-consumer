@@ -1,8 +1,8 @@
 # Summary
 
 ## Reference
-* [Overview](README.md)
-* [Properties](properties.md)
+* [Overview](docs/README.md)
+* [Properties](docs/properties.md)
     * [General](docs/general.md)
     * [Batch job](docs/batch-job.md)
     * [HTTP - CICS](docs/cics-http.md)
