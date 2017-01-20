@@ -1,5 +1,5 @@
 # cics-event-consumer
-cics-event-consumer is a Java EE 7 web application that _consumes_ events produced by the [CICS Transaction Server](http://www.ibm.com/software/products/en/cics-tservers) event processing support as a result of a CICS application event, a CICS system event, or a CICS policy event action. The application can also be called with a simple CICS LINK or START command.
+cics-event-consumer is a Java EE 7 web application that _consumes_ events produced by the [CICS Transaction Server](http://www.ibm.com/software/products/en/cics-tservers) event processing support as a result of a CICS application event, a CICS system event, or a CICS policy event action. The application can also be called directly using the CICS LINK or START command.
 
 For example it can be called:
 * by CICS directly as a [custom event processing adapter](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.eventprocessing.doc/concepts/dfhep_event_processing_adapters.html).
