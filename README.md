@@ -35,7 +35,7 @@ To run the application:
 <feature>jaxrs-2.0</feature>
 <feature>jaxb-2.2</feature>
 <feature>javaMail-1.5</feature>
-  ```
+    ```
   
 1 Clone this repository, or download the repository [cics-event-consumer-master.zip](https://github.com/cicsdev/cics-event-consumer/archive/master.zip) and expand it.
 1 In CICS Explorer, select `File` > `Import...` > `Existing Projects into Workspace` > `Select root directory` > `Browse` and select the repository `projects` directory. Select all the projects, then `Copy projects into workspace`, then `Finish`.
