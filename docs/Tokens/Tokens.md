@@ -1,2 +1,0 @@
-# Test header
-Test text
