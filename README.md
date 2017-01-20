@@ -23,7 +23,7 @@ To install or make changes to the application:
 * Access to the Maven Central Repository or suitable proxy to resolve dependencies defined in [pom.xml](https://github.com/cicsdev/cics-event-consumer/blob/master/projects/com.ibm.cics.ca1y.web/pom.xml).
 
 To run the application:
-* CICS TS TS V5.3 with APAR PI63005, or above.
+* CICS TS TS V5.3 with APAR [PI63005](http://www.ibm.com/support/docview.wss?crawler=1&uid=swg1PI63005).
 * A configured CICS integrated-mode Liberty JVM server, as described in topic [Configuring a Liberty JVM server](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.java.doc/JVMserver/config_jvmserver_liberty.html). 
 
 ## Installation
@@ -37,10 +37,10 @@ To run the application:
 <feature>javaMail-1.5</feature>
     ```
 * Clone this repository, or download the repository [cics-event-consumer-master.zip](https://github.com/cicsdev/cics-event-consumer/archive/master.zip) and expand it.
-* In CICS Explorer, select `File` > `Import...` > `Existing Projects into Workspace` > `Select root directory` > `Browse` and select the repository `projects` directory. Select all the projects, then `Copy projects into workspace`, then `Finish`.
+* In CICS Explorer, select `File` &rarr; `Import...` &rarr; `Existing Projects into Workspace` &rarr; `Select root directory` &rarr; `Browse` and select the repository `projects` directory. Select all the projects, then `Copy projects into workspace`, then `Finish`.
 * If your JVMSERVER resource name is not DFH$WLP, expand project com.ibm.cics.ca1y.web.cicsbundle, then edit com.ibm.cics.ca1y.web.warbundle, and update the value for jvmserver.
-* Export the `com.ibm.cics.ca1y.web.cicsbundle` CICS Bundle project using the wizard `Export Bundle Project to z/OS UNIX File System...` to a directory on zFS, eg. /usr/lpp/ca1y/com.ibm.cics.ca1y.web.cicsbundle_1.7.1
-* Define, install and enable the CICS bundle with NAME(CA1Y), BUNDLEDIR(/usr/lpp/ca1y/com.ibm.cics.ca1y.web.cicsbundle_1.7.1).
+* Export the `com.ibm.cics.ca1y.web.cicsbundle` CICS Bundle project using the wizard `Export Bundle Project to z/OS UNIX File System...` to a directory on zFS such as /usr/lpp/ca1y/com.ibm.cics.ca1y.web.cicsbundle_1.8.0
+* Define, install and enable the CICS bundle with NAME(CA1Y), BUNDLEDIR(/usr/lpp/ca1y/com.ibm.cics.ca1y.web.cicsbundle_1.8.0).
 
 Alternatively you can export the `com.ibm.cics.ca1y.web` project as a WAR file and install it into the Liberty JVM server using the dropins directory or an application entry in server.xml as described in topic [Deploying web applications directly to a Liberty JVM server](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.java.doc/JVMserver/create_libertyapp.html).
 
