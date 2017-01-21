@@ -1,5 +1,5 @@
 # Troubleshooting
-Use the following checklist to diagnose problems using the SupportPac.
+Use the following checklist to diagnose problems.
 
 1. The application will issue the CICS abend CA1Y if it is started as a custom event adapter and the event could not be emitted.
 * Ensure the steps listed under [Installation](https://github.com/cicsdev/cics-event-consumer/blob/master/README.md#installation) were followed.
@@ -17,5 +17,5 @@ Use the following checklist to diagnose problems using the SupportPac.
 * Check you are using the latest version of the project as it may contain fixes and it will be easier to diagnose and fix your issue.
 * If you are having issues creating a Java regular expression, as used in the property token.regex and tokens htmltable and texttable, you may find site http://www.regexplanet.com/advanced/java/index.html useful to try and evaluate expressions.
 
-## Raising bugs
-1. If you suspect the project has a bug, please use the GitHub [issue](https://github.com/cicsdev/cics-event-consumer/issues) page.
+
+If you suspect the project has a bug, please use the GitHub [issue](https://github.com/cicsdev/cics-event-consumer/issues) page.
