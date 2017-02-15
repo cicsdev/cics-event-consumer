@@ -1,6 +1,6 @@
 # Changelog
 
-## Version 1.8.0 - January 2017 - in development
+## Version 1.8.0 - February 2017 - in development
 * Move project from [IBM SupportPac CA1Y](http://www-01.ibm.com/support/docview.wss?uid=swg24033197) to [cics-event-consumer](https://github.com/cicsdev/cics-event-consumer).
 * New support to use the Java JAX-RS framework to send HTTP requests to a server.
 * Breaking changes:
