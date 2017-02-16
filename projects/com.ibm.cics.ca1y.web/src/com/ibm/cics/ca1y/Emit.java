@@ -33,6 +33,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.nio.charset.Charset;
 import java.text.DecimalFormat;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.BitSet;
@@ -574,23 +575,30 @@ public class Emit {
 	 * @return true if adapters successfully emitted data
 	 */
 	private static boolean callAdapters(EmitProperties props) {
-		boolean emissionSuccessful = true;
+		int adaptersSuccessful = 0;
+		int adaptersFailed = 0;
 		
 		// This method would benefit from using an array of the clases that implement the EmitAdapter interface
 		// however this would require use of Java 8 that introduced support for the static method validForEmission on the interface.
 
+		if (logger.isLoggable(Level.FINE)) {
+			logger.fine(messages.getString("AdaptersAboutToCall"));
+		}
+		
 		if (Email.validForEmission(props)) {
 			// Emit message to SMTP server
 
 			if (props.isPropertyTrue(CA1Y_RECOVERABLE)) {
-				emissionSuccessful = false;
+				adaptersFailed++;
 				logger.warning(messages.getString("RecoverableEventNotSupportedEmail"));
 
 			} else {
 				Email email = new Email(props);
 
-				if (email.send() == false) {
-					emissionSuccessful = false;
+				if (email.send()) {
+					adaptersSuccessful++;
+				} else {
+					adaptersFailed++;
 				}
 			}
 		}
@@ -599,8 +607,11 @@ public class Emit {
 			// Emit message to a CICS queue. Note it is not possible to establish via JCICS if the queue is recoverable
 			// or not, so cannot guard against using a recoverable event with a non-recoverable queue
 			CICSQueue cicsQueue = new CICSQueue(props);
-			if (cicsQueue.send() == false) {
-				emissionSuccessful = false;
+			
+			if (cicsQueue.send()) {
+				adaptersSuccessful++;
+			} else {
+				adaptersFailed++;
 			}
 		}
 
@@ -609,14 +620,16 @@ public class Emit {
 
 			if (props.isPropertyTrue(CA1Y_RECOVERABLE)) {
 				// Events required to be recoverable are not supported
-				emissionSuccessful = false;
+				adaptersFailed++;
 				logger.warning(messages.getString("RecoverableEventNotSupportedMVSJOB"));
 
 			} else {
 				MVSJob mvsJob = new MVSJob(props);
 
-				if (mvsJob.send() == false) {
-					emissionSuccessful = false;
+				if (mvsJob.send()) {
+					adaptersSuccessful++;
+				} else {
+					adaptersFailed++;
 				}
 			}
 		}
@@ -626,14 +639,16 @@ public class Emit {
 
 			if (props.isPropertyTrue(CA1Y_RECOVERABLE)) {
 				// Events required to be recoverable are not supported
-				emissionSuccessful = false;
+				adaptersFailed++;
 				logger.warning(messages.getString("RecoverableEventNotSupportedMVSWTO"));
 
 			} else {
 				MVSWriteToOperator mvsWriteToOperator = new MVSWriteToOperator(props);
 
-				if (mvsWriteToOperator.send() == false) {
-					emissionSuccessful = false;
+				if (mvsWriteToOperator.send()) {
+					adaptersSuccessful++;
+				} else {
+					adaptersFailed++;
 				}
 			}
 		}
@@ -643,30 +658,35 @@ public class Emit {
 
 			if (props.isPropertyTrue(CA1Y_RECOVERABLE)) {
 				// Events required to be recoverable are not supported
-				emissionSuccessful = false;
+				adaptersFailed++;
 				logger.warning(messages.getString("RecoverableEventNotSupportedHTTP"));
 
 			} else {
 				JavaHTTP http = new JavaHTTP(props);
 
-				if (http.send() == false) {
-					emissionSuccessful = false;
+				if (http.send()) {
+					adaptersSuccessful++;
+				} else {
+					adaptersFailed++;
 				}
 			}
 		}
+		
 		if (CICSHTTP.validForEmission(props)) {
 			// Emit message to an HTTP server
 
 			if (props.isPropertyTrue(CA1Y_RECOVERABLE)) {
 				// Events required to be recoverable are not supported
-				emissionSuccessful = false;
+				adaptersFailed++;
 				logger.warning(messages.getString("RecoverableEventNotSupportedHTTP"));
 
 			} else {
 				CICSHTTP cicsHTTP = new CICSHTTP(props);
 
-				if (cicsHTTP.send() == false) {
-					emissionSuccessful = false;
+				if (cicsHTTP.send()) {
+					adaptersSuccessful++;
+				} else {
+					adaptersFailed++;
 				}
 			}
 		}
@@ -676,19 +696,30 @@ public class Emit {
 
 			if (props.isPropertyTrue(CA1Y_RECOVERABLE)) {
 				// Events required to be recoverable are not supported
-				emissionSuccessful = false;
+				adaptersFailed++;
 				logger.warning(messages.getString("RecoverableEventNotSupportedJZOS"));
 
 			} else {
 				JZOSFile pdsFile = new JZOSFile(props);
 
-				if (pdsFile.send() == false) {
-					emissionSuccessful = false;
+				if (pdsFile.send()) {
+					adaptersSuccessful++;
+				} else {
+					adaptersFailed++;
 				}
 			}
 		}
 
-		return emissionSuccessful;
+		if (logger.isLoggable(Level.FINE)) {
+			logger.fine(MessageFormat.format(messages.getString("AdaptersCalled"), adaptersSuccessful, adaptersFailed));
+		}
+		
+		if ((adaptersSuccessful == 0) || (adaptersFailed > 0)) {
+			// Return false if there were adapters called successfully or any adapters had a failure
+			return false;
+		}
+		
+		return true;
 	}
 
 	/**
