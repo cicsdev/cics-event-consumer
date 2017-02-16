@@ -421,6 +421,8 @@ public class Emit {
 	 * @return true if emission was successful
 	 */
 	public static boolean emit(EmitProperties props, Channel cicsChannel, boolean isStartedWithEPAdpter) {
+		// Maximum number of nested imports
+		final int MAX_NESTED_IMPORTS = 10;
 
 		boolean emissionSuccessful = true;
 		try {
@@ -448,7 +450,8 @@ public class Emit {
 				pattern = getPattern(props);
 			}
 
-			if (props.containsKey(IMPORT)) {
+			int nestedImports = 0;
+			while ((props.containsKey(IMPORT)) && (nestedImports <= MAX_NESTED_IMPORTS)) {
 				// Merge properties from the supplied property import
 				if (logger.isLoggable(Level.FINE)) {
 					logger.fine(messages.getString("LoadingPropertiesFromImport") + " " + IMPORT);
@@ -456,15 +459,20 @@ public class Emit {
 
 				resolveTokensInKey(IMPORT, pattern, props, cicsChannel, isStartedWithEPAdpter, false);
 
-				if (!Util.loadProperties(props, props.getProperty(IMPORT))) {
-					logger.warning(Emit.messages.getString("InvalidImportProperties") + " " + IMPORT);
-				}
+				String importString = props.getProperty(IMPORT);
 
-				// Remove the IMPORT property otherwise it will go through unnecessary token processing
+				// Remove the IMPORT property to allow for nested IMPORTs
 				props.remove(IMPORT);
+				props.setPropertyResolved(IMPORT, false);
+
+				if (!Util.loadProperties(props, importString)) {
+					logger.warning(Emit.messages.getString("InvalidImportProperties") + " " + IMPORT + "=" + importString);
+				}
 
 				// Re-evaluate token regex as the imported properties may have changed it
 				pattern = getPattern(props);
+				
+				nestedImports++;
 			}
 
 			if (props.containsKey(IMPORT_PRIVATE)) {
