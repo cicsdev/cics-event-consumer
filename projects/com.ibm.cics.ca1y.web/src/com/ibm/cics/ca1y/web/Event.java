@@ -67,7 +67,7 @@ public class Event {
 	public Response createEvent(String eventXML, @Context UriInfo info) {
 		
 		if (logger.isLoggable(Level.FINE)) {
-			logger.fine(messages.getString("EventReceived") + ": " + eventXML);
+			logger.fine(messages.getString("EventReceived") + ": URI:" + info.getRequestUri() + ",User data:" + eventXML);
 		}
 		
 		if (eventXML == null) {
@@ -75,13 +75,19 @@ public class Event {
 			return Response.status(Response.Status.NO_CONTENT).build();
 		}
 		
-		// Whether event was successfully processed
+		/**
+		 *  Whether event was successfully processed 
+		 */
 		boolean emitEvent = false;
 
-		// Properties for event extracted from received XML
+		/**
+		 * Properties for event extracted from received XML
+		 */ 
 		EmitProperties props = new EmitProperties();
 		
-		// JAXB generated class is used to hold the parsed XML data
+		/**
+		 * JAXB generated class is used to hold the parsed XML data
+		 */ 
 		com.ibm.xmlns.prod.cics.events.cbe.Event event = null;
 
 		try {
@@ -99,6 +105,7 @@ public class Event {
 			if (logger.isLoggable(Level.FINE)) {
 				logger.fine(messages.getString("EventFailedXMLParsing") + ": " + e);
 			}
+			
 			event = null;
 		}
 		
