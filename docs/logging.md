@@ -1,8 +1,8 @@
 # Logging
-The application uses the standard Java logging framework (java.util.logging) to write messages. These can be directed to the JVM server standard error (STDERR) file as follows: 
+The application uses the Java logging framework [java.util.logging](https://docs.oracle.com/javase/8/docs/technotes/guides/logging/overview.html#a1.0) to write INFO and FINE messages. These can be directed to the JVM server standard error (STDERR) file as follows: 
 
 1. Disable the JVMSERVER resource.
-* Create a logging.properties file on zFS to specify the logging parameters. For example create /usr/lpp/ca1y/examples/logging.properties containing the following:
+* Create a logging.properties file on zFS to specify the logging parameters. The file should be saved in the JVM file encoding specified by the `-Dfile.encoding` parameter in the JVM server profile, typically ISO-8859-1. For example create /usr/lpp/ca1y/examples/logging.properties containing the following:
  ```properties
 # Logging levels
 java.util.logging.ConsoleHandler.level=ALL
