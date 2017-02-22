@@ -3,6 +3,7 @@
 ## Version 1.8.0 - February 2017 - in development
 * Move project from [IBM SupportPac CA1Y](http://www-01.ibm.com/support/docview.wss?uid=swg24033197) to [cics-event-consumer](https://github.com/cicsdev/cics-event-consumer).
 * New support to use the Java JAX-RS framework to send HTTP requests to a server.
+* The `import` property can now import a file that itself contains an `import` property. This allows for nested imports.
 * Breaking changes:
   * Change packaging from an OSGi application into a web application (.war) that results in the runtime requirement changing from an OSGi JVM server to a Liberty JVM server.
 
