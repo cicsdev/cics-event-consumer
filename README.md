@@ -1,13 +1,13 @@
 # ![](/assets/README.md)cics-event-consumer
 
-cics-event-consumer is a Java EE 7 web application that _consumes_ events produced by the [CICS Transaction Server](http://www.ibm.com/software/products/en/cics-tservers) event processing support as a result of a CICS application event, a CICS system event, or a CICS policy event action. The application can also be called directly using the CICS LINK or START command.
+cics-event-consumer is a Java EE 7 web application that _consumes_ events produced by [CICS Transaction Server](http://www.ibm.com/software/products/en/cics-tservers). Events are produced as a result of a CICS application event, a CICS system event, or a CICS policy event action. The application can also be called directly using the CICS LINK or START command.
 
-For example it can be called:
+cics-event-consumer can be called:
 
-* by CICS directly as a [custom event processing adapter](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.eventprocessing.doc/concepts/dfhep_event_processing_adapters.html).
-* by the CICS [HTTP EP adapter](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.eventprocessing.doc/concepts/dfhep_event_processing_http_adapter.html) with events formatted using the [common base event REST format](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.eventprocessing.doc/reference/dfhep_event_processing_cberformat.html).
-* by your program using the [EXEC CICS LINK PROGRAM\(CA1Y\)](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.applicationprogramming.doc/commands/dfhp4_link.html) command.
-* by your program using the [EXEC CICS START TRANSID\(CA1Y\) CHANNEL\(\)](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.applicationprogramming.doc/commands/dfhp4_starttransidchannel.html) command.
+* by CICS directly as a [custom event processing adapter](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.5.0/reference/event-processing/dfhep_event_processing_adapters.html).
+* by the CICS [HTTP EP adapter](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.5.0/reference/event-processing/dfhep_event_processing_http_adapter.html) with events formatted using the [common base event REST format](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.5.0/reference/event-processing/dfhep_event_processing_cberformat.html).
+* by your program using the [EXEC CICS LINK PROGRAM\(CA1Y\)](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.5.0/reference/commands-api/dfhp4_link.html) command, passing a COMMAREA or CHANNEL.
+* by your program using the [EXEC CICS START TRANSID\(CA1Y\) CHANNEL\(\)](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.5.0/reference/commands-api/dfhp4_starttransidchannel.html) command.
 
 The received event, channel, or commarea can be formatted and:
 
@@ -24,17 +24,17 @@ The application was originally released as the [IBM CA1Y: Send email from CICS T
 
 To install or make changes to the application:
 
-* [IBM CICS Explorer](https://developer.ibm.com/mainframe/products/downloads/eclipse-tools/) 5.3.0.8, or above with features IBM CICS SDK for Java, and IBM CICS SDK for Servlet and JSP support.
+* [IBM CICS Explorer](https://developer.ibm.com/mainframe/products/downloads/eclipse-tools/) 5.3.0.8, or later with features IBM CICS SDK for Java, and IBM CICS SDK for Servlet and JSP support.
 * Access to the Maven Central Repository or suitable proxy to resolve dependencies defined in [pom.xml](https://github.com/cicsdev/cics-event-consumer/blob/master/projects/com.ibm.cics.ca1y.web/pom.xml).
 
 To run the application:
 
-* CICS TS TS V5.3 with APAR [PI63005](http://www.ibm.com/support/docview.wss?crawler=1&uid=swg1PI63005).
-* A configured CICS integrated-mode Liberty JVM server, as described in topic [Configuring a Liberty JVM server](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.java.doc/JVMserver/config_jvmserver_liberty.html). 
+* CICS TS TS V5.3 with APAR [PI63005](http://www.ibm.com/support/docview.wss?crawler=1&uid=swg1PI63005), or later.
+* A configured CICS integrated-mode Liberty JVM server, as described in topic [Configuring a Liberty JVM server](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.5.0/configuring/java/config_jvmserver_liberty.html). 
 
 ## Installation
 
-1. Define, install and enable a CICS transaction with NAME\(CA1Y\), PROGRAM\(CA1Y\), TASKDATALOC\(ANY\).
+1. Define, install and enable a CICS TRANSACTION resource with attributes NAME\(CA1Y\), PROGRAM\(CA1Y\), TASKDATALOC\(ANY\).
 2. Update the Liberty server configuration file server.xml to include the following features:
 
    ```xml
@@ -48,9 +48,9 @@ To run the application:
 4. In CICS Explorer, select `File` → `Import...` → `Existing Projects into Workspace` → `Select root directory` → `Browse` and select the repository `projects` directory. Select all the projects, then `Copy projects into workspace`, then `Finish`.
 5. If your JVMSERVER resource name is not DFH$WLP, expand project com.ibm.cics.ca1y.web.cicsbundle, then edit com.ibm.cics.ca1y.web.warbundle, and update the value for jvmserver.
 6. Export the `com.ibm.cics.ca1y.web.cicsbundle` CICS Bundle project using the wizard `Export Bundle Project to z/OS UNIX File System...` to a directory on zFS such as /usr/lpp/ca1y/com.ibm.cics.ca1y.web.cicsbundle\_1.8.0
-7. Define, install and enable the CICS bundle with NAME\(CA1Y\), BUNDLEDIR\(/usr/lpp/ca1y/com.ibm.cics.ca1y.web.cicsbundle\_1.8.0\).
+7. Define, install and enable the CICS BUNDLE resource with attributes NAME\(CA1Y\), BUNDLEDIR\(/usr/lpp/ca1y/com.ibm.cics.ca1y.web.cicsbundle\_1.8.0\).
 
-Alternatively you can export the `com.ibm.cics.ca1y.web` project as a WAR file and install it into the Liberty JVM server using the dropins directory or an application entry in server.xml as described in topic [Deploying web applications directly to a Liberty JVM server](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.java.doc/JVMserver/create_libertyapp.html).
+Alternatively you can export the `com.ibm.cics.ca1y.web` project as a WAR file and install it into the Liberty JVM server using the dropins directory, or add an application entry in server.xml as described in topic [Deploying web applications directly to a Liberty JVM server](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.5.0/applications/deploying/create_libertyapp.html).
 
 ## Usage
 
@@ -58,7 +58,7 @@ See the [documentation](https://cicsdev.github.io/cics-event-consumer/) and the 
 
 ## Motivation
 
-This project was started in 2012 as to demonstrate how to write CICS event adapter, and how the many APIs available in Java could be used to consume and process the events. Several customers raised the requirement to send an email from a CICS application asynchronously to the task, and the combination of event processing and the JavaMail API lead to the project being made available. As detailed in the [CHANGELOG](https://github.com/cicsdev/cics-event-consumer/blob/master/CHANGELOG.md), the project evolved to meet new requirements - some motivated by customer need, and others to learn about Java, CICS, and JZOS APIs. It was moved to GitHub to encourage community engagement.
+This project was started in 2012 as to demonstrate how to write a CICS event adapter, and how the many APIs available in Java could be used to consume and process the events. Several customers raised the requirement to send an email from a CICS application asynchronously to the task, and the combination of event processing and the JavaMail API lead to the project being made available. As detailed in the [CHANGELOG](https://github.com/cicsdev/cics-event-consumer/blob/master/CHANGELOG.md), the project evolved to meet new requirements - some motivated by customer need, and others to learn about Java, CICS, and JZOS APIs. It was moved to GitHub and the license changed to encourage community engagement.
 
 ## License
 
