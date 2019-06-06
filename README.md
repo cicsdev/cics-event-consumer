@@ -29,7 +29,7 @@ To install or make changes to the application:
 
 To run the application:
 
-* CICS TS TS V5.3 with APAR [PI63005](http://www.ibm.com/support/docview.wss?crawler=1&uid=swg1PI63005), or later.
+* CICS TS V5.3 with APAR [PI63005](http://www.ibm.com/support/docview.wss?crawler=1&uid=swg1PI63005), or later.
 * A configured CICS integrated-mode Liberty JVM server, as described in topic [Configuring a Liberty JVM server](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.5.0/configuring/java/config_jvmserver_liberty.html). 
 
 ## Installation
@@ -38,7 +38,7 @@ To run the application:
 2. Update the Liberty server configuration file server.xml to include the following features:
 
    ```xml
-   <feature>cicst:link-1.0</feature>
+   <feature>cicsts:link-1.0</feature>
    <feature>jaxrs-2.0</feature>
    <feature>jaxb-2.2</feature>
    <feature>javaMail-1.5</feature>
