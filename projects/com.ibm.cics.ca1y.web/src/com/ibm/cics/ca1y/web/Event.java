@@ -40,10 +40,8 @@ import com.ibm.cics.ca1y.EmitProperties;
 /**
  * Consumes CICS Common base event REST format
  * 
- * For details of this format see the CICS Knowledge Center
- * http://www.ibm.com/support
- * /knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.eventprocessing
- * .doc/reference/dfhep_event_processing_cberformat.html
+ * For details of this format see the CICS documentation
+ * https://www.ibm.com/support/knowledgecenter/SSGMCP_5.6.0/reference-applications/event-processing/dfhep_formats.html
  * 
  * @author Mark Cocker <mark_cocker@uk.ibm.com>
  * @version 1.8.0

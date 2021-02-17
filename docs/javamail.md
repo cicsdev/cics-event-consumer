@@ -38,7 +38,7 @@ mail.to="Joe Bloggs" <j.bloggs@example.com>, “A N Other” <a.n.other@example.
 ```properties
 mail.sentdate=003609661860917
  ```
-* Complete [emailServer.properties](https://github.com/cicsdev/cics-event-consumer/blob/master/examples/emailServer.properties)
+* Complete [emailServer.properties](../examples/emailServer.properties)
 
 ### Examples using tokens for email attachments
 You can add one or more properties to an email as attachments. Email clients can typically preview and save attachments, or start other applications to handle them. Tokens can be used in combination to specify the attachment contents, name and mime type.

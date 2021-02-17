@@ -3,7 +3,7 @@ Use these properties to write content to a CICS temporary storage (TS) or tempor
 
 Property | Usage
 --- | ---
-queue&nbsp;=&nbsp;_queueName_ | **Required**. The queue name. Follow the queue naming rules defined by CICS. For TS queues see [QNAME(name)](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.applicationprogramming.doc/commands/dfhp4_writeqts.html). For TD queues see [QUEUE(name)](http://www.ibm.com/support/knowledgecenter/SSGMCP_5.3.0/com.ibm.cics.ts.applicationprogramming.doc/commands/dfhp4_writeqtd.html).
+queue&nbsp;=&nbsp;_queueName_ | **Required**. The queue name. Follow the queue naming rules defined by CICS. For TS queues see [QNAME(name)](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.6.0/reference-applications/commands-api/dfhp4_writeqts.html). For TD queues see [QUEUE(name)](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.6.0/reference-applications/commands-api/dfhp4_writeqtd.html).
 queue.content&nbsp;=&nbsp;_value_ | **Required**. Text content to write to the queue.
 queue.content.encoding&nbsp;=&nbsp;_value_ | Content is written to the queue using the specified encoding. If not specified the CICS region local CCSID will be used.
 queue.content.length.chunk&nbsp;=&nbsp;_maxLength_ | The maximum length of content to write in a single queue record. If the content is beyond this length, multiple queue records will be written. In this situation it is possible other CICS tasks may write records to the same queue and become interspersed with records written by this task. If this property is not specified, the content will be written as a single record and truncation may occur.
