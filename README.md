@@ -1,6 +1,6 @@
 # cics-event-consumer
 
-cics-event-consumer is a Java EE 7 web application that _consumes_ events produced by [CICS Transaction Server](http://www.ibm.com/software/products/en/cics-tservers). Events are produced as a result of a CICS application event, a CICS system event, or a CICS policy event action. The application can also be called directly using the CICS LINK or START command.
+cics-event-consumer is a Java EE 7 web application that _consumes_ events produced by [CICS Transaction Server](https://www.ibm.com/products/cics-transaction-server). Events are produced as a result of a CICS application event, a CICS system event, or a CICS policy event action. The application can also be called directly using the CICS LINK or START command.
 
 cics-event-consumer can be called:
 
@@ -24,13 +24,13 @@ The application was originally released as the [IBM CA1Y: Send email from CICS T
 
 To install or make changes to the application:
 
-* [IBM CICS Explorer](https://developer.ibm.com/mainframe/products/downloads/eclipse-tools/) 5.3.0.8, or later with features IBM CICS SDK for Java, and IBM CICS SDK for Servlet and JSP support.
+* [IBM CICS Explorer](https://ibm.github.io/mainframe-downloads/eclipse-tools.html) 5.3.0.8, or later with features IBM CICS SDK for Java, and IBM CICS SDK for Servlet and JSP support.
 * Access to the Maven Central Repository or suitable proxy to resolve dependencies defined in [pom.xml](./projects/com.ibm.cics.ca1y.web/pom.xml).
 
 To run the application:
 
 * CICS TS V5.3 with APAR [PI63005](http://www.ibm.com/support/docview.wss?crawler=1&uid=swg1PI63005), or later.
-* A configured CICS integrated-mode Liberty JVM server, as described in topic [Configuring a Liberty JVM server](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.6.0/reference-applications/event-processing/dfhep_event_processing_adapters.html).
+* A configured CICS integrated-mode Liberty JVM server, as described in topic [Configuring a Liberty JVM server](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.6.0/configuring/java/config_jvmserver_liberty.html).
 
 ## Installation
 
@@ -54,7 +54,7 @@ Alternatively you can export the `com.ibm.cics.ca1y.web` project as a WAR file a
 
 ## Usage
 
-See the [documentation](https://cicsdev.github.io/cics-event-consumer/) and the [examples](./tree/main/examples).
+See the [documentation](https://cicsdev.github.io/cics-event-consumer/) and the [examples](./examples).
 
 ## Motivation
 
