@@ -25,7 +25,7 @@ The application was originally released as the [IBM CA1Y: Send email from CICS T
 To install or make changes to the application:
 
 * [IBM CICS Explorer](https://developer.ibm.com/mainframe/products/downloads/eclipse-tools/) 5.3.0.8, or later with features IBM CICS SDK for Java, and IBM CICS SDK for Servlet and JSP support.
-* Access to the Maven Central Repository or suitable proxy to resolve dependencies defined in [pom.xml](https://github.com/cicsdev/cics-event-consumer/blob/master/projects/com.ibm.cics.ca1y.web/pom.xml).
+* Access to the Maven Central Repository or suitable proxy to resolve dependencies defined in [pom.xml](./blob/main/projects/com.ibm.cics.ca1y.web/pom.xml).
 
 To run the application:
 
@@ -44,7 +44,7 @@ To run the application:
    <feature>javaMail-1.5</feature>
    ```
 
-3. Clone this repository, or download the repository [cics-event-consumer-master.zip](https://github.com/cicsdev/cics-event-consumer/archive/master.zip) and expand it.
+3. Clone this repository, or download the repository [cics-event-consumer-main.zip](https://github.com/cicsdev/cics-event-consumer/archive/main.zip) and expand it.
 4. In CICS Explorer, select `File` → `Import...` → `Existing Projects into Workspace` → `Select root directory` → `Browse` and select the repository `projects` directory. Select all the projects, then `Copy projects into workspace`, then `Finish`.
 5. If your JVMSERVER resource name is not DFH$WLP, expand project com.ibm.cics.ca1y.web.cicsbundle, then edit com.ibm.cics.ca1y.web.warbundle, and update the value for jvmserver.
 6. Export the `com.ibm.cics.ca1y.web.cicsbundle` CICS Bundle project using the wizard `Export Bundle Project to z/OS UNIX File System...` to a directory on zFS such as /usr/lpp/ca1y/com.ibm.cics.ca1y.web.cicsbundle\_1.8.0
@@ -54,13 +54,13 @@ Alternatively you can export the `com.ibm.cics.ca1y.web` project as a WAR file a
 
 ## Usage
 
-See the [documentation](https://cicsdev.github.io/cics-event-consumer/) and the [examples](https://github.com/cicsdev/cics-event-consumer/tree/master/examples).
+See the [documentation](https://cicsdev.github.io/cics-event-consumer/) and the [examples](./tree/main/examples).
 
 ## Motivation
 
-This project was started in 2012 as to demonstrate how to write a CICS event adapter, and how the many APIs available in Java could be used to consume and process the events. Several customers raised the requirement to send an email from a CICS application asynchronously to the task, and the combination of event processing and the JavaMail API lead to the project being made available. As detailed in the [CHANGELOG](https://github.com/cicsdev/cics-event-consumer/blob/master/CHANGELOG.md), the project evolved to meet new requirements - some motivated by customer need, and others to learn about Java, CICS, and JZOS APIs. It was moved to GitHub and the license changed to encourage community engagement.
+This project was started in 2012 as to demonstrate how to write a CICS event adapter, and how the many APIs available in Java could be used to consume and process the events. Several customers raised the requirement to send an email from a CICS application asynchronously to the task, and the combination of event processing and the JavaMail API lead to the project being made available. As detailed in the [CHANGELOG](./blob/main/CHANGELOG.md), the project evolved to meet new requirements - some motivated by customer need, and others to learn about Java, CICS, and JZOS APIs. It was moved to GitHub and the license changed to encourage community engagement.
 
 ## License
 
-This project is licensed under [Apache License Version 2.0](https://github.com/cicsdev/cics-event-consumer/blob/master/LICENSE).
+This project is licensed under [Apache License Version 2.0](./blob/main/LICENSE).
 
