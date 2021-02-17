@@ -4,10 +4,10 @@ cics-event-consumer is a Java EE 7 web application that _consumes_ events produc
 
 cics-event-consumer can be called:
 
-* by CICS directly as a [custom event processing adapter](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.5.0/reference/event-processing/dfhep_event_processing_adapters.html).
-* by the CICS [HTTP EP adapter](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.5.0/reference/event-processing/dfhep_event_processing_http_adapter.html) with events formatted using the [common base event REST format](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.5.0/reference/event-processing/dfhep_event_processing_cberformat.html).
-* by your program using the [EXEC CICS LINK PROGRAM\(CA1Y\)](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.5.0/reference/commands-api/dfhp4_link.html) command, passing a COMMAREA or CHANNEL.
-* by your program using the [EXEC CICS START TRANSID\(CA1Y\) CHANNEL\(\)](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.5.0/reference/commands-api/dfhp4_starttransidchannel.html) command.
+* by CICS directly as a [custom event processing adapter](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.6.0/reference-applications/event-processing/dfhep_event_processing_adapters.html).
+* by the CICS [HTTP EP adapter](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.6.0/reference-applications/event-processing/dfhep_event_processing_http_adapter.html) with events formatted using the [common base event REST format](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.6.0/reference-applications/event-processing/dfhep_event_processing_cberformat.html).
+* by your program using the [EXEC CICS LINK PROGRAM\(CA1Y\)](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.6.0/reference-applications/commands-api/dfhp4_link.html) command, passing a COMMAREA or CHANNEL.
+* by your program using the [EXEC CICS START TRANSID\(CA1Y\) CHANNEL\(\)](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.6.0/reference-applications/commands-api/dfhp4_starttransidchannel.html) command.
 
 The received event, channel, or commarea can be formatted and:
 
@@ -25,12 +25,12 @@ The application was originally released as the [IBM CA1Y: Send email from CICS T
 To install or make changes to the application:
 
 * [IBM CICS Explorer](https://developer.ibm.com/mainframe/products/downloads/eclipse-tools/) 5.3.0.8, or later with features IBM CICS SDK for Java, and IBM CICS SDK for Servlet and JSP support.
-* Access to the Maven Central Repository or suitable proxy to resolve dependencies defined in [pom.xml](./blob/main/projects/com.ibm.cics.ca1y.web/pom.xml).
+* Access to the Maven Central Repository or suitable proxy to resolve dependencies defined in [pom.xml](./projects/com.ibm.cics.ca1y.web/pom.xml).
 
 To run the application:
 
 * CICS TS V5.3 with APAR [PI63005](http://www.ibm.com/support/docview.wss?crawler=1&uid=swg1PI63005), or later.
-* A configured CICS integrated-mode Liberty JVM server, as described in topic [Configuring a Liberty JVM server](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.5.0/configuring/java/config_jvmserver_liberty.html). 
+* A configured CICS integrated-mode Liberty JVM server, as described in topic [Configuring a Liberty JVM server](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.6.0/reference-applications/event-processing/dfhep_event_processing_adapters.html).
 
 ## Installation
 
@@ -50,7 +50,7 @@ To run the application:
 6. Export the `com.ibm.cics.ca1y.web.cicsbundle` CICS Bundle project using the wizard `Export Bundle Project to z/OS UNIX File System...` to a directory on zFS such as /usr/lpp/ca1y/com.ibm.cics.ca1y.web.cicsbundle\_1.8.0
 7. Define, install and enable the CICS BUNDLE resource with attributes NAME\(CA1Y\), BUNDLEDIR\(/usr/lpp/ca1y/com.ibm.cics.ca1y.web.cicsbundle\_1.8.0\).
 
-Alternatively you can export the `com.ibm.cics.ca1y.web` project as a WAR file and install it into the Liberty JVM server using the dropins directory, or add an application entry in server.xml as described in topic [Deploying web applications directly to a Liberty JVM server](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.5.0/applications/deploying/create_libertyapp.html).
+Alternatively you can export the `com.ibm.cics.ca1y.web` project as a WAR file and install it into the Liberty JVM server using the dropins directory, or add an application entry in server.xml as described in topic [Deploying web applications directly to a Liberty JVM server](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.6.0/applications/deploying/create_libertyapp.html).
 
 ## Usage
 
@@ -58,9 +58,9 @@ See the [documentation](https://cicsdev.github.io/cics-event-consumer/) and the 
 
 ## Motivation
 
-This project was started in 2012 as to demonstrate how to write a CICS event adapter, and how the many APIs available in Java could be used to consume and process the events. Several customers raised the requirement to send an email from a CICS application asynchronously to the task, and the combination of event processing and the JavaMail API lead to the project being made available. As detailed in the [CHANGELOG](./blob/main/CHANGELOG.md), the project evolved to meet new requirements - some motivated by customer need, and others to learn about Java, CICS, and JZOS APIs. It was moved to GitHub and the license changed to encourage community engagement.
+This project was started in 2012 as to demonstrate how to write a CICS event adapter, and how the many APIs available in Java could be used to consume and process the events. Several customers raised the requirement to send an email from a CICS application asynchronously to the task, and the combination of event processing and the JavaMail API lead to the project being made available. As detailed in the [CHANGELOG](./CHANGELOG.md), the project evolved to meet new requirements - some motivated by customer need, and others to learn about Java, CICS, and JZOS APIs. It was moved to GitHub and the license changed to encourage community engagement.
 
 ## License
 
-This project is licensed under [Apache License Version 2.0](./blob/main/LICENSE).
+This project is licensed under [Apache License Version 2.0](./LICENSE).
 
