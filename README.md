@@ -24,8 +24,8 @@ The application was originally released as the [IBM CA1Y: Send email from CICS T
 
 To install or make changes to the application:
 
-* [IBM CICS Explorer](https://ibm.github.io/mainframe-downloads/eclipse-tools.html) 5.3.0.8, or later with features IBM CICS SDK for Java, and IBM CICS SDK for Servlet and JSP support.
-* Access to the Maven Central Repository or suitable proxy to resolve dependencies defined in [pom.xml](./projects/com.ibm.cics.ca1y.web/pom.xml).
+* [IBM CICS SDK for Java EE, Jakarta EE and Liberty](https://ibm.github.io/mainframe-downloads/eclipse-tools.html) 5.3.0.8, or later
+* or any IDE that supports usage of the dependencies defined in [pom.xml](./projects/com.ibm.cics.ca1y.web/pom.xml) 
 
 To run the application:
 
