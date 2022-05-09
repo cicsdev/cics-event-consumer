@@ -59,7 +59,7 @@ Alternatively you can export the `com.ibm.cics.ca1y.web` project as a WAR file a
 
 ## Usage
 
-See the [documentation](https://cicsdev.github.io/cics-event-consumer/) and the [examples](./examples).
+See the [documentation](./SUMMARY.md) and the [examples](./examples).
 
 ## Motivation
 
