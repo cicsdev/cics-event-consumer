@@ -51,7 +51,9 @@ To run the application:
     * Then, in CICS Explorer, select `File` → `Import...` → `Existing Projects into Workspace` → `Select root directory` → `Browse` and select the repository `projects` directory. Select all the projects, then `Copy projects into workspace`, then `Finish`.
 4. If your JVMSERVER resource name is not DFH$WLP, expand project com.ibm.cics.ca1y.web.cicsbundle, then edit com.ibm.cics.ca1y.web.warbundle, and update the value for jvmserver.
 5. Export the `com.ibm.cics.ca1y.web.cicsbundle` CICS Bundle project using the wizard `Export Bundle Project to z/OS UNIX File System...` to a directory on zFS such as /usr/lpp/ca1y/com.ibm.cics.ca1y.web.cicsbundle\_1.8.0
-6. Define, install and enable the CICS BUNDLE resource with attributes NAME\(CA1Y\), BUNDLEDIR\(/usr/lpp/ca1y/com.ibm.cics.ca1y.web.cicsbundle\_1.8.0\).
+6. Define, install and enable the CICS BUNDLE resource with attributes: 
+   * NAME\(CA1Y\), 
+   * BUNDLEDIR\(/usr/lpp/ca1y/com.ibm.cics.ca1y.web.cicsbundle\_1.8.0\)
 
 Alternatively you can export the `com.ibm.cics.ca1y.web` project as a WAR file and install it into the Liberty JVM server using the dropins directory, or add an application entry in server.xml as described in topic [Deploying web applications directly to a Liberty JVM server](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.6.0/applications/deploying/create_libertyapp.html).
 
