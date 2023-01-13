@@ -66,5 +66,13 @@
   		<artifactId>smackx</artifactId>
   		<version>3.2.1</version>
   	</dependency>
+    <!-- UNCOMMENT THE FOLLOWING DEPENDENCY IF USING JAVA 11 -->
+    <!--
+      <dependency>
+          <groupId>com.sun.activation</groupId>
+          <artifactId>javax.activation</artifactId>
+          <version>1.2.0</version>
+      </dependency>
+    -->
   </dependencies>
 </project>
