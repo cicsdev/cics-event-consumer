@@ -2536,35 +2536,41 @@ public class Emit {
 
 			sb.append("<table border='1' cellspacing='0' cellpadding='2'><thead><tr><th>Container</th><th>Value in hex</th></tr></thead><tbody>");
 			Task t = Task.getTask();
-			ContainerIterator ci = t.containerIterator();
-			while ((ci != null) && (ci.hasNext())) {
-				Container container = ci.next();
-				String key = container.getName().trim();
+			Channel chl = t.getCurrentChannel();
 
-				try {
-					if (!key.matches(containersExpression)) {
-						continue;
+			if (chl != null) {
+				List<String> names = chl.getContainerNames();
+
+				for (String name : names) {
+					Container container = chl.getContainer(name, false);
+					
+					String key = container.getName().trim();
+
+					try {
+						if (!key.matches(containersExpression)) {
+							continue;
+						}
+
+					} catch (Exception e) {
+						// Ignore issues with regular expression
 					}
 
-				} catch (Exception e) {
-					// Ignore issues with regular expression
-				}
+					sb.append("<tr><td>").append(org.apache.commons.lang3.StringEscapeUtils.escapeHtml4(key)).append("</td><td><pre>");
 
-				sb.append("<tr><td>").append(org.apache.commons.lang3.StringEscapeUtils.escapeHtml4(key)).append("</td><td><pre>");
+					try {
+						if (summary == null) {
+							sb.append(Util.getHexDump(container.get(), 32, "<br/>"));
 
-				try {
-					if (summary == null) {
-						sb.append(Util.getHexDump(container.get(), 32, "<br/>"));
+						} else {
+							sb.append(Util.getHexSummary(container.get()));
+						}
 
-					} else {
-						sb.append(Util.getHexSummary(container.get()));
+					} catch (Exception e1) {
+						// ignore
 					}
 
-				} catch (Exception e1) {
-					// ignore
+					sb.append("</pre></td><tr>");
 				}
-
-				sb.append("</pre></td><tr>");
 			}
 
 			sb.append("</tbody></table>");
@@ -2650,36 +2656,41 @@ public class Emit {
 			}
 
 			Task t = Task.getTask();
-			ContainerIterator ci = t.containerIterator();
-			while (ci.hasNext()) {
-				Container container = ci.next();
-				String key = container.getName().trim();
+			Channel chl = t.getCurrentChannel();
 
-				try {
-					if (!key.matches(containersExpression)) {
-						continue;
+			if (chl != null) {
+				List<String> names = chl.getContainerNames();
+
+				for (String name : names) {
+					Container container = chl.getContainer(name, false);
+					String key = container.getName().trim();
+
+					try {
+						if (!key.matches(containersExpression)) {
+							continue;
+						}
+
+					} catch (Exception e) {
+						// Ignore issues with regular expression
 					}
 
-				} catch (Exception e) {
-					// Ignore issues with regular expression
-				}
+					String title = "Container:" + key;
+					sb.append(title).append("\n").append(StringUtils.repeat("=", title.length())).append("\n");
 
-				String title = "Container:" + key;
-				sb.append(title).append("\n").append(StringUtils.repeat("=", title.length())).append("\n");
+					try {
+						if (summary == null) {
+							sb.append(Util.getHexDump(container.get(), 32, "\n"));
 
-				try {
-					if (summary == null) {
-						sb.append(Util.getHexDump(container.get(), 32, "\n"));
+						} else {
+							sb.append(Util.getHexSummary(container.get()));
+						}
 
-					} else {
-						sb.append(Util.getHexSummary(container.get()));
+					} catch (Exception e1) {
+						// ignore
 					}
 
-				} catch (Exception e1) {
-					// ignore
+					sb.append("\n");
 				}
-
-				sb.append("\n");
 			}
 		}
 
