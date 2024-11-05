@@ -4,10 +4,10 @@ cics-event-consumer is a Java EE 7 web application that _consumes_ events produc
 
 cics-event-consumer can be called:
 
-* by CICS directly as a [custom event processing adapter](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.6.0/reference-applications/event-processing/dfhep_event_processing_adapters.html).
-* by the CICS [HTTP EP adapter](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.6.0/reference-applications/event-processing/dfhep_event_processing_http_adapter.html) with events formatted using the [common base event REST format](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.6.0/reference-applications/event-processing/dfhep_event_processing_cberformat.html).
-* by your program using the [EXEC CICS LINK PROGRAM\(CA1Y\)](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.6.0/reference-applications/commands-api/dfhp4_link.html) command, passing a COMMAREA or CHANNEL.
-* by your program using the [EXEC CICS START TRANSID\(CA1Y\) CHANNEL\(\)](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.6.0/reference-applications/commands-api/dfhp4_starttransidchannel.html) command.
+* by CICS directly as a [custom event processing adapter](https://www.ibm.com/docs/en/cics-ts/6.x?topic=formats-event-processing-adapters).
+* by the CICS [HTTP EP adapter](https://www.ibm.com/docs/en/cics-ts/6.x?topic=adapters-http-ep-adapter) with events formatted using the [common base event REST format](https://www.ibm.com/docs/en/cics-ts/6.x?topic=formats-common-base-event-rest-format).
+* by your program using the `EXEC CICS LINK PROGRAM(CA1Y)`command, passing a COMMAREA or CHANNEL.
+* by your program using the `EXEC CICS START TRANSID(CA1Y) CHANNEL()` command.
 
 The received event, channel, or commarea can be formatted and:
 
@@ -18,24 +18,50 @@ The received event, channel, or commarea can be formatted and:
 * written out as a message to the MVS operator console.
 * submitted as an MVS job.
 
-The application was originally released as the [IBM CA1Y: Send email from CICS Transaction Server for z/OS](http://www-01.ibm.com/support/docview.wss?uid=swg24033197) and referred to here as CA1Y for short.
+The application was originally released as the *IBM CA1Y: Send email from CICS Transaction Server for z/OS* and referred to here as CA1Y for short.
 
 ## Requirements
 
-To install or make changes to the application:
-
-* [IBM CICS SDK for Java EE, Jakarta EE and Liberty](https://ibm.github.io/mainframe-downloads/eclipse-tools.html) 5.3.0.8, or later
-* or any IDE that supports usage of the dependencies defined in [pom.xml](./projects/com.ibm.cics.ca1y.web/pom.xml) 
-
-To run the application:
-
-* CICS TS V5.3 with APAR [PI63005](http://www.ibm.com/support/docview.wss?crawler=1&uid=swg1PI63005), or later.
-* A configured CICS integrated-mode Liberty JVM server, as described in topic [Configuring a Liberty JVM server](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.6.0/configuring/java/config_jvmserver_liberty.html).
+* [IBM CICS SDK for Java EE, Jakarta EE and Liberty](https://ibm.github.io/mainframe-downloads/eclipse-tools.html) or any IDE that supports usage of the dependencies defined in [pom.xml](cics-event-consumer-ca1y/pom.xml) 
+* CICS TS V5.5 or later
+* A CICS integrated-mode Liberty JVM server, as described in topic [Configuring a Liberty JVM server](https://www.ibm.com/docs/en/cics-ts/6.x?topic=server-configuring-liberty-jvm).
 
 ## Installation
 
-1. Define, install and enable a CICS TRANSACTION resource with attributes NAME\(CA1Y\), PROGRAM\(CA1Y\), TASKDATALOC\(ANY\).
-2. Update the Liberty server configuration file server.xml to include the following features:
+
+### Building the Example
+
+You can build the sample using an IDE of your choice, or the sample can be built using the supplied Maven build files to produce a WAR file and optionally a CICS Bundle archive.
+
+#### Maven (command line)
+
+First install the generated JAR file into the local Maven repository by running the following Maven command in a local command prompt
+
+```sh
+mvn org.apache.maven.plugins:maven-install-plugin:3.1.3:install-file -Dfile=cics-event-consumer-ca1y/WebContent/WEB-INF/lib/com.ibm.etools.marshall.runtime_6.1.200.v20120502_1750.jar -DgroupId=com.ibm.cicsdev -DartifactId=com.ibm.etools.marshall.jar -Dversion=1.0 -Dpackaging=jar -DlocalRepositoryPath=cics-event-consumer-ca1y/local-repo
+```
+
+Run the following in a local command prompt which will create a WAR file for deployment.
+
+```sh
+mvn clean verify
+```
+
+This creates a WAR file in the `target` directory. 
+
+If building a CICS bundle ZIP the CICS bundle plugin bundle goal is driven using the maven verify phase. The CICS JVM server name can be modified in the <cics.jvmserver> property in the [`pom.xml`](cics-event-consumer-bundle/pom.xml) to match the required CICS JVMSERVER resource name, or alternatively can be set on the command line as follows. 
+
+```sh
+mvn clean verify -Dcics.jvmserver=MYJVM
+```
+
+
+### To start a JVM server in CICS:
+
+1. Enable Java support in the CICS region by setting the USSHOME and the JVMPROFILEDIR SIT parameters.
+1. Define a Liberty JVM server called DFHWLP using the CICS supplied sample definition DFHWLP in the CSD group DFH$WLP.
+1. Copy the CICS sample DFHWLP.jvmprofile zFS file to the CICS JVMPROFILEDIR directory and ensure the JAVA_HOME variable is set correctly.
+1. Add the following  features to the Liberty server.xml depending on your version of Java EE. 
 
    ```xml
    <feature>cicsts:link-1.0</feature>
@@ -43,19 +69,16 @@ To run the application:
    <feature>jaxb-2.2</feature>
    <feature>javaMail-1.5</feature>
    ```
+1. Install the DFHWLP JVM server resource and ensure it becomes enabled.
 
-3. Either :
-    * Clone this repository using git,
-  * _or_
-    * download the repository [cics-event-consumer-main.zip](https://github.com/cicsdev/cics-event-consumer/archive/main.zip) and expand it. 
-    * Then, in CICS Explorer, select `File` → `Import...` → `Existing Projects into Workspace` → `Select root directory` → `Browse` and select the repository `projects` directory. Select all the projects, then `Copy projects into workspace`, then `Finish`.
-4. If your JVMSERVER resource name is not DFH$WLP, expand project com.ibm.cics.ca1y.web.cicsbundle, then edit com.ibm.cics.ca1y.web.warbundle, and update the value for jvmserver.
-5. Export the `com.ibm.cics.ca1y.web.cicsbundle` CICS Bundle project using the wizard `Export Bundle Project to z/OS UNIX File System...` to a directory on zFS such as /usr/lpp/ca1y/com.ibm.cics.ca1y.web.cicsbundle\_1.8.0
-6. Define, install and enable the CICS BUNDLE resource with attributes: 
-   * NAME\(CA1Y\), 
-   * BUNDLEDIR\(/usr/lpp/ca1y/com.ibm.cics.ca1y.web.cicsbundle\_1.8.0\)
+### To deploy the samples into a CICS region:
 
-Alternatively you can export the `com.ibm.cics.ca1y.web` project as a WAR file and install it into the Liberty JVM server using the dropins directory, or add an application entry in server.xml as described in topic [Deploying web applications directly to a Liberty JVM server](https://www.ibm.com/support/knowledgecenter/SSGMCP_5.6.0/applications/deploying/create_libertyapp.html).
+1. Export the CICS bundle project to a zFS directory. The samples use the directory `/u/ca1y/com.ibm.cics.ca1y.web.cicsbundle_1.8.1`
+1. Using the supplied [DFHCSDUP file](examples/DFHCSD.txt) create a CICS transaction CA1Y and a CICS BUNDLE definition referencing the zFS directory created in step 1
+1. Install the CICS BUNDLE and TRANSACTION resoures.
+1. Download and compile the supplied COBOL programs and deploy into CICS.
+
+Alternatively you can export the cics-event-consumer-ca1y project as a WAR file and install it into the Liberty JVM server using the dropins directory, or add an application entry in server.xml as described in topic [Deploying web applications directly to a Liberty JVM server](https://www.ibm.com/docs/en/cics-ts/6.x?topic=dajs-deploying-enterprise-java-applications-directly-liberty-jvm-server).
 
 ## Usage
 

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.ibm.cicsdev</groupId>
+    <artifactId>cics-event-consumer</artifactId>
+    <version>1.8.1</version>
+    <packaging>pom</packaging>
+
+    <name>CICS Enterprise Java Program</name>
+    <description>Sample CICS Java program showing use of CICS events</description>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <cics.jvmserver>DFHWLP</cics.jvmserver>       
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+    </properties>
+
+    <repositories>
+        <repository>
+          <id>com.ibm.etools.marshall</id>
+          <name>Project libraries</name>
+          <url>file://${project.basedir}/local-repo</url>
+          <releases>
+            <checksumPolicy>ignore</checksumPolicy>
+        </releases>
+        </repository>
+      </repositories>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.ibm.cics</groupId>
+                <artifactId>com.ibm.cics.ts.bom</artifactId>
+                <version>5.5-20200519131930-PH25409</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <modules>
+        <module>cics-event-consumer-ca1y</module>        
+        <module>cics-event-consumer-bundle</module>        
+    </modules>
+</project>

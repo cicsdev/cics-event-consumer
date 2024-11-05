@@ -1,0 +1,6 @@
+DEFINE TRANSACTION(CA1Y)  GROUP(CA1Y)
+        PROGRAM(CA1Y) TASKDATALOC(ANY) DESCRIPTION(CICS event consumer)
+
+ DEFINE BUNDLE(CA1Y) GROUP(CA1Y)
+        DESCRIPTION(CICS event consumer web app) 
+        BUNDLEDIR(/u/ca1y/cics-event-consumer-bundle-1.8.1)

@@ -1,0 +1,11 @@
+**/bin/
+
+# Gradle ignores
+.gradle
+**/build/
+!src/**/build/
+
+# Maven ignores
+target/
+
+

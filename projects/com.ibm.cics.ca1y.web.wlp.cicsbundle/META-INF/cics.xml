@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<manifest xmlns="http://www.ibm.com/xmlns/prod/cics/bundle" id="com.ibm.cics.ca1y.web.wlp.cicsbundle" bundleMajorVer="1" bundleMinorVer="0" bundleMicroVer="0" bundleVersion="1" bundleRelease="0" build="incgm-20110601-1954">
-    <meta_directives>
-        <timestamp>2012-05-30T03:02:24.482+02:00</timestamp>
-    </meta_directives>
-    <define name="CA1Y" type="http://www.ibm.com/xmlns/prod/cics/bundle/TRANSACTION" path="CA1Y.transaction"/>
-    <define name="DFH$WLP" type="http://www.ibm.com/xmlns/prod/cics/bundle/JVMSERVER" path="DFH$WLP.jvmserver"/>
-</manifest>
