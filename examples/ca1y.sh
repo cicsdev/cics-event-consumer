@@ -1,5 +1,5 @@
 # -----------------------------------------------------------------------------------------------
-# Start CICS SupportPac CA1Y to send an email.
+# Start cics-event-consumer app to send an email.
 #
 # The script will produce messages to standard out and complete with return code 0 if successful.  
 #
@@ -21,24 +21,24 @@
 #   - from script variable PROPERTIES
 #
 # Set JAVA_HOME_DEFAULT to the Java home directory, for example:
-#   JAVA_HOME_DEFAULT="/java/java71_64/J7.1_64"
+#   JAVA_HOME_DEFAULT="/java/java80_64/J8.0_64"
 #
 # Set CICS_HOME to the CICS home directory, for example:
-#   CICS_HOME="/cics/cics690"
+#   CICS_HOME="/cics/cics710"
 #
 # Set PROPERTIES to the properties that override those provided on the command line, for example
 # the email server settings:
-#   PROPERTIES="$PROPERTIES import.private={file=/usr/lpp/ca1y/examples/emailServer.properties:encoding=UTF8}"
+#   PROPERTIES="$PROPERTIES import.private={file=/u/ca1y/examples/emailServer.properties:encoding=UTF8}"
 #
 # Set JAVA_OPTIONS to required JVM options, for example to quick start the JVM 
 #   JAVA_OPTIONS="$JAVA_OPTIONS -Xquickstart"
-#   JAVA_OPTIONS="$JAVA_OPTIONS -Djava.util.logging.config.file=/usr/lpp/ca1y/examples/logging.properties"
+#   JAVA_OPTIONS="$JAVA_OPTIONS -Djava.util.logging.config.file=/u/ca1y/examples/logging.properties"
 #   JAVA_OPTIONS="$JAVA_OPTIONS -Xrunjdwp:transport=dt_socket,server=y,address=27508,suspend=y"
 # -----------------------------------------------------------------------------------------------
-JAVA_HOME_DEFAULT="/java/java71_64/J7.1_64"
-CICS_HOME="/cics/cics690"
-CA1Y_HOME="/usr/lpp/ca1y"
-PROPERTIES="$PROPERTIES import.private={file="$CA1Y_HOME"/ca1y/examples/emailServer.properties:encoding=UTF8}"
+JAVA_HOME_DEFAULT="/java/java80_64/J8.0_64"
+CICS_HOME="/cics/cics710"
+CA1Y_HOME="/u/ca1y"
+PROPERTIES="$PROPERTIES import.private={file="$CA1Y_HOME"/examples/emailServer.properties:encoding=UTF8}"
 JAVA_OPTIONS="$JAVA_OPTIONS -Xquickstart"
 
 # Set Java environment if not already defined

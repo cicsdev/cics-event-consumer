@@ -16,7 +16,7 @@ import={file=/path/standard.properties}
  ```
 * Import properties from the named file using the UTF-8 encoding.
  ```properties
-import={file=/usr/lpp/ca1y/examples/emailServer.properties:encoding=UTF-8}
+import={file=/u/ca1y/examples/emailServer.properties:encoding=UTF-8}
  ```
 * Import properties from a CICS DOCTEMPLATE resource that is cached in memory upon first use.
  ```properties
@@ -24,7 +24,7 @@ import={doctemplate=MyTemplate}
  ```
 * Import properties from the named file using UTF-8 encoding and do not log or allow these properties to be copied using tokens.
  ```properties
-import.private={file=/usr/lpp/ca1y/examples/emailServer.properties:encoding=UTF-8}
+import.private={file=/u/ca1y/examples/emailServer.properties:encoding=UTF-8}
  ```
 * An event is sent to an HTTP server defined in a URIMAP. If there is a failure, the SupportPac links to program ERRLOG to log the HTTPCONTENT container to DB2.
  ```properties
