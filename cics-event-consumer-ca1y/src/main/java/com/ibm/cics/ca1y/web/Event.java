@@ -43,7 +43,7 @@ import com.ibm.cics.ca1y.EmitProperties;
  * https://www.ibm.com/support/knowledgecenter/SSGMCP_5.6.0/reference-applications/event-processing/dfhep_formats.html
  * 
  * @author Mark Cocker <mark_cocker@uk.ibm.com>
- * @version 1.8.0
+ * @version 1.8.1
  * @since 2016-11-28
  */
 @Path("/cberest")

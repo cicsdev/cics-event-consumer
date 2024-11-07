@@ -30,7 +30,7 @@ import org.apache.commons.io.IOUtils;
  * Class to emit a message to an HTTP server.
  * 
  * @author Mark Cocker <mark_cocker@uk.ibm.com>
- * @version 1.8.0
+ * @version 1.8.1
  * @since 2016-12-19
  */
 public class JavaHTTP implements EmitAdapter {
