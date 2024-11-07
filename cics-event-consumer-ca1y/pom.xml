@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <copyright                                                  -->
+<!-- 	Licensed Materials - Property of IBM                     -->
+<!-- 	cics-event-consumer                                      -->
+<!-- 	(c) Copyright IBM Corp. 2012 - 2024 All Rights Reserved  -->
+<!-- 	US Government Users Restricted Rights - Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp. -->
+<!-- </copyright> -->
+ 
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<modelVersion>4.0.0</modelVersion>
+
+  <parent>
+  	<groupId>com.ibm.cicsdev</groupId>
+  	<artifactId>cics-event-consumer</artifactId>
+  	<version>1.8.1</version>  	
+  </parent>
+
+  <artifactId>cics-event-consumer-ca1y</artifactId>
+  <packaging>war</packaging>
+
+  <build>
+    <plugins>
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-compiler-plugin</artifactId>
+			<version>3.12.1</version>
+			<configuration>
+				<!-- Enable the CICS Annotation Processor -->
+				<annotationProcessorPaths>
+					<annotationProcessorPath>
+						<groupId>com.ibm.cics</groupId>
+						<artifactId>com.ibm.cics.server.invocation</artifactId>
+						<version>6.1</version>
+					</annotationProcessorPath>
+				</annotationProcessorPaths>
+			</configuration>
+		  </plugin>
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.4.0</version>
+        <configuration>
+          <warSourceDirectory>WebContent</warSourceDirectory>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  	<!-- CICS TS V5.5 BOM (as of May 2020) -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.ibm.cics</groupId>
+				<artifactId>com.ibm.cics.ts.bom</artifactId>
+				<version>5.5-20200519131930-PH25409</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+  
+  <dependencies>
+  	<dependency>
+  		<groupId>org.apache.httpcomponents</groupId>
+  		<artifactId>httpclient</artifactId>
+  		<version>4.5.14</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>commons-net</groupId>
+  		<artifactId>commons-net</artifactId>
+  		<version>3.11.1</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>commons-io</groupId>
+  		<artifactId>commons-io</artifactId>
+  		<version>2.17.0</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.fasterxml.jackson.core</groupId>
+  		<artifactId>jackson-databind</artifactId>
+  		<version>[2.14.3,)</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.apache.commons</groupId>
+  		<artifactId>commons-lang3</artifactId>
+  		<version>3.17.0</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.apache.xmlgraphics</groupId>
+  		<artifactId>fop</artifactId>
+  		<version>2.10</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.igniterealtime.smack</groupId>
+  		<artifactId>smack</artifactId>
+  		<version>3.2.1</version>
+  	</dependency>
+
+
+    <!-- javax packages required for Java 11 or later, scope is provided by Liberty web container-->    
+    <dependency>
+          <groupId>com.sun.activation</groupId>
+          <artifactId>javax.activation</artifactId>
+          <version>1.2.0</version>		
+		  <scope>provided</scope> 	
+     </dependency>
+	<dependency>
+    	<groupId>javax.ws.rs</groupId>
+    	<artifactId>javax.ws.rs-api</artifactId>
+    	<version>2.1.1</version>
+		<scope>provided</scope> 	
+	</dependency>
+	<dependency>
+		<groupId>javax.xml.bind</groupId>
+		<artifactId>jaxb-api</artifactId>
+		<version>2.3.1</version>	
+		<scope>provided</scope> 		
+	</dependency> 
+	<dependency>
+	    <groupId>javax.resource</groupId>
+	    <artifactId>javax.resource-api</artifactId>
+	    <version>1.7.1</version>	
+		<scope>provided</scope> 		
+	</dependency>	
+	<dependency>
+		<groupId>javax.mail</groupId>
+		<artifactId>javax.mail-api</artifactId>
+		<version>1.6.2</version>	
+		<scope>provided</scope> 		
+	</dependency>
+	
+
+	<!-- ibmzjos, scope is provided by IBM Java SDK on z/OS-->    
+	<dependency>
+	    <groupId>com.ibm.jzos</groupId>
+		<artifactId>ibmjzos</artifactId>
+	    <version>2.4.11.3</version>
+		<scope>provided</scope> 	
+	</dependency>
+
+	<!-- JCICS scope is provided by  POM-->    
+	<dependency>
+		<groupId>com.ibm.cics</groupId>
+		<artifactId>com.ibm.cics.server</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>com.ibm.cics</groupId>
+		<artifactId>com.ibm.cics.server.invocation.annotations</artifactId>
+	  </dependency>
+
+	<!--J2C marshall JAR from local repo, scope provided as already packaged in the lib dir -->	
+	<dependency>
+		<groupId>com.ibm.cicsdev</groupId>
+		<artifactId>com.ibm.etools.marshall</artifactId>
+		<version>1.0</version>
+		<scope>provided</scope> 
+	</dependency>	
+
+  </dependencies>
+</project>

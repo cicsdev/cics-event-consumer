@@ -3,13 +3,13 @@
       ***************************************************************** 
       * Licensed Materials - Property of IBM                            
       *                                                                 
-      * CICS SupportPac CA1Y - CICS ® TS support for sending emails     
+      * cics-event-consumer      
       *                                                                 
-      * © Copyright IBM Corporation 2012 All Rights Reserved.           
+      * (c) Copyright IBM Corp. 2012 - 2024 All Rights Reserved            
       *                                                                 
       *  US Government Users Restricted Rights - Use, duplication,      
       *  or disclosure restricted by GSA ADP Schedule Contract with     
-      *  IBM Corporation.                                               
+      *  IBM Corporation.                                              
       ***************************************************************** 
       *                                                                 
       * This example program illustrates how to send an email using     
@@ -54,9 +54,9 @@
                'task number {TASK_NUMBER}, '                            
                'CICS SYSID {REGION_SYSID}, '                            
                'CICS APPLID {REGION_APPLID}.' CR                        
-               'attachment={file=/usr/lpp/ca1y/examples/'               
+               'attachment={file=/u/ca1y/examples/'               
                'picture.png:binary}' CR                                 
-               'import.private={file=/usr/lpp/ca1y/examples/'           
+               'import.private={file=/u/ca1y/examples/'           
                'emailServer.properties:encoding=UTF-8}' CR              
                X'00'                                                    
                DELIMITED BY SIZE INTO CONFIG-DATA.                      

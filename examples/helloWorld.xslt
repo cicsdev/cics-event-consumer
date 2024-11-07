@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!-- 
-      ***************************************************************** 
-      * Licensed Materials - Property of IBM                            
-      *                                                                 
-      * CICS SupportPac CA1Y - CICS TS support for sending emails     
-      *                                                                 
-      * (c) Copyright IBM Corporation 2012 All Rights Reserved.           
-      *                                                                 
-      *  US Government Users Restricted Rights - Use, duplication,      
-      *  or disclosure restricted by GSA ADP Schedule Contract with     
-      *  IBM Corporation.                                               
-      ***************************************************************** 
- -->
+<!-- <copyright                                                  -->
+<!-- 	Licensed Materials - Property of IBM                     -->
+<!-- 	cics-event-consumer                                      -->
+<!-- 	(c) Copyright IBM Corp. 2012 - 2024 All Rights Reserved  -->
+<!-- 	US Government Users Restricted Rights - Use, duplication or disclosure restricted by GSA ADP Schedule Contract with IBM Corp. -->
+<!-- </copyright> -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format">
 <xsl:output method="xml" indent="yes" />
 <xsl:template match="/">

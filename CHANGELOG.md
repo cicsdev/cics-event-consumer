@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 1.8.1 - November 2024
+* Repackage as Maven project
+
 ## Version 1.8.0 - March 2019
 * Updates to readme, changelog, and dependencies.
 
