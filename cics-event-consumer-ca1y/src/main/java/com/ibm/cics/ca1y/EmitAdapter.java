@@ -1,13 +1,12 @@
-/*
- * Licensed Materials - Property of IBM
- * 
- * CICS SupportPac CA1Y - CICS® TS support for sending emails
- * 
- * © Copyright IBM Corporation 2012 - 2016. All Rights Reserved.
- * 
- *  US Government Users Restricted Rights - Use, duplication, or disclosure
- *  restricted by GSA ADP Schedule Contract with IBM Corporation.
- */
+/* Licensed Materials - Property of IBM                                   */
+/*                                                                        */
+/* cics-event-consumer                                                    */
+/*                                                                        */
+/* (c) Copyright IBM Corp. 2012 - 2024 All Rights Reserved                */
+/*                                                                        */
+/* US Government Users Restricted Rights - Use, duplication or disclosure */
+/* restricted by GSA ADP Schedule Contract with IBM Corp                  */
+/*                                                                        */
 
 package com.ibm.cics.ca1y;
 

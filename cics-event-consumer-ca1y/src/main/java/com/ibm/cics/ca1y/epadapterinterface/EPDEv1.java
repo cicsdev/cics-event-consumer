@@ -15,8 +15,6 @@ import com.ibm.etools.marshall.util.*;
  * @type-descriptor.child-class class-name="com.ibm.cics.example.Epde_epde__item"
  */
 
-// Built from DFHEPDEO 
-
 @SuppressWarnings( {"rawtypes", "unchecked"} )
 
 public class EPDEv1 implements javax.resource.cci.Record,

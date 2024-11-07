@@ -13,7 +13,7 @@ import com.ibm.etools.marshall.util.*;
  * @type-descriptor.aggregate-instance-td accessor="readWrite" contentSize="44" offset="0" size="44"
  * @type-descriptor.platform-compiler-info language="COBOL" defaultBigEndian="true" defaultCodepage="IBM-037" defaultExternalDecimalSign="ebcdic" defaultFloatType="ibm390Hex"
  */
-// Built from copybook DFHEPAPO
+
 @SuppressWarnings( {"rawtypes", "unused", "unchecked"} )
 
 public class EPAPv1 implements javax.resource.cci.Record,

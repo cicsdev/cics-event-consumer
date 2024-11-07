@@ -14,8 +14,6 @@ import com.ibm.etools.marshall.util.*;
  * @type-descriptor.platform-compiler-info language="COBOL" defaultBigEndian="true" defaultCodepage="IBM-037" defaultExternalDecimalSign="ebcdic" defaultFloatType="ibm390Hex"
  */
 
-// Built from DFHEPCXO
-
 @SuppressWarnings( {"rawtypes", "unused", "unchecked"} )
 
 public class EPCXv2 implements javax.resource.cci.Record,
