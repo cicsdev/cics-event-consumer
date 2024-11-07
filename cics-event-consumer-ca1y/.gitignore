@@ -1,7 +1,8 @@
 **/bin/
+.settings/
 
 # Gradle ignores
-.gradle
+.gradle/
 **/build/
 !src/**/build/
 
