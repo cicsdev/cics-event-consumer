@@ -72,7 +72,7 @@ REGION_APPLID | The CICS region application ID.
 * The JVM property myProperty is set in the JVM profile, and the {myProperty} token is replaced with “Greetings”. In the JVM profile add `-DmyProperty=Greetings` then the value of myProperty can be used as a token:
  ```properties
  {myProperty}
-  ```
+ ```
 * The CICS set JVM property com.ibm.cics.jvmserver.configroot is set to JVM server configuration root directory. This property was new at CICS TS V5.2.
  ```properties
  {com.ibm.cics.jvmserver.configroot}
@@ -95,40 +95,40 @@ java.http.content={json}
 * Replace the token with the contents of the specified MVS file.
  ```properties
  {file=//'HLQ.MYSEQ'}
-  ```
-  ```properties
+ ```
+ ```properties
  {file=//'HLQ.MYPDS(SAMPMEM)'}
-  ```
-  ```properties
+ ```
+ ```properties
  {file=//'HLQ.MYSEQ':encoding=Cp1047}
-  ```
-   ```properties
+ ```
+ ```properties
  {file=//'HLQ.MYSEQ':binary}
-  ```
-   ```properties
+ ```
+ ```properties
  {file=//DD:MYCARD(SAMPMEM)}
-  ```
-   ```properties
+ ```
+ ```properties
  {file=//DD:MYCARD(SAMPMEM):encoding=Cp1047}
-  ```
-  ```properties
+ ```
+ ```properties
  {file=//DD:MYCARD(SAMPMEM):binary}
-  ```
+ ```
 * Replace the token with the contents of the file from FTP:
  ```properties
  {ftp=/path/file1.txt:server=my.host.com}
-  ```
+ ```
  ```properties
 {ftp=/path/file1.txt:server=my.host.com:username=johndoe:password=secret}
  ```
 * Include all properties and containers.
  ```properties
  {htmltable}
-  ```
+ ```
 * Include only properties.
  ```properties
  {htmltable:properties=.*}
-  ```
+ ```
 * Include only properties whos name does not start with “mail”.
  ```properties
 {htmltable:properties=(?!mail.*).*
@@ -161,14 +161,14 @@ java.http.content={json}
 {mime=text/xml:to=application/pdf:xslt=MyStyleSheet}
  ```
 * Set the name of the attachment to 'My photo.jpg'
- ```
+ ```properties
 {name=My photo.jpg}
  ```
 * Set the name of the attachment to 'Invoice' followed by todays date.
-    ```properties
+ ```properties
 MyFileName=Invoice – {datetime=yyyy-MM-dd}.pdf
 MyAttachment={name=MyFileName}
-    ```
+ ```
 * Include all properties and containers.
  ```properties
 {texttable}
@@ -180,7 +180,7 @@ MyAttachment={name=MyFileName}
 * Include only properties whos name does not start with “mail”.
  ```properties
  {texttable:properties=(?!mail.*).*
-  ```
+ ```
 * Include only containers named MyContainer1 and MyContainer2.
  ```properties
 {texttable:containers=MyContainer1|MyContainer2}
