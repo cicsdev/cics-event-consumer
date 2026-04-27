@@ -13,7 +13,7 @@ fop.config.file=/path/config.xml
  ```
 * Use the Apache FOP transformer for XSLT processing.
  ```properties
- javax.xml.transform.TransformerFactory=org.apache.xalan.processor.TransformerFactoryImpl`
+ javax.xml.transform.TransformerFactory=org.apache.xalan.processor.TransformerFactoryImpl
   ```
 * Use the Saxon transformer for XSLT processing.
  ```properties
