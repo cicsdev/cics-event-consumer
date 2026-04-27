@@ -38,7 +38,7 @@ You can build the sample using an IDE of your choice, or the sample can be built
 First install the generated JAR file into the local Maven repository by running the following Maven command in a local command prompt
 
 ```sh
-mvn org.apache.maven.plugins:maven-install-plugin:3.1.3:install-file -Dfile=cics-event-consumer-ca1y/WebContent/WEB-INF/lib/com.ibm.etools.marshall.runtime_6.1.200.v20120502_1750.jar -DgroupId=com.ibm.cicsdev -DartifactId=com.ibm.etools.marshall.jar -Dversion=1.0 -Dpackaging=jar -DlocalRepositoryPath=cics-event-consumer-ca1y/local-repo
+mvn org.apache.maven.plugins:maven-install-plugin:3.1.3:install-file -Dfile=cics-event-consumer-ca1y/WebContent/WEB-INF/lib/com.ibm.etools.marshall.runtime_6.1.200.v20120502_1750.jar -DgroupId=com.ibm.cicsdev -DartifactId=com.ibm.etools.marshall -Dversion=1.0 -Dpackaging=jar -DlocalRepositoryPath=cics-event-consumer-ca1y/local-repo
 ```
 
 Run the following in a local command prompt which will create a WAR file for deployment.
