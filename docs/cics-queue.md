@@ -14,36 +14,36 @@ queue.type&nbsp;=&nbsp;_type_ | Specify the queue type. If not specified, tempor
 
 ## Examples
 * Use the queue name MyQueue.
-  ```properties
+ ```properties
  queue=MyQueue
-  ```
+ ```
 * Write the contents 'Hello from CICS'.
  ```properties
  queue.content=Hello from CICS.
-  ```
+ ```
 * Write the text content read from the named dataset member.
  ```properties
-queue.content={file=//DD:MYDATAS(MEMBER)}
+ queue.content={file=//DD:MYDATAS(MEMBER)}
  ```
 * Write the binary content read from the named zFS file to the queue.
  ```properties
-queue.content={file=/path/picture.png:binary}
+ queue.content={file=/path/picture.png:binary}
  ```
 * Write to a temporary storage queue.
  ```properties
-queue.type=ts
+ queue.type=ts
  ```
 * Write to a temporary data queue.
  ```properties
-queue.type=td
+ queue.type=td
  ```
 * Write the queue content using a specific encoding.
  ```properties
-queue.content.encoding=Cp1047
+ queue.content.encoding=Cp1047
  ```
 * Write the content to the queue in chunks of 32763 bytes each.
  ```properties
-queue.content.length.chunk=32763
+ queue.content.length.chunk=32763
  ```
 * Write the content to the queue up to a maximum of 32763 bytes.
  ```properties
@@ -55,9 +55,9 @@ queue.sysid=SYS1
  ```
 * Write to the queue using main storage.
  ```properties
-queue.ts.storage=main
+ queue.ts.storage=main
  ```
 * Write to the queue using auxiliary storage.
  ```properties
-queue.ts.storage=auxiliary
+ queue.ts.storage=auxiliary
  ```
