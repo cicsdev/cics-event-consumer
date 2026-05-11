@@ -1,7 +1,9 @@
 # Maintainers
 
-- Phil Wakelin [@PhilWakelin](https://github.com/PhilWakelin)
 - Mark Cocker [@markcocker](https://github.com/markcocker)
 
+## Former maintainers
 
-*Last reviewed:* November 2024
+- Phil Wakelin [@PhilWakelin](https://github.com/PhilWakelin)
+
+*Last reviewed:* May 2026
